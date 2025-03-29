@@ -1,0 +1,34 @@
+/* Dark Mode class */
+.dark {
+    -webkit-print-color-scheme: light;
+    color-scheme: light;
+
+    /* Override dark mode styles for colors */
+    --mui-palette-common-black: #000000;
+    --mui-palette-common-white: #ffffff;
+    --mui-palette-common-background: #000; /* Set dark color for backgrounds */
+    --mui-palette-common-onBackground: #fff; /* Text color on dark background */
+    --mui-palette-common-backgroundChannel: 0 0 0; /* Dark background channel */
+    --mui-palette-common-onBackgroundChannel: 255 255 255; /* Text color for dark mode */
+
+    /* Primary colors */
+    --mui-palette-primary-main: #7578ff;
+    --mui-palette-primary-dark: #635bff;
+    --mui-palette-primary-contrastText: var(--mui-palette-common-black);
+
+    /* Secondary colors */
+    --mui-palette-secondary-main: #dde7ee;
+    --mui-palette-secondary-dark: #cdd7e1;
+    --mui-palette-secondary-contrastText: var(--mui-palette-common-black);
+}
+
+/* Keep the background color white, even in dark mode */
+body.dark {
+    background-color: white !important; /* Force white background */
+    color: #000; /* Ensure text remains dark */
+}
+
+/* Optional: Specific container background styling */
+.layout-container {
+    background-color: white !important; /* Keep white background in container */
+}

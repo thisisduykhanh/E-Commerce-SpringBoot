@@ -1,0 +1,215 @@
+'use client';
+import * as React from 'react';
+import PolicyContent from '@/components/PolicyContent/PolicyContent';
+import PolicySidebar from '@/components/SideBarCooperate/PolicySideBar';
+import { Box, Drawer, Grid2 as Grid, IconButton, Link, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+
+function Agreement() {
+    const title = 'THỎA THUẬN VỀ ĐIỀU KIỆN LÀM VIỆC & CHÍNH SÁCH CHỐNG LAO ĐỘNG CƯỠNG BỨC';
+    const content = (
+        <>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                Bằng việc đăng ký tham gia sàn thương mại điện tử Asizon, bạn và chúng tôi cùng đồng thuận tuân thủ và triển khai các cam kết đảm bảo các tiêu chuẩn về điều kiện làm việc và loại bỏ hoàn toàn lao động cưỡng bức trong tất cả các hoạt động kinh doanh trong hoạt động kinh doanh của mình. Chúng tôi tin rằng, cùng nhau, chúng ta có thể tạo nên một cộng đồng tốt đẹp, Nhằm thúc đẩy một môi trường kinh doanh bền vững và trách nhiệm, các thành viên tham gia sàn thương mại điện tử Asizon cam kết đảm bảo các tiêu chuẩn về điều kiện làm việc và loại bỏ hoàn toàn lao động cưỡng bức trong tất cả các hoạt động kinh doanh.
+            </Typography>
+
+            <Typography variant="h6" sx={{ marginTop: 4, fontWeight: 'bold' }}>
+                1. Điều kiện làm việc
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                1.1 Môi trường làm việc an toàn và lành mạnh:<br/><br/>
+Đảm bảo nơi làm việc đáp ứng các tiêu chuẩn an toàn lao động, bao gồm việc cung cấp đầy đủ trang thiết bị bảo hộ và đào tạo về an toàn lao động cho người lao động.<br/><br/>
+Chủ động xác định, đánh giá và xử lý các nguy cơ tiềm ẩn có thể ảnh hưởng đến sức khỏe thể chất hoặc tinh thần của nhân viên.<br/><br/>
+1.2 Chính sách giờ làm việc và nghỉ ngơi:<br/><br/>
+Tuân thủ các quy định pháp luật về giờ làm việc tối đa, giờ nghỉ giữa ca và thời gian nghỉ phép của người lao động.<br/><br/>
+Đảm bảo không áp đặt giờ làm việc vượt quá mức hợp lý, trừ các trường hợp có thỏa thuận tự nguyện và được bù đắp thỏa đáng.<br/><br/>
+1.3 Tiền lương và phúc lợi:<br/><br/>
+Đảm bảo mức lương ít nhất bằng hoặc cao hơn mức lương tối thiểu do pháp luật địa phương quy định, đồng thời thanh toán đầy đủ và đúng hạn.<br/><br/>
+Cung cấp các chế độ phúc lợi cơ bản như bảo hiểm xã hội, bảo hiểm y tế và các phúc lợi khác theo quy định pháp luật.<br/><br/>
+1.4 Quyền tự do lao động:<br/><br/>
+Tôn trọng quyền tự do tham gia hoặc không tham gia vào các tổ chức đại diện lao động và quyền thương lượng tập thể của nhân viên.
+
+            </Typography>
+
+            <Typography variant="h6" sx={{ marginTop: 4, fontWeight: 'bold' }}>
+                2. Chính sách chống lao động cưỡng bức
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+               2.1 Cấm lao động cưỡng bức dưới mọi hình thức:<br/><br/>
+Cam kết không sử dụng bất kỳ hình thức lao động cưỡng bức, ép buộc, hoặc bắt buộc nào, bao gồm nhưng không giới hạn ở lao động bằng cách đe dọa, bạo lực, giữ giấy tờ tùy thân, hoặc giam giữ bất hợp pháp.<br/><br/>
+2.2 Cấm giữ giấy tờ tùy thân và tài sản cá nhân:<br/><br/>
+Không giữ giấy tờ tùy thân, tiền lương, hoặc tài sản cá nhân của người lao động như một cách để ép buộc họ làm việc.<br/><br/>
+2.3 Tự do chấm dứt hợp đồng:<br/><br/>
+Tôn trọng quyền của người lao động được tự do chấm dứt hợp đồng lao động, với điều kiện tuân thủ các quy định pháp luật và hợp đồng lao động đã ký kết.<br/><br/>
+2.4 Hệ thống khiếu nại:<br/><br/>
+Đảm bảo người lao động có quyền khiếu nại hoặc báo cáo các hành vi cưỡng bức lao động hoặc vi phạm quyền mà không phải chịu bất kỳ sự trả thù hoặc trừng phạt nào.<br/><br/>
+Thiết lập kênh liên lạc minh bạch để người lao động có thể báo cáo các trường hợp vi phạm và đảm bảo các báo cáo này được xử lý công bằng.<br/><br/>
+
+            </Typography>
+
+            <Typography variant="h6" sx={{ marginTop: 4, fontWeight: 'bold' }}>
+                3. Quyền và trách nhiệm của ASIZON
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                Asizon.vn có quyền và trách nhiệm sau:
+            </Typography>
+            <ul>
+                <li>Cung cấp dịch vụ theo đúng cam kết</li>
+                <li>Bảo mật thông tin người dùng</li>
+                <li>Xử lý các vi phạm và khiếu nại của người dùng</li>
+                <li>Ngừng cung cấp dịch vụ nếu người dùng vi phạm quy định</li>
+            </ul>
+
+            <Typography variant="h6" sx={{ marginTop: 4, fontWeight: 'bold' }}>
+                Trách nhiệm và giám sát
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                Các thành viên của sàn Asizon đồng ý tuân thủ các cam kết trên trong toàn bộ hoạt động kinh doanh.<br/><br/>
+Ban quản lý sàn Asizon có quyền kiểm tra và giám sát định kỳ hoặc bất kỳ lúc nào phát hiện dấu hiệu vi phạm các điều khoản thỏa thuận này.<br/><br/>
+Các thành viên vi phạm sẽ phải chịu các biện pháp xử lý theo quy định của pháp luật và chính sách của sàn Asizon, bao gồm việc chấm dứt tư cách thành viên trên sàn.
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+               Chúng tôi tin tưởng rằng việc duy trì điều kiện làm việc tốt và loại bỏ lao động cưỡng bức không chỉ bảo vệ quyền lợi của người lao động mà còn tạo nền tảng phát triển bền vững và minh bạch cho cộng đồng kinh doanh trên sàn Asizon.
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                Email:{' '}
+                <Link color="#008489" href="mailto:support@asizon.vn">
+                    support@asizon.vn
+                </Link>
+                <br />
+                Tổng đài:{' '}
+                <Link color="#008489" href="tel:19006074">
+                    19006074
+                </Link>
+            </Typography>
+        </>
+    );
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 900);
+        };
+
+        handleResize(); // Gọi khi component mount
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize); // Dọn dẹp khi component unmount
+    }, []);
+    const toggleDrawer = () => {
+        setDrawerOpen(!drawerOpen);
+    };
+    React.useEffect(() => {
+        // Điều chỉnh overflow của body khi sidebar mở ở mobile
+        if (drawerOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [drawerOpen]);
+    return (
+        <Box sx={{ paddingTop: 2 }}>
+            <Grid container={true} spacing={3}>
+                <Grid item={true} size={{ xs: 12, md: 3 }}>
+                    <Drawer
+                        sx={{
+                            display: { xs: 'block', md: 'none' },
+                            width: 240,
+                            flexShrink: 0,
+                            '& .MuiDrawer-paper': {
+                                width: 240,
+                                boxSizing: 'border-box',
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                            },
+                        }}
+                        variant="temporary"
+                        anchor="left"
+                        open={drawerOpen}
+                        onClose={toggleDrawer}
+                    >
+                        <PolicySidebar />
+                    </Drawer>
+                    <IconButton
+                        sx={{
+                            display: { xs: 'block', md: 'none' },
+                            position: 'absolute',
+                            top: 292,
+                            left: 10,
+                            zIndex: 999,
+                        }}
+                        onClick={toggleDrawer}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
+                    {/* Sidebar cho desktop luôn hiển thị */}
+                    <Drawer
+                        sx={{
+                            display: { xs: 'none', md: 'block' },
+                            width: '100%',
+                            flexShrink: 0,
+                            '& .MuiDrawer-paper': {
+                                overflowY: 'auto',
+                                backgroundColor: 'transparent',
+                                position: 'relative',
+                                marginBottom: 2,
+                                border: 'none',
+                                boxShadow: 'none',
+                                whiteSpace: 'normal',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
+                            },
+                        }}
+                        variant="permanent"
+                        anchor="left"
+                        open={drawerOpen}
+                    >
+                        <PolicySidebar />
+                    </Drawer>
+                </Grid>
+
+                <Grid item={true} size={{ xs: 12, md: 9 }}>
+                    <Grid container={true} justifyContent="center">
+                        <Grid item={true}>
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                  color:'#1a1a1a!important',
+                                    fontWeight: 'bold',
+                                    position: 'absolute',
+                                    whiteSpace: 'nowrap',
+                                    marginBottom: 2,
+                                    top: { xs: 300, md: 'unset' },
+                                    left: {xs:'50%',md:'60%'},
+                                    textAlign: 'center',
+                                    transform: 'translateX(-50%)',
+                                    fontSize: { xs: '0.5rem', sm: '0.8rem', md: '1rem' },
+                                    overflowY: 'auto',
+                                    overflow: 'hidden',
+                                    wordWrap: 'break-word',
+                                    overflowWrap: 'break-word',
+                                    lineHeight: 2,
+                                }}
+                            >
+                                {title}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <PolicyContent
+                        sx={{
+                            whiteSpace: 'pre-line',
+                            wordWrap: 'break-word',
+                        }}
+                        content={content}
+                    />
+                </Grid>
+            </Grid>
+        </Box>
+    );
+}
+
+export default Agreement;
