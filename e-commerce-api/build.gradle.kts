@@ -51,6 +51,13 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation("org.springframework.boot:spring-boot-starter-security:3.4.3")
 
+
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+
+
+
+
 }
 
 tasks.named<Test>("test") {

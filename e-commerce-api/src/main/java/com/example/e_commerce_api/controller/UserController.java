@@ -1,10 +1,13 @@
 package com.example.e_commerce_api.controller;
 
 import com.example.e_commerce_api.dto.ApiResponse;
+import com.example.e_commerce_api.dto.user.AccountLoginDTO;
+import com.example.e_commerce_api.dto.user.AuthenticationDTO;
 import com.example.e_commerce_api.dto.user.UserCreateDTO;
 import com.example.e_commerce_api.dto.user.UserUpdateDTO;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.User;
+import com.example.e_commerce_api.service.AccountService;
 import com.example.e_commerce_api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,14 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    private AccountService accountService;
 
+    @PostMapping("/signin")
+    public ResponseEntity<ApiResponse<AuthenticationDTO>> signIn(@RequestBody AccountLoginDTO accountLoginDTO) {
+        AuthenticationDTO authenticationDTO = accountService.signIn(accountLoginDTO);
+        ApiResponse<AuthenticationDTO> response = new ApiResponse<>(true, "Login Success", authenticationDTO, null);
+        return ResponseEntity.ok(response);
+    }
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<?>> createUser(@RequestBody UserCreateDTO userCreateDTO) {
         User user = userService.createUser(userCreateDTO);
@@ -29,8 +39,8 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping()
-    public ResponseEntity<ApiResponse<?>> updateUser(@RequestParam Integer id, @RequestBody UserUpdateDTO userUpdateDTO) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> updateUser(@PathVariable Integer id, @RequestBody UserUpdateDTO userUpdateDTO) {
         User user = userService.updateUser(id, userUpdateDTO);
         ApiResponse<User> response = new ApiResponse<>( true, "Update user successfully", user, null);
         return ResponseEntity.ok(response);

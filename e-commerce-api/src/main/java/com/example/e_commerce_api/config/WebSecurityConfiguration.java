@@ -56,7 +56,14 @@ public class WebSecurityConfiguration {
 
                 // Configure truy cập endpoints
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(apiPrefix + "/users/register",
+                        .requestMatchers(
+                                "swagger-resources",
+
+                                "swagger-resources/**",
+                                "/swagger-ui/**",  // Cho phép truy cập Swagger UI
+                                "/v3/api-docs/**", // Cho phép truy cập OpenAPI docs
+                                "/swagger-ui.html",
+                                apiPrefix + "/users/register",
                                 apiPrefix + "/users/signin",
                                 apiPrefix + "/account/refreshtoken",
                                 apiPrefix + "/image",
@@ -68,22 +75,11 @@ public class WebSecurityConfiguration {
                                 apiPrefix + "/accounts/**")
                         .permitAll()
                         .anyRequest().authenticated() // Các API còn lại yêu cầu xác thực
-                ).httpBasic(Customizer.withDefaults())
+                )
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults());
 
-                // Cấu hình session stateless (phù hợp với JWT)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-
-                // Add JWT vào chuỗi lọc và ưu tiên loc theo JWT
-
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-
-                // Tăng cường bảo mật header (ngăn chặn clickjacking, XSS)
-                .headers(headers -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Hỗ trợ H2 Console (nếu có)
-                        .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))
-                );
 
 
         return http.build();
@@ -92,20 +88,6 @@ public class WebSecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(ourUserDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        return daoAuthenticationProvider;
     }
 
 }

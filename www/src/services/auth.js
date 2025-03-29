@@ -3,7 +3,7 @@ import apiClient from './ApiClient';
 
 // API đăng nhập
 export const login = async (email, password) => {
-    const response = await apiClient.post('/accounts/signin', { email, password });
+    const response = await apiClient.post('/users/signin', { email, password });
     return response;
 };
 
