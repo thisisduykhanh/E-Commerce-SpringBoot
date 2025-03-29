@@ -41,7 +41,7 @@ public class ProductMapper {
      */
     public ProductDTO toProductDTO(Product product, List<Image> images, List<OfficialPrice> officialPrices) {
 
-        String nameProductType = product.getProductType() != null ? product.getProductType().getProductTypeName() : null;
+        String nameProductType = product.getProductType() != null ? product.getProductType().getProductTypeName().name() : null;
         String nameSupplier = product.getSupplier() != null ? product.getSupplier().getNameSupply() : null;
 
 
@@ -182,7 +182,7 @@ public class ProductMapper {
         return productTypes.stream().map(productType -> {
             ProductTypeDTO dto = new ProductTypeDTO(
                     productType.getId(),
-                    productType.getProductTypeName()
+                    productType.getProductTypeName().name()
             );
            
             return dto;

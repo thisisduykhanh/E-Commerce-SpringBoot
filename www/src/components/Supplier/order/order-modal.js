@@ -60,7 +60,7 @@ export function OrderModal({ open }) {
         id: '',
         user: {
             userId: '',
-            fullname: '',
+            fullName: '',
             phone: '',
             email: ''
         },
@@ -68,7 +68,7 @@ export function OrderModal({ open }) {
         quantity: 0,
         totalPrice: 0,
         createDate: '',
-        fullname: '',
+        fullName: '',
         address: '',
         phone: '',
         orderProductDTOS: [],
@@ -138,7 +138,7 @@ export function OrderModal({ open }) {
                 <Card sx={{ borderRadius: 1 }} variant="outlined">
                     <PropertyList divider={<Divider />} sx={{ '--PropertyItem-padding': '12px 24px' }}>
                         {[
-                            { key: 'Tên khách hàng', value: <Link variant="subtitle2">{orderDetail.user.fullname}</Link> },
+                            { key: 'Tên khách hàng', value: <Link variant="subtitle2">{orderDetail.user.fullName}</Link> },
                             {
                                 key: 'Thành phố',
                                 value: (

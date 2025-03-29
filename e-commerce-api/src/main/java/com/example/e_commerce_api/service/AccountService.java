@@ -90,8 +90,9 @@ public class AccountService {
         String jwtToken = jwtTokenUtil.generateToken((UserDetails) accountFind);
         String refreshToken = jwtTokenUtil.generateRefreshToken((UserDetails) accountFind);
 
+        String role = accountFind.getRole().getRole();
 
-        return new AuthenticationDTO(jwtToken, refreshToken);
+        return new AuthenticationDTO(jwtToken, refreshToken, role);
     }
     public Account findById(Integer id){
         return accountRepository.findById(id).orElseThrow();

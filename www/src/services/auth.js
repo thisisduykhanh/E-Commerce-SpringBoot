@@ -8,8 +8,8 @@ export const login = async (email, password) => {
 };
 
 // API đăng ký
-export const register = async (fullname, phone, email, password) => {
-    const response = await apiClient.post('/users', { fullname, phone, email, password });
+export const register = async (fullName, phone, email, password) => {
+    const response = await apiClient.post('/users/register', { fullName, phone, email, password });
     return response;
 };
 

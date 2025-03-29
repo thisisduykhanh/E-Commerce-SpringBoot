@@ -31,7 +31,7 @@ import { paths } from '@/paths';
 const oAuthProviders = [{ id: 'google', name: 'Google', logo: '/assets/logo-google.svg' }];
 
 const schema = zod.object({
-    fullname: zod.string().min(1, { message: 'Yêu cầu điền họ tên' }),
+    fullName: zod.string().min(1, { message: 'Yêu cầu điền họ tên' }),
     phone: zod
         .string()
         .min(1, { message: 'Yêu cầu điền số điện thoại' })
@@ -45,7 +45,7 @@ const schema = zod.object({
         .refine((value) => value, 'Đồng ý với điều khoản và điều kiện để bắt đầu hành trình cùng chúng tôi!'),
 });
 
-const defaultValues = { fullname: '', phone: '', email: '', password: '', terms: false };
+const defaultValues = { fullName: '', phone: '', email: '', password: '', terms: false };
 
 export function SignUpForm() {
     const router = useRouter();
@@ -158,13 +158,13 @@ export function SignUpForm() {
                     <Stack spacing={2}>
                         <Controller
                             control={control}
-                            name="fullname"
+                            name="fullName"
                             render={({ field }) => (
-                                <FormControl error={Boolean(errors.fullname)}>
+                                <FormControl error={Boolean(errors.fullName)}>
                                     <InputLabel>Họ tên</InputLabel>
                                     <OutlinedInput {...field} />
-                                    {errors.fullname ? (
-                                        <FormHelperText>{errors.fullname.message}</FormHelperText>
+                                    {errors.fullName ? (
+                                        <FormHelperText>{errors.fullName.message}</FormHelperText>
                                     ) : null}
                                 </FormControl>
                             )}

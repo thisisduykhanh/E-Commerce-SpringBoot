@@ -111,7 +111,7 @@ export function SignInForm() {
                     router.push('/dashboard/products');
                     break;
                 case 'user':
-                    router.push('/user/dashboard/orders');
+                    router.push('/');
                     break;
                 case 'supplier':
                     router.push('/supplier/products');

@@ -100,7 +100,7 @@ function applySort(row, sortDir) {
 function applyFilters(row, { customer, id, status }) {
     return row.filter((item) => {
         if (customer) {
-            if (!item.fullname.toLowerCase().includes(customer.toLowerCase())) {
+            if (!item.fullName.toLowerCase().includes(customer.toLowerCase())) {
                 return false;
             }
         }

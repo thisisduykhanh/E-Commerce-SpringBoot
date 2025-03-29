@@ -9,7 +9,10 @@ import com.example.e_commerce_api.repository.product.ProductTypeRepository;
 import com.example.e_commerce_api.repository.supply.SupplierRepository;
 
 import java.math.BigDecimal;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductFactory {
     public Product createProduct(String name, BigDecimal price, String description, ProductType productType, Supplier supplier, String... attributes) {
 

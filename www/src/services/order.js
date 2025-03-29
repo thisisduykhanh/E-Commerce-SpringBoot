@@ -1,8 +1,8 @@
 import apiClient from './ApiClient';
 
-export const addOrder = async (fullname, address, phone, idCartDetail,shippingFee,taxFee,city,district) => {
+export const addOrder = async (fullName, address, phone, idCartDetail,shippingFee,taxFee,city,district) => {
     try {
-        const response = await apiClient.post('/orders', { fullname, address, phone, idCartDetail,shippingFee,taxFee,city,district});
+        const response = await apiClient.post('/orders', { fullName, address, phone, idCartDetail,shippingFee,taxFee,city,district});
         return response;
     } catch (error) {
         throw error;

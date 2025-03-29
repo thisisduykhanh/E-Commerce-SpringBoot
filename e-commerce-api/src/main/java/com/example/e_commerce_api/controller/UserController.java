@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping()
+    @PostMapping("/register")
     public ResponseEntity<ApiResponse<?>> createUser(@RequestBody UserCreateDTO userCreateDTO) {
         User user = userService.createUser(userCreateDTO);
         ApiResponse<User> response = new ApiResponse<>( true, "Create user successfully", user, null);
@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getcurrent")
+    @GetMapping("/getCurrentUser")
     public ResponseEntity<ApiResponse<User>> getUsersByAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account account = (Account) authentication.getPrincipal();

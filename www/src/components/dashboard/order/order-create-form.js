@@ -81,7 +81,7 @@ export function OrderCreateForm() {
             const lineItems = cartData.flatMap((supplier) => supplier.cartDetailDTOS.map((item) => item.id));
 
             const orderData = {
-                fullname: data.customer,
+                fullName: data.customer,
                 address: data.billingAddress,
                 phone: data.phone,
                 idCartDetail: lineItems,
@@ -89,7 +89,7 @@ export function OrderCreateForm() {
 
             console.log('Final payload:', JSON.stringify(orderData));
 
-            await addOrder(orderData.fullname, orderData.address, orderData.phone, orderData.idCartDetail);
+            await addOrder(orderData.fullName, orderData.address, orderData.phone, orderData.idCartDetail);
 
             console.log('Đơn hàng đã được tạo', orderData);
             toast.success('Đơn hàng đã được tạo');

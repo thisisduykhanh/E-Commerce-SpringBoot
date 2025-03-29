@@ -40,7 +40,7 @@ public class UserService {
 //        user.setId(getGenerationId());
         user.setFullName(userCreateDTO.fullName());
         user.setPhone(userCreateDTO.phone());
-        Role role=repository.findByRole("User").orElseThrow();
+        Role role=repository.findByRole("user").orElseThrow();
         Account account= Account.builder().role(role).email(userCreateDTO.email()).password(userCreateDTO.password()).locked(false).build();
         Account accountSave=accountService.registration(account);
         user.setAccount(accountSave);

@@ -4,10 +4,10 @@ import { login, register, registerSeller } from '@/services/auth';
 
 class AuthClient {
     async signUp(params) {
-        const { fullname, phone, email, password } = params;
+        const { fullName, phone, email, password } = params;
 
         try {
-            const response = await register(fullname, phone, email, password);
+            const response = await register(fullName, phone, email, password);
             return response.data;
         } catch (error) {
             if (error.response?.status === 409) {

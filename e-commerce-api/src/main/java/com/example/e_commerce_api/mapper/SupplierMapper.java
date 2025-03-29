@@ -45,8 +45,10 @@ public class SupplierMapper {
                 supplier.getImage(),
                 deliveries != null ? deliveries.stream().map(Delivery::getInfo).collect(Collectors.toList()) : Collections.emptyList(),
                 productTypes != null ? productTypes.stream()
-                        .map(ProductType::getProductTypeName)
-                        .collect(Collectors.toList()) : Collections.emptyList()
+                        .map(productType -> productType.getProductTypeName().name()) // Chuyển enum thành String
+                        .collect(Collectors.toList())
+                        : Collections.emptyList()
+
         );
     }
 

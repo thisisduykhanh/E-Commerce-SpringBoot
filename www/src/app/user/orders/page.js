@@ -128,11 +128,11 @@ function Orders() {
         const district = parts.length >= 2 ? parts[parts.length - 2] : ''; // Lấy quận/huyện
         const city = parts.length >= 1 ? parts[parts.length - 1] : ''; // Lấy tỉnh/thành phố
 
-        const fullname = addresses[0]?.name || '';
+        const fullName = addresses[0]?.name || '';
         const phone = addresses[0]?.phone || '';
         try {
             // Gọi API để tạo đơn hàng
-            const response = await addOrder(fullname, address, phone, idCartDetails,shippingData.shippingFee,taxRate,city,district);
+            const response = await addOrder(fullName, address, phone, idCartDetails,shippingData.shippingFee,taxRate,city,district);
             logger.debug('response:', response);
             window.location.href = '/user/orders/notification';
         } catch (error) {

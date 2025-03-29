@@ -1,5 +1,6 @@
 package com.example.e_commerce_api.service.product;
 
+import com.example.e_commerce_api.entity.product.ProductTypeEnum;
 
 import com.example.e_commerce_api.dto.product.ProductTypeCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductTypeUpdateDTO;
@@ -93,7 +94,7 @@ public class ProductTypeService {
 
         ProductType productType = new ProductType();
 //        productType.setId(getGenerationId());
-        productType.setProductTypeName(productTypeDTO.productTypeName());
+        productType.setProductTypeName(ProductTypeEnum.valueOf(productTypeDTO.productTypeName()));
         productType.setProductGroup(productGroup);
 
         return productTypeRepository.save(productType);
@@ -105,7 +106,7 @@ public class ProductTypeService {
                 .orElseThrow(() -> new CustomException(Error.PRODUCT_TYPE_NOT_FOUND));
 
 
-        productType.setProductTypeName(productTypeUpdateDTO.productTypeName());
+        productType.setProductTypeName(ProductTypeEnum.valueOf(productTypeUpdateDTO.productTypeName()));
 
 
         return productTypeRepository.save(productType);

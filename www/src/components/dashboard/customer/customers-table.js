@@ -29,7 +29,7 @@ const columns = [
                         sx={{ whiteSpace: 'nowrap' }}
                         variant="subtitle2"
                     >
-                        {row.fullname}
+                        {row.fullName}
                     </Link>
                     <Typography color="text.secondary" variant="body2">
                         {row.email}
