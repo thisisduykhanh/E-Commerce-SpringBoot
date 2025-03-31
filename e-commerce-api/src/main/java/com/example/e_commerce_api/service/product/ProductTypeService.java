@@ -4,27 +4,24 @@ import com.example.e_commerce_api.entity.product.ProductTypeEnum;
 
 import com.example.e_commerce_api.dto.product.ProductTypeCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductTypeUpdateDTO;
-import com.example.e_commerce_api.entity.product.ProductGroup;
 import com.example.e_commerce_api.entity.product.ProductType;
 import com.example.e_commerce_api.entity.supply.Supplier;
 import com.example.e_commerce_api.exception.CustomException;
 import com.example.e_commerce_api.exception.Error;
-import com.example.e_commerce_api.repository.product.ProductGroupRepository;
 import com.example.e_commerce_api.repository.product.ProductTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProductTypeService {
 
     @Autowired
     private ProductTypeRepository productTypeRepository;
-    @Autowired
-    private ProductGroupRepository productGroupRepository;
+
 
     /**
      * Tìm kiếm loại sản phẩm (`ProductType`) theo ID.
@@ -45,27 +42,6 @@ public class ProductTypeService {
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id " + id));
     }
 
-
-    /**
-     * Lấy danh sách các loại sản phẩm (`ProductType`) dựa trên ID của nhóm sản phẩm (`ProductGroup`).
-     *
-     * Phương thức này thực hiện các bước sau:
-     * 1. Gọi `productGroupRepository.findById(productGroupId)` để tìm nhóm sản phẩm bằng ID.
-     *    - Nếu không tìm thấy nhóm sản phẩm, ném ngoại lệ `NoSuchElementException` với thông báo cụ thể.
-     * 2. Sử dụng nhóm sản phẩm đã tìm thấy để gọi `productTypeRepository.findAllByProductGroup(productGroup)`
-     *    và lấy danh sách các loại sản phẩm liên quan.
-     * 3. Trả về danh sách `ProductType`.
-     *
-     * @param productGroupId ID của nhóm sản phẩm cần tìm.
-     * @return `List<ProductType>` Danh sách các loại sản phẩm thuộc nhóm sản phẩm.
-     * @throws NoSuchElementException nếu không tìm thấy nhóm sản phẩm với ID đã cho.
-     */
-    public List<ProductType> getProductTypesByGroupId(Integer productGroupId) {
-        ProductGroup productGroup = productGroupRepository.findById(productGroupId)
-                .orElseThrow(() -> new NoSuchElementException("Product group not found with id " + productGroupId));
-
-        return productTypeRepository.findAllByProductGroup(productGroup);
-    }
 
     /**
      * Tìm danh sách các loại sản phẩm (`ProductType`) liên quan đến nhà cung cấp (`Supplier`).
@@ -89,13 +65,14 @@ public class ProductTypeService {
     }
 
     public ProductType createProductType(ProductTypeCreateDTO productTypeDTO) {
-        ProductGroup productGroup = productGroupRepository.findById(productTypeDTO.productGroupId())
-                .orElseThrow(() -> new CustomException(Error.PRODUCT_NOT_FOUND));
+        Optional<ProductType> existingProductType = productTypeRepository.findByProductTypeName(ProductTypeEnum.valueOf(productTypeDTO.productTypeName()));
+
+        if (existingProductType.isPresent()) {
+            throw new CustomException(Error.CATEGORY_ALREADY_EXISTS);
+        }
 
         ProductType productType = new ProductType();
-//        productType.setId(getGenerationId());
         productType.setProductTypeName(ProductTypeEnum.valueOf(productTypeDTO.productTypeName()));
-        productType.setProductGroup(productGroup);
 
         return productTypeRepository.save(productType);
     }

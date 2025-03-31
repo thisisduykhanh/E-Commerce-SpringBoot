@@ -20,8 +20,8 @@ public class Phone extends Product {
     private int cameraMP;
     private String screenSize;
 
-    public Phone(String productName, BigDecimal price, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, int batteryLife, int cameraMP, String screenSize) {
-        super(null,productName, price, description, productType, supplier, statusVerify, statusActivity);
+    public Phone(String productName, BigDecimal price,Integer quantity, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, int batteryLife, int cameraMP, String screenSize) {
+        super(null,productName, price,quantity, description, productType, supplier, statusVerify, statusActivity);
         this.batteryLife = batteryLife;
         this.cameraMP = cameraMP;
         this.screenSize = screenSize;

@@ -54,6 +54,7 @@ public class WebSecurityConfiguration {
                 // Cấu hình CORS (cho phép gọi API từ các domain khác nhau)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
 
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Configure truy cập endpoints
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -76,13 +77,16 @@ public class WebSecurityConfiguration {
                         .permitAll()
                         .anyRequest().authenticated() // Các API còn lại yêu cầu xác thực
                 )
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
-
-
-
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                ;
 
         return http.build();
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean

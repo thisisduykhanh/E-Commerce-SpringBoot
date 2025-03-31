@@ -27,8 +27,9 @@ public record ProductCreateDTO(
         @NotEmpty(message = "At least one image is required")
         List<MultipartFile> images,
 
-        @NotEmpty(message = "At least one official price is required")
-        List<OfficialPriceCreateDTO> officialPriceDTOS,
+        @NotEmpty(message = "quantity must not be blank")
+        @Positive(message = "quantity must be greater than 0")
+        Integer quantity,
 
         @NotBlank(message = "Attributes must not be blank")
                 String[] attributes

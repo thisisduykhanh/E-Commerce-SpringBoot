@@ -19,9 +19,9 @@ public class Laptop extends Product {
     private  int ram;
     private  int storage;
 
-    public Laptop(String productName, BigDecimal price, String description, ProductType productType, Supplier supplier,
+    public Laptop(String productName, BigDecimal price, Integer quantity, String description, ProductType productType, Supplier supplier,
                   Boolean statusVerify, Boolean statusActivity, String cpu, int ram, int storage) {
-        super(null, productName, price, description, productType, supplier, statusVerify, statusActivity);
+        super(null, productName, price,quantity, description, productType, supplier,statusVerify, statusActivity);
         this.cpu = cpu;
         this.ram = ram;
         this.storage = storage;

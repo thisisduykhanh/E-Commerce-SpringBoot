@@ -22,8 +22,4 @@ public class ProductType {
     @Enumerated(EnumType.STRING)
     @Column(name = "product_type_name", unique = true, nullable = false)
     private ProductTypeEnum productTypeName;
-
-    @ManyToOne
-    @JoinColumn(name = "product_group_id")
-    private ProductGroup productGroup;
 }

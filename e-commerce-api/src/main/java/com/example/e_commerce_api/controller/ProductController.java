@@ -4,16 +4,10 @@ import com.example.e_commerce_api.dto.ApiResponse;
 import com.example.e_commerce_api.dto.product.ProductCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductDTO;
 import com.example.e_commerce_api.dto.product.ProductUpdateDTO;
-import com.example.e_commerce_api.dto.supply.SupplierDTO;
-import com.example.e_commerce_api.entity.product.OfficialPrice;
 import com.example.e_commerce_api.entity.product.Product;
-import com.example.e_commerce_api.entity.product.ProductType;
-import com.example.e_commerce_api.entity.supply.Delivery;
 import com.example.e_commerce_api.entity.supply.Image;
-import com.example.e_commerce_api.entity.supply.Supplier;
 import com.example.e_commerce_api.mapper.ProductMapper;
 import com.example.e_commerce_api.mapper.SupplierMapper;
-import com.example.e_commerce_api.service.product.OfficialPriceService;
 import com.example.e_commerce_api.service.product.ProductService;
 import com.example.e_commerce_api.service.product.ProductTypeService;
 import com.example.e_commerce_api.service.supply.DeliveryService;
@@ -24,10 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -52,8 +49,7 @@ public class ProductController {
     @Autowired
     private ProductTypeService productTypeService;
 
-    @Autowired
-    private OfficialPriceService officialPriceService;
+
 
     /**
      * API: Lấy thông tin chi tiết sản phẩm theo ID.
@@ -84,10 +80,10 @@ public class ProductController {
 
             // Lấy danh sách hình ảnh và giá chính thức của sản phẩm
             List<Image> images = imageService.getImageByProduct(product);
-            List<OfficialPrice> officialPrices = officialPriceService.findByProduct(product);
+
 
             // Chuyển đổi sang ProductDTO
-            ProductDTO productDTO = productMapper.toProductDTO(product, images, officialPrices);
+            ProductDTO productDTO = productMapper.toProductDTO(product, images);
 
             // Tạo response thành công
             ApiResponse<ProductDTO> response = new ApiResponse<>(true, "Product found", productDTO,null);
@@ -162,8 +158,8 @@ public class ProductController {
             // Chuyển đổi Product sang ProductDTO
             Page<ProductDTO> productDTOs = products.map(product -> {
                 List<Image> images = imageService.getImageByProduct(product);
-                List<OfficialPrice> officialPrices = officialPriceService.findByProduct(product);
-                return productMapper.toProductDTO(product, images, officialPrices);
+
+                return productMapper.toProductDTO(product, images);
             });
 
 
@@ -191,41 +187,69 @@ public class ProductController {
 //            return ResponseEntity.ok(response);
 
     }
-    @PostMapping()
-    public ResponseEntity<ApiResponse<?>> create(@ModelAttribute ProductCreateDTO productCreateDTO){
-        productService.createProduct(productCreateDTO);
-        ApiResponse<String> response = new ApiResponse<>(true, "Thêm sản phẩm thành công", "true",null);
+//    @PostMapping()
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ApiResponse<?>>  createProduct(
+            @RequestParam("productName") String productName,
+            @RequestParam("price") BigDecimal price,
+            @RequestParam("description") String description,
+            @RequestParam("productTypeId") Integer productTypeId,
+            @RequestParam("supplierId") Integer supplierId,
+            @RequestParam("quantity") Integer quantity,
+            @RequestParam("attributes") String [] attributes,
+            @RequestPart("images") List<MultipartFile> images) {
+
+
+        System.out.println("Received productName: " + productName);
+        System.out.println("Received price: " + price);
+        System.out.println("Received description: " + description);
+        System.out.println("Received productTypeId: " + productTypeId);
+        System.out.println("Received supplierId: " + supplierId);
+        System.out.println("Received quantity: " + quantity);
+        System.out.println("Received attributes: " + Arrays.toString(attributes));
+        System.out.println("Received images count: " + images.size());
+
+        ProductCreateDTO productDTO = new ProductCreateDTO(
+                productName, price, description, productTypeId, supplierId, images, quantity, attributes);
+
+
+        Product product = productService.createProduct(productDTO);
+
+        ApiResponse<String> response = new ApiResponse<>(true, "Thêm sản phẩm thành công", product.toString(),null);
+
         return ResponseEntity.ok(response);
     }
+
+
     @PatchMapping()
     public ResponseEntity<ApiResponse<?>> update(@ModelAttribute ProductUpdateDTO productUpdateDTO){
         productService.updateProduct(productUpdateDTO);
         ApiResponse<String> response = new ApiResponse<>(true, "cập nhật sản phẩm thành công", "true",null);
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/supplier")
-    public ResponseEntity<ApiResponse<?>> search(
-
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) Boolean statusVerify
-    ) {
-        Pageable pageable = PageRequest.of(page, size);
-
-        // Tìm kiếm Product
-        Page<Product> products = productService.getProductsBySupplierAndStatus(statusVerify,pageable);
-
-        // Chuyển đổi Product sang ProductDTO
-        Page<ProductDTO> productDTOs = products.map(product -> {
-            List<Image> images = imageService.getImageByProduct(product);
-            List<OfficialPrice> officialPrices = officialPriceService.findByProduct(product);
-            return productMapper.toProductDTO(product, images, officialPrices);
-        });
-
-        // Tạo response cho Product
-        ApiResponse<Page<ProductDTO>> response = new ApiResponse<>(true, "Products retrieved successfully", productDTOs,null);
-        return ResponseEntity.ok(response);
-
-    }
+//    @GetMapping("/supplier")
+//    public ResponseEntity<ApiResponse<?>> search(
+//
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int size,
+//            @RequestParam(required = false) Boolean statusVerify
+//    ) {
+//        Pageable pageable = PageRequest.of(page, size);
+//
+//        // Tìm kiếm Product
+//        Page<Product> products = productService.getProductsBySupplierAndStatus(statusVerify,pageable);
+//
+//        // Chuyển đổi Product sang ProductDTO
+//        Page<ProductDTO> productDTOs = products.map(product -> {
+//            List<Image> images = imageService.getImageByProduct(product);
+//
+//            return productMapper.toProductDTO(product, images);
+//        });
+//
+//        // Tạo response cho Product
+//        ApiResponse<Page<ProductDTO>> response = new ApiResponse<>(true, "Products retrieved successfully", productDTOs,null);
+//        return ResponseEntity.ok(response);
+//
+//    }
 
 }

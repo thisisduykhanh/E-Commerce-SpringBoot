@@ -10,8 +10,10 @@ import com.example.e_commerce_api.repository.cart.CartRepository;
 import com.example.e_commerce_api.repository.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +35,7 @@ public class CartDetailService {
     @Autowired
     private  CartService cartService;
 
+    @Transactional
     public CartDetail createOrUpdateCartDetail( Integer productId, Integer quantity) {
         // Tìm Cart
         Cart cart = cartService.getCartForCurrentUser();
@@ -56,7 +59,11 @@ public class CartDetailService {
                 return null;
             }
 
-            return cartDetailRepository.save(existingCartDetail);
+            try {
+                return cartDetailRepository.save(existingCartDetail);
+            } catch (ObjectOptimisticLockingFailureException e) {
+                throw new CustomException(Error.CART_UNABLE_TO_SAVE);
+            }
         } else {
             // Tạo mới CartDetail nếu không tồn tại
             if (quantity <= 0) {
@@ -64,7 +71,6 @@ public class CartDetailService {
             }
 
             CartDetail newCartDetail = new CartDetail();
-            newCartDetail.setId(getGenerationId());
             newCartDetail.setDate(LocalDateTime.now());
             newCartDetail.setCart(cart);
             newCartDetail.setProduct(product);
@@ -100,11 +106,6 @@ public class CartDetailService {
         cartDetail.setQuantity( quantity);
 
         return cartDetailRepository.save(cartDetail);
-    }
-    public Integer getGenerationId() {
-        UUID uuid = UUID.randomUUID();
-        // Use most significant bits and ensure it's within the integer range
-        return (int) (uuid.getMostSignificantBits() & 0xFFFFFFFFL);
     }
 
 }

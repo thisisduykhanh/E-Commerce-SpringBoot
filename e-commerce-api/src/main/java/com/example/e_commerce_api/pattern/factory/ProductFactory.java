@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductFactory {
-    public Product createProduct(String name, BigDecimal price, String description, ProductType productType, Supplier supplier, String... attributes) {
+    public Product createProduct(String name, BigDecimal price, Integer quantity,String description, ProductType productType, Supplier supplier, String... attributes) {
 
         if (productType == null) {
             throw new IllegalArgumentException("Product type is required");
@@ -25,13 +25,13 @@ public class ProductFactory {
         }
 
         return switch (productType.getProductTypeName().name().toLowerCase()) {
-            case "laptop" -> new Laptop(name, price, description, productType, supplier, true, true, attributes[0], Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2]));
+            case "laptop" -> new Laptop(name, price, quantity, description, productType, supplier, true, true, attributes[0], Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2]));
 //                return new Laptop(null, name, price, description, productType, supplier, true, true, attributes[0], Integer.parseInt(attributes[1]), Integer.parseInt(attributes[2]));
 
-            case "phone" -> new Phone(name, price, description, productType, supplier, true, true, Integer.parseInt(attributes[0]), Integer.parseInt(attributes[1]), attributes[2]);
-            case "tablet" -> new Tablet(name, price, description, productType, supplier, true, true, attributes[0], Integer.parseInt(attributes[1]), Boolean.parseBoolean(attributes[2]));
-            case "smartwatch" -> new SmartWatch(name, price, description, productType, supplier, true, true, Boolean.parseBoolean(attributes[0]), Boolean.parseBoolean(attributes[1]), Integer.parseInt(attributes[2]));
-            case "headphone" -> new Headphone(name, price, description, productType, supplier, true, true, Boolean.parseBoolean(attributes[0]), Integer.parseInt(attributes[1]), attributes[2]);
+            case "phone" -> new Phone(name, price, quantity, description, productType, supplier, true, true, Integer.parseInt(attributes[0]), Integer.parseInt(attributes[1]), attributes[2]);
+            case "tablet" -> new Tablet(name, price, quantity, description, productType, supplier, true, true, attributes[0], Integer.parseInt(attributes[1]), Boolean.parseBoolean(attributes[2]));
+            case "smartwatch" -> new SmartWatch(name, price, quantity, description, productType, supplier, true, true, Boolean.parseBoolean(attributes[0]), Boolean.parseBoolean(attributes[1]), Integer.parseInt(attributes[2]));
+            case "headphone" -> new Headphone(name, price, quantity, description, productType, supplier, true, true, Boolean.parseBoolean(attributes[0]), Integer.parseInt(attributes[1]), attributes[2]);
             default -> throw new IllegalArgumentException("Invalid product type: " + productType.getProductTypeName().name());
         };
     }

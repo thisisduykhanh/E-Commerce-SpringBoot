@@ -1,7 +1,6 @@
 package com.example.e_commerce_api.service.product;
 
 
-import com.example.e_commerce_api.dto.product.OfficialPriceCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductUpdateDTO;
 import com.example.e_commerce_api.entity.product.Product;
@@ -19,7 +18,6 @@ import com.example.e_commerce_api.repository.supply.SupplierRepository;
 import com.example.e_commerce_api.service.UserService;
 import com.example.e_commerce_api.service.supply.ImageService;
 import com.example.e_commerce_api.service.supply.SupplyService;
-import com.example.e_commerce_api.specification.ProductSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +46,6 @@ public class ProductService {
     private final ProductTypeRepository productTypeRepository;
     private final SupplierRepository supplierRepository;
     private final ImageService imageService;
-    private final OfficialPriceService officialPriceService;
     private final ImageRepository imageRepository;
     private final ProductFactory productFactory;
 
@@ -106,49 +103,7 @@ public class ProductService {
             int page,
             int size) {
 
-        // Bắt đầu với Specification mặc định (lấy tất cả nếu không có điều kiện)
-        Specification<Product> spec = Specification.where(null);
-
-        // Lọc theo loại sản phẩm (nếu có)
-        if (productTypeId != null) {
-            spec = spec.and(ProductSpecification.hasProductType(productTypeId));
-        }
-
-        // Lọc theo khoảng giá (nếu có)
-        if (minPrice != null || maxPrice != null) {
-            spec = spec.and(ProductSpecification.hasPriceInRange(minPrice, maxPrice));
-        }
-
-        // Lọc theo trạng thái xác minh và hoạt động (luôn áp dụng)
-        spec = spec.and(ProductSpecification.hasStatusVerifyTrue())
-                .and(ProductSpecification.hasStatusActivityTrue());
-//                .and(ProductSpecification.hasSupplierStatusVerify());
-
-        // Lọc theo supplierId (nếu có)
-        if (supplierId != null) {
-            spec = spec.and(ProductSpecification.hasSupplier(supplierId));
-        } else {
-            // Nếu không có supplierId, lọc theo trạng thái và địa chỉ (nếu có)
-            if (status != null) {
-                spec = spec.and(ProductSpecification.hasSupplierStatus(status));
-            }
-            if (address != null && !address.isEmpty()) {
-                spec = spec.and(ProductSpecification.hasSupplierAddress(address));
-            }
-        }
-
-        // Cấu hình phân trang
-        Pageable pageable = PageRequest.of(page, size);
-
-        // Ghi log kiểm tra
-        log.info("🔍 Đang tìm kiếm với các điều kiện: productTypeId={}, supplierId={}, minPrice={}, maxPrice={}, status={}, address={}",
-                productTypeId, supplierId, minPrice, maxPrice, status, address);
-
-        // Thực hiện truy vấn
-        Page<Product> products = productRepository.findAll(spec, pageable);
-
-        log.info("📊 Tổng số sản phẩm tìm thấy: {}", products.getTotalElements());
-        return products;
+      return  null;
     }
 
     @Cacheable("productTypes")
@@ -166,26 +121,21 @@ public class ProductService {
         });
     }
 
-
-
     // Create Product
     @Transactional
     public Product createProduct(ProductCreateDTO productDTO) {
 
         ProductType productType = findProductTypeById(productDTO.productTypeId());
 
-
         Supplier supplier = supplierRepository.findById(productDTO.supplierId())
                 .orElseThrow(() -> new CustomException(Error.PRODUCT_NOT_FOUND));
 
+        Product product = productFactory.createProduct(productDTO.productName(), productDTO.price(),productDTO.quantity(), productDTO.description() , productType, supplier, productDTO.attributes());
 
-        Product product = productFactory.createProduct(productDTO.productName(), productDTO.price(), productDTO.description(), productType, supplier, productDTO.attributes());
+
+        productRepository.save(product);
 
         saveProductImages(product, productDTO.images());
-
-        productDTO.officialPriceDTOS().forEach(officialPriceDTO -> {
-            officialPriceService.save(officialPriceDTO, product);
-        });
 
         return product;
     }
@@ -214,26 +164,8 @@ public class ProductService {
                     image.setUrl(url);
                     imageRepository.save(image);
                 }
-
             });
         }
-        if (productUpdateDTO.officialPriceUpdateDTOs() != null) {
-            productUpdateDTO.officialPriceUpdateDTOs().forEach(officialPriceUpdateDTO -> {
-                if (officialPriceUpdateDTO.id() != null) {
-                    officialPriceService.update(officialPriceUpdateDTO);
-                } else {
-                    OfficialPriceCreateDTO officialPriceCreateDTO = new OfficialPriceCreateDTO(
-                            officialPriceUpdateDTO.minQuantity(),
-                            officialPriceUpdateDTO.maxQuantity(),
-                            officialPriceUpdateDTO.price()
-                    );
-
-                    officialPriceService.save(officialPriceCreateDTO, existingProduct);
-                }
-            });
-        }
-
-
         return existingProduct;
     }
 
@@ -250,20 +182,12 @@ public class ProductService {
         return account;
     }
 
-    public Page<Product> getProductsBySupplierAndStatus(Boolean statusVerify, Pageable pageable) {
-        Supplier supplier = supplyService.getCurrentSupplier();
-        Specification<Product> spec = Specification.where(ProductSpecification.hasSupplier(supplier.getId()));
-        if (statusVerify != null) {
-            spec = spec.and(ProductSpecification.hasStatusVerifyEquals(statusVerify));
-        }
-        return productRepository.findAll(spec, pageable);
-    }
-
-
-//    public Integer getGenerationId() {
-//        UUID uuid = UUID.randomUUID();
-//        // Use most significant bits and ensure it's within the integer range
-//        return (int) (uuid.getMostSignificantBits() & 0xFFFFFFFFL);
+//    public Page<Product> getProductsBySupplierAndStatus(Boolean statusVerify, Pageable pageable) {
+//        Supplier supplier = supplyService.getCurrentSupplier();
+//        Specification<Product> spec = Specification.where(ProductSpecification.hasSupplier(supplier.getId()));
+//        if (statusVerify != null) {
+//            spec = spec.and(ProductSpecification.hasStatusVerifyEquals(statusVerify));
+//        }
+//        return productRepository.findAll(spec, pageable);
 //    }
-
 }

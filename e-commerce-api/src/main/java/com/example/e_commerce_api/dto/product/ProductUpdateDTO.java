@@ -13,7 +13,7 @@ public record ProductUpdateDTO(
         Integer productTypeId,
         Integer supplierId,
         List<ImageUpdateDTO> images,
-        List<OfficialPriceUpdateDTO> officialPriceUpdateDTOs,
+        Integer quantity,
         Boolean statusVerified,
         Boolean statusActive,
 

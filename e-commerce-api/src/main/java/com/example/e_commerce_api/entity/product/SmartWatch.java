@@ -19,8 +19,8 @@ public class SmartWatch extends Product {
     private boolean waterResistant;
     private int batteryLife;
 
-    public SmartWatch(String productName, BigDecimal price, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, boolean hasGPS, boolean waterResistant, int batteryLife) {
-        super(null, productName, price, description, productType, supplier, statusVerify, statusActivity);
+    public SmartWatch(String productName, BigDecimal price,Integer quantity, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, boolean hasGPS, boolean waterResistant, int batteryLife) {
+        super(null, productName, price,quantity, description, productType, supplier, statusVerify, statusActivity);
         this.hasGPS = hasGPS;
         this.waterResistant = waterResistant;
         this.batteryLife = batteryLife;

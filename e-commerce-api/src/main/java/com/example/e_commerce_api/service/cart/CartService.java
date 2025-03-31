@@ -16,10 +16,6 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
-
-
-
-
     public Cart getCartForCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account account = (Account) authentication.getPrincipal();

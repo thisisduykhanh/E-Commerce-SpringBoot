@@ -12,7 +12,6 @@ import com.example.e_commerce_api.exception.Error;
 import com.example.e_commerce_api.repository.supply.SupplierRepository;
 import com.example.e_commerce_api.repository.user.RoleRepository;
 import com.example.e_commerce_api.service.AccountService;
-import com.example.e_commerce_api.specification.SupplierSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,36 +35,36 @@ public class SupplyService {
     @Autowired
     private RoleRepository repository;
 
-    /**
-     * Tìm kiếm nhà cung cấp (`Supplier`) theo nhiều điều kiện và hỗ trợ phân trang.
-     *
-     * Phương thức này thực hiện các bước sau:
-     * 1. Tạo `Specification` để kết hợp các điều kiện tìm kiếm:
-     *    - Lọc theo địa chỉ (`address`) bằng `SupplierSpecification.hasAddress(address)`.
-     *    - Lọc theo trạng thái (`status`) bằng `SupplierSpecification.hasStatus(status)`.
-     * 2. Kết hợp các điều kiện sử dụng `Specification.where()` và `and()` để tạo điều kiện tìm kiếm động.
-     * 3. Sử dụng `PageRequest.of(page, size)` để tạo đối tượng `Pageable`, hỗ trợ phân trang.
-     * 4. Gọi `supplierRepository.findAll(spec, pageable)` để truy vấn cơ sở dữ liệu:
-     *    - Trả về danh sách các nhà cung cấp phù hợp với điều kiện tìm kiếm dưới dạng phân trang (`Page<Supplier>`).
-     * 5. Trả về kết quả tìm kiếm.
-     *
-     * @param address Địa chỉ nhà cung cấp (nullable).
-     * @param status Trạng thái nhà cung cấp (nullable).
-     * @param page Số trang hiện tại (bắt đầu từ 0).
-     * @param size Số lượng nhà cung cấp trên mỗi trang.
-     * @return `Page<Supplier>` Kết quả tìm kiếm với thông tin phân trang.
-     */
-    public Page<Supplier> searchSuppliers(String address, Boolean status, int page, int size) {
-        // Tạo Specification từ các điều kiện
-        Specification<Supplier> spec = Specification.where(SupplierSpecification.hasAddress(address))
-                .and(SupplierSpecification.hasStatus(status));
-
-        // Tạo Pageable từ page và size để xử lý phân trang
-        Pageable pageable = PageRequest.of(page, size);
-
-        // Truy vấn cơ sở dữ liệu sử dụng Specification và Pageable
-        return supplierRepository.findAll(spec, pageable);
-    }
+//    /**
+//     * Tìm kiếm nhà cung cấp (`Supplier`) theo nhiều điều kiện và hỗ trợ phân trang.
+//     *
+//     * Phương thức này thực hiện các bước sau:
+//     * 1. Tạo `Specification` để kết hợp các điều kiện tìm kiếm:
+//     *    - Lọc theo địa chỉ (`address`) bằng `SupplierSpecification.hasAddress(address)`.
+//     *    - Lọc theo trạng thái (`status`) bằng `SupplierSpecification.hasStatus(status)`.
+//     * 2. Kết hợp các điều kiện sử dụng `Specification.where()` và `and()` để tạo điều kiện tìm kiếm động.
+//     * 3. Sử dụng `PageRequest.of(page, size)` để tạo đối tượng `Pageable`, hỗ trợ phân trang.
+//     * 4. Gọi `supplierRepository.findAll(spec, pageable)` để truy vấn cơ sở dữ liệu:
+//     *    - Trả về danh sách các nhà cung cấp phù hợp với điều kiện tìm kiếm dưới dạng phân trang (`Page<Supplier>`).
+//     * 5. Trả về kết quả tìm kiếm.
+//     *
+//     * @param address Địa chỉ nhà cung cấp (nullable).
+//     * @param status Trạng thái nhà cung cấp (nullable).
+//     * @param page Số trang hiện tại (bắt đầu từ 0).
+//     * @param size Số lượng nhà cung cấp trên mỗi trang.
+//     * @return `Page<Supplier>` Kết quả tìm kiếm với thông tin phân trang.
+//     */
+//    public Page<Supplier> searchSuppliers(String address, Boolean status, int page, int size) {
+//        // Tạo Specification từ các điều kiện
+//        Specification<Supplier> spec = Specification.where(SupplierSpecification.hasAddress(address))
+//                .and(SupplierSpecification.hasStatus(status));
+//
+//        // Tạo Pageable từ page và size để xử lý phân trang
+//        Pageable pageable = PageRequest.of(page, size);
+//
+//        // Truy vấn cơ sở dữ liệu sử dụng Specification và Pageable
+//        return supplierRepository.findAll(spec, pageable);
+//    }
     public Page<Supplier> findAllByStatusVerify( Boolean status, int page, int size) {
 
 

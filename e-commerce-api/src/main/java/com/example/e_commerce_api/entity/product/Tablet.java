@@ -18,8 +18,8 @@ public class Tablet extends Product {
     private int batteryLife;
     private boolean hasPenSupport;
 
-    public Tablet(String productName, BigDecimal price, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, String screenSize, int batteryLife, boolean hasPenSupport) {
-        super(null, productName, price, description, productType, supplier, statusVerify, statusActivity);
+    public Tablet(String productName, BigDecimal price, Integer quantity, String description, ProductType productType, Supplier supplier, Boolean statusVerify, Boolean statusActivity, String screenSize, int batteryLife, boolean hasPenSupport) {
+        super(null, productName, price, quantity, description, productType, supplier, statusVerify, statusActivity);
         this.screenSize = screenSize;
         this.batteryLife = batteryLife;
         this.hasPenSupport = hasPenSupport;

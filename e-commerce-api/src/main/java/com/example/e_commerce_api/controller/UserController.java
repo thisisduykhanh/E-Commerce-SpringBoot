@@ -12,10 +12,13 @@ import com.example.e_commerce_api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
     private AccountService accountService;
 
     @PostMapping("/signin")
@@ -54,20 +59,47 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<Page<User>>> getAllUsers(@RequestParam int page, @RequestParam int size) {
-        Page<User> users = userService.findAllUsers(page, size);
-        ApiResponse<Page<User>> response = new ApiResponse<>( true, "Lấy danh sách người dùng thành công", users, null);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            Page<User> users = userService.findAllUsers(page, size);
+            ApiResponse<Page<User>> response = new ApiResponse<>(true, "Lấy danh sách người dùng thành công", users, null);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(false, "Lỗi server: " + e.getMessage(), null, null));
+        }
     }
 
     @GetMapping("/getCurrentUser")
     public ResponseEntity<ApiResponse<User>> getUsersByAccount() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Account account = (Account) authentication.getPrincipal();
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User users = userService.findUserByAccount(account);
-        ApiResponse<User> response = new ApiResponse<>( true, "Tìm kiếm người dùng theo tài khoản thành công", users, null);
-        return ResponseEntity.ok(response);
+            if (authentication == null || authentication.getPrincipal() == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ApiResponse<>(false, "Người dùng chưa đăng nhập", null, null));
+            }
+
+            // Kiểm tra kiểu của principal
+            if (!(authentication.getPrincipal() instanceof Account)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ApiResponse<>(false, "Thông tin xác thực không hợp lệ", null, null));
+            }
+
+            Account account = (Account) authentication.getPrincipal();
+            User user = userService.findUserByAccount(account);
+
+            ApiResponse<User> response = new ApiResponse<>(true, "Tìm kiếm người dùng theo tài khoản thành công", user, null);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(false, "Lỗi hệ thống: " + e.getMessage(), null, List.of(e.getClass().getName())));
+        }
     }
+
 
 }

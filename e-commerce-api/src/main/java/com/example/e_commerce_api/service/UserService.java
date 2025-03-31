@@ -70,7 +70,7 @@ public class UserService {
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<User> findAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable);

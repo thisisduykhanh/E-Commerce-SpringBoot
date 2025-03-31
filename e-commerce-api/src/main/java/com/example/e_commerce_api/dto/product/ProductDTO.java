@@ -14,7 +14,7 @@ public record ProductDTO(
         String productTypeName,
         String supplierName,
         List<ImageDTO> images,
-        List<OfficialPriceDTO> officialPricesDTO
+        Integer quantity
 
 ) {
 }

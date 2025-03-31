@@ -33,6 +33,8 @@ public enum Error {
     USER_INVALID_NAME(1103, "Invalid first name", HttpStatus.BAD_REQUEST),
     TOKEN_REQUIRED(1010, "Token is required", HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND_IN_TOKEN(1011, "Account in token not found", HttpStatus.NOT_FOUND),
+
+
     //Role error
     ROLE_NOT_FOUND(1201, "Role not found", HttpStatus.NOT_FOUND),
     ROLE_ALREADY_EXISTS(1202, "Role already exists", HttpStatus.CONFLICT),
