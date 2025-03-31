@@ -26,7 +26,7 @@ export function PostAdd() {
                     <Avatar src={user.avatar} />
                     <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
                         <OutlinedInput
-                            multiline
+                            multiline={true}
                             placeholder="Thông Báo!"
                             rows={3}
                              sx={{

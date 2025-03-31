@@ -128,7 +128,7 @@ export default function Header() {
           </Button>
           <Divider
             orientation="vertical"
-            flexItem
+            flexItem={true}
             sx={{ borderColor: "#666666", margin: "0 10px", opacity: 0.5 }}
           />
           <Button
@@ -147,7 +147,7 @@ export default function Header() {
           </Button>
           <Divider
             orientation="vertical"
-            flexItem
+            flexItem={true}
             sx={{ borderColor: "#666666", margin: "0 10px", opacity: 0.5 }}
           />
           <Typography

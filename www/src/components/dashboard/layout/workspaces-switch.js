@@ -8,7 +8,7 @@ import { workspaces, WorkspacesPopover } from './workspaces-popover';
 
 export function WorkspacesSwitch() {
     const popover = usePopover();
-    const workspace = workspaces[0];
+    const _workspace = workspaces[0];
 
     return (
         <React.Fragment>

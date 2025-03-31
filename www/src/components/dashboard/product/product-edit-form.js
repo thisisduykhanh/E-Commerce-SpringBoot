@@ -10,12 +10,10 @@ import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid2';
-import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Trash as TrashIcon } from '@phosphor-icons/react/dist/ssr/Trash';
 import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -23,7 +21,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 import { TextEditor } from '@/components/core/text-editor/text-editor';
 import { paths } from '@/paths';
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -310,17 +308,17 @@ export function ProductEditForm({ product }) {
                                     )}
                                 />
                             </Grid> */}
-                                <Grid item xs={12}>
+                                <Grid item={true} xs={12}>
                                     <Typography variant="h6" gutterBottom={true}>
                                         Hình ảnh
                                     </Typography>
-                                    <Grid container rowSpacing={2} columnSpacing={18}>
+                                    <Grid container={true} rowSpacing={2} columnSpacing={18}>
                                         {Array.isArray(product.productsDetail.listImage) &&
                                             product.productsDetail.listImage.map((image, index) => (
-                                                <Grid item xs={12} sm={6} md={3} key={index}>
-                                                    <FormControl fullWidth>
+                                                <Grid item={true} xs={12} sm={6} md={3} key={index}>
+                                                    <FormControl fullWidth={true}>
                                                         <Box display="flex" flexDirection="column" alignItems="center">
-                                                            <InputLabel shrink style={{ marginBottom: '8px' }}>
+                                                            <InputLabel shrink={true} style={{ marginBottom: '8px' }}>
                                                                 Hình {index + 1}
                                                             </InputLabel>
                                                             <OutlinedInput
@@ -366,15 +364,15 @@ export function ProductEditForm({ product }) {
                                     </Grid>
                                 </Grid>
 
-                                <Grid container flexDirection="column" spacing={2}>
+                                <Grid container={true} flexDirection="column" spacing={2}>
                                     {/* Section: Giá chỉnh thức */}
-                                    <Grid item xs={12}>
+                                    <Grid item={true} xs={12}>
                                         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
                                             Giá chỉnh thức
                                         </Typography>
                                         {Array.from({ length: 4 }).map((_, index) => (
-                                            <Grid container spacing={3} key={index}>
-                                                <Grid item md={4} xs={12}>
+                                            <Grid container={true} spacing={3} key={index}>
+                                                <Grid item={true} md={4} xs={12}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTO.${index}.price`}
@@ -397,7 +395,7 @@ export function ProductEditForm({ product }) {
                                                         )}
                                                     />
                                                 </Grid>
-                                                <Grid item md={4} xs={12}>
+                                                <Grid item={true} md={4} xs={12}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTO.${index}.minQuantity`}
@@ -427,7 +425,7 @@ export function ProductEditForm({ product }) {
                                                         )}
                                                     />
                                                 </Grid>
-                                                <Grid item md={4} xs={12}>
+                                                <Grid item={true} md={4} xs={12}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTO.${index}.maxQuantity`}
@@ -460,15 +458,15 @@ export function ProductEditForm({ product }) {
                                     </Grid>
 
                                     {/* Section: Thông tin sản phẩm */}
-                                    <Grid item xs={12} sx={{ mt: 2 }}>
+                                    <Grid item={true} xs={12} sx={{ mt: 2 }}>
                                         <Typography variant="h6" sx={{ mb: 0, fontWeight: 'bold' }}>
                                             Thông tin sản phẩm
                                         </Typography>
                                     </Grid>
 
-                                    <Grid container spacing={3}>
+                                    <Grid container={true} spacing={3}>
 
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="storageType"
@@ -486,7 +484,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="shelfLife"
@@ -504,7 +502,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="instructionForUse"
@@ -522,7 +520,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="color"
@@ -540,7 +538,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="size"
@@ -558,7 +556,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="weight"
@@ -580,7 +578,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="packagingDetails"
@@ -598,7 +596,7 @@ export function ProductEditForm({ product }) {
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item md={6} xs={12}>
+                                        <Grid item={true} md={6} xs={12}>
                                             <Controller
                                                 control={control}
                                                 name="singlePackageSize"

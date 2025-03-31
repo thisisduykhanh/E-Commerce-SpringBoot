@@ -1,6 +1,4 @@
 'use client';
-
-import React from 'react';
 import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
@@ -414,16 +412,16 @@ export function ProductCreateForm() {
                                 </Grid> */}
 
 
-                                    <Grid container flexDirection= "column" spacing={4}>
+                                    <Grid container={true} flexDirection= "column" spacing={4}>
                                         {/* Phần Giá chính thức */}
-                                        <Grid item xs={12}>
+                                        <Grid item={true} xs={12}>
                                             <Typography variant="h6">
                                                 Giá chính thức
                                             </Typography>
                                         </Grid>
                                         {Array.from({ length: 4 }).map((_, index) => (
-                                            <Grid container item xs={12} spacing={2} key={index}>
-                                                <Grid item xs={12} md={4}>
+                                            <Grid container={true} item={true} xs={12} spacing={2} key={index}>
+                                                <Grid item={true} xs={12} md={4}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTOS[${index}].price`}
@@ -432,9 +430,9 @@ export function ProductCreateForm() {
                                                                 error={Boolean(
                                                                     errors.officialPriceDTOS?.[index]?.price
                                                                 )}
-                                                                fullWidth
+                                                                fullWidth={true}
                                                             >
-                                                                <InputLabel required>Giá</InputLabel>
+                                                                <InputLabel required={true}>Giá</InputLabel>
                                                                 <OutlinedInput {...field} placeholder="Nhập giá" />
                                                                 {errors.officialPriceDTOS?.[index]?.price && (
                                                                     <FormHelperText>
@@ -445,7 +443,7 @@ export function ProductCreateForm() {
                                                         )}
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item={true} xs={12} md={4}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTOS[${index}].minQuantity`}
@@ -454,9 +452,9 @@ export function ProductCreateForm() {
                                                                 error={Boolean(
                                                                     errors.officialPriceDTOS?.[index]?.minQuantity
                                                                 )}
-                                                                fullWidth
+                                                                fullWidth={true}
                                                             >
-                                                                <InputLabel required>Số lượng tối thiểu</InputLabel>
+                                                                <InputLabel required={true}>Số lượng tối thiểu</InputLabel>
                                                                 <OutlinedInput
                                                                     {...field}
                                                                     placeholder="Nhập số lượng tối thiểu"
@@ -473,7 +471,7 @@ export function ProductCreateForm() {
                                                         )}
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item={true} xs={12} md={4}>
                                                     <Controller
                                                         control={control}
                                                         name={`officialPriceDTOS[${index}].maxQuantity`}
@@ -482,9 +480,9 @@ export function ProductCreateForm() {
                                                                 error={Boolean(
                                                                     errors.officialPriceDTOS?.[index]?.maxQuantity
                                                                 )}
-                                                                fullWidth
+                                                                fullWidth={true}
                                                             >
-                                                                <InputLabel required>Số lượng tối đa</InputLabel>
+                                                                <InputLabel required={true}>Số lượng tối đa</InputLabel>
                                                                 <OutlinedInput
                                                                     {...field}
                                                                     placeholder="Nhập số lượng tối đa"
@@ -504,12 +502,12 @@ export function ProductCreateForm() {
                                             </Grid>
                                         ))}
 
-                                        <Grid item xs={12}>
+                                        <Grid item={true} xs={12}>
                                             <Typography variant="h6">
                                                 Thông tin sản phẩm
                                             </Typography>
                                         </Grid>
-                                        <Grid container spacing={2}>
+                                        <Grid container={true} spacing={2}>
                                             {[
                                                 { label: 'Loại lưu trữ', name: 'storageType' },
                                                 { label: 'Thời hạn sử dụng', name: 'shelfLife' },
@@ -520,12 +518,12 @@ export function ProductCreateForm() {
                                                 { label: 'Chi tiết đóng gói', name: 'packagingDetails' },
                                                 { label: 'Kích thước gói đơn', name: 'singlePackageSize' },
                                             ].map(({ label, name }) => (
-                                                <Grid item xs={12} md={6} key={name}>
+                                                <Grid item={true} xs={12} md={6} key={name}>
                                                     <Controller
                                                         control={control}
                                                         name={name}
                                                         render={({ field }) => (
-                                                            <FormControl error={Boolean(errors[name])} fullWidth>
+                                                            <FormControl error={Boolean(errors[name])} fullWidth={true}>
                                                                 <InputLabel>{label}</InputLabel>
                                                                 <OutlinedInput
                                                                     {...field}

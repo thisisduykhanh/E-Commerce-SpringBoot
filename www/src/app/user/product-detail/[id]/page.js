@@ -533,8 +533,8 @@ function ProductDetailPage() {
                                     </IconButton>
                                     <TextField
                                         value={`${quantity} kg`}
-                                        disabled
-                                        aria-readonly
+                                        disabled={true}
+                                        aria-readonly={true}
                                         slotProps={{
                                             input: {
                                                 readOnly: true,
@@ -717,14 +717,14 @@ function ProductDetailPage() {
 
                                 {/* Grid layout for details */}
                                 <Grid
-                                    container
+                                    container={true}
                                     spacing={3}
                                     sx={{
                                         marginBottom: '16px',
                                     }}
                                 >
                                     {/* Left side details */}
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item={true} xs={12} sm={6}>
                                         <Typography variant="body1" sx={{ marginBottom: '8px' }}>
                                             <strong>Trạng thái:</strong> {productDetail?.status || 'Không có'}
                                         </Typography>
@@ -742,7 +742,7 @@ function ProductDetailPage() {
                                     </Grid>
 
                                     {/* Right side details */}
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item={true} xs={12} sm={6}>
                                         <Typography variant="body1" sx={{ marginBottom: '8px' }}>
                                             <strong>Màu sắc:</strong> {productDetail?.color || 'Không có'}
                                         </Typography>
@@ -794,7 +794,7 @@ function ProductDetailPage() {
                                                 </Typography>
                                                 <Rating
                                                     value={review.rating}
-                                                    readOnly
+                                                    readOnly={true}
                                                     precision={0.5}
                                                     size="small"
                                                 />

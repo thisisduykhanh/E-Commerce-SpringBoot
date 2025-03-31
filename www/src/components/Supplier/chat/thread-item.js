@@ -10,7 +10,7 @@ import { getSupplier } from '@/services/supplier';
 
 
 
-function getDisplayContent(lastMessage, userId) {
+function getDisplayContent(lastMessage, _userId) {
     const author = 'Me: ' ;
     const message = lastMessage;
 

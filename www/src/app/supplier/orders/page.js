@@ -22,7 +22,7 @@ export default function Page({ searchParams }) {
     const [rowsPerPage, setRowsPerPage] = React.useState(2);
 
     const sortedOrders = applySort(orders, sortDir);
-    const filteredOrders = applyFilters(sortedOrders, { customer, id, status });
+    const _filteredOrders = applyFilters(sortedOrders, { customer, id, status });
 
     const [totalElementsByStatus, setTotalElementsByStatus] = React.useState({
         Pending: 0,

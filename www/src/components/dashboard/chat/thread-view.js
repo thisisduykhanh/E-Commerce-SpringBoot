@@ -22,7 +22,7 @@ import { ThreadToolbar } from './thread-toolbar';
 export function ThreadView({ threadId }) {
     const pathname = usePathname();
 
-     const segments = pathname.split('/').filter(Boolean); 
+     const _segments = pathname.split('/').filter(Boolean); 
      const { client } =React.useContext(WebSocketContext);
 
     
@@ -77,7 +77,7 @@ export function ThreadView({ threadId }) {
                })); 
               }, [threadId, createMessage] );
               React.useEffect(() => {
-                const token = sessionStorage.getItem('token'); 
+                const _token = sessionStorage.getItem('token'); 
                 console.log("Subscribing to messages for client:", client);
                 if (client) { 
                   console.log("Subscribing to messages for log:", client);

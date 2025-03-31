@@ -144,8 +144,8 @@ function Orders() {
 
     return (
         <Box p={2} display="flex" justifyContent="center">
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={8} sx={{ paddingX: '0 !important' }}>
+            <Grid container={true} spacing={2}>
+                <Grid item={true} xs={12} md={8} sx={{ paddingX: '0 !important' }}>
                     <Card
                         variant="outlined"
                         sx={{
@@ -158,7 +158,7 @@ function Orders() {
                         }}
                     >
                         <CardContent sx={{ paddingX: '0 !important' }}>
-                            <Typography variant="h6" gutterBottom sx={{ color: '#000', marginBottom: '1rem' }}>
+                            <Typography variant="h6" gutterBottom={true} sx={{ color: '#000', marginBottom: '1rem' }}>
                                 VẬN CHUYỂN & THANH TOÁN
                             </Typography>
 
@@ -349,7 +349,7 @@ function Orders() {
                             </Box>
 
                             <Box mb={4}>
-                                <Typography variant="h6" gutterBottom>
+                                <Typography variant="h6" gutterBottom={true}>
                                     CHỌN PHƯƠNG THỨC THANH TOÁN
                                 </Typography>
                                 <Box p={2} sx={{ backgroundColor: '#D4EDDA', color: '#39615B', borderRadius: 1 }}>
@@ -474,7 +474,7 @@ function Orders() {
                                 <Typography
                                     component="h2"
                                     variant="h6"
-                                    gutterBottom
+                                    gutterBottom={true}
                                     sx={{ fontWeight: 600, color: '#212121', marginBottom: 2 }}
                                 >
                                     Xuất Hóa Đơn
@@ -524,7 +524,7 @@ function Orders() {
                 </Grid>
                 {/* Tóm tắt đơn hàng */}
                 {cartItems?.cartSupplierDTOS?.length > 0 && (
-                    <Grid item xs={12} md={4} sx={{ paddingX: '0 !important' }}>
+                    <Grid item={true} xs={12} md={4} sx={{ paddingX: '0 !important' }}>
                         <OrderSummary
                             totalPrice={totalPrice}
                             taxRate={taxRate}

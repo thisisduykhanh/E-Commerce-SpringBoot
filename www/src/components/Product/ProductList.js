@@ -161,9 +161,9 @@ const formatPrice = (priceString) => {
 
     return (
         <Box width="100%">
-            <Grid container spacing={2}>
+            <Grid container={true} spacing={2}>
                 {products.map((product) => (
-                    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                    <Grid item={true} key={product.id} xs={12} sm={6} md={4} lg={3}>
                         <Box
                             border={1}
                             borderColor="grey.300"
@@ -175,7 +175,7 @@ const formatPrice = (priceString) => {
                             minHeight={367}
                         >
                             {/* Ảnh sản phẩm */}
-                            <Link href={`/user/product-detail/${product.id}`} passHref>
+                            <Link href={`/user/product-detail/${product.id}`} passHref={true}>
                                 <button
                                     type="button"
                                     style={{ border: 'none', background: 'none', padding: 0, height:'260px', width: '270px', }}
@@ -199,7 +199,7 @@ const formatPrice = (priceString) => {
                             <Box display="flex" justifyContent="left" width="100%" mt={1}>
                                 <Rating
                                     value={product.rating || 5}
-                                    readOnly
+                                    readOnly={true}
                                     precision={0.1}
                                     size="small"
                                     sx={{ marginRight: 1 }}

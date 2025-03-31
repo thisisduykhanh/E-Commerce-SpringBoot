@@ -6,11 +6,10 @@ import Typography from '@mui/material/Typography';
 
 import { dayjs } from '@/lib/dayjs';
 import * as React from 'react';
-import { getSupplier } from '@/services/supplier';
 
 
 
-function getDisplayContent(lastMessage, userId) {
+function getDisplayContent(lastMessage, _userId) {
     const author = 'Me: ' ;
     const message = lastMessage;
 

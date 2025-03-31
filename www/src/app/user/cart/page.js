@@ -154,9 +154,9 @@ function CartPage() {
 
     return (
         <Box p={2} display="flex" justifyContent="center" paddingX={0}>
-            <Grid container spacing={2} paddingX={0}>
+            <Grid container={true} spacing={2} paddingX={0}>
                 {/* Tựa đề và Danh sách sản phẩm */}
-                <Grid item xs={12} md={8} paddingX={0}>
+                <Grid item={true} xs={12} md={8} paddingX={0}>
                     <Card
                         sx={{
                             color: 'black',
@@ -214,7 +214,7 @@ function CartPage() {
 
                 {/* Tóm tắt đơn hàng */}
                 {cartItems?.cartSupplierDTOS?.length > 0 && (
-                    <Grid item xs={12} md={4}>
+                    <Grid item={true} xs={12} md={4}>
                         <OrderSummary
                             totalPrice={totalPrice}
                             taxRate={taxRate}

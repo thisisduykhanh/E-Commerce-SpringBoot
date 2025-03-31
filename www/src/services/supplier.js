@@ -49,7 +49,7 @@ export const fetchOrderDetail = async (id) => {
         throw error;
     }
 };
-export const getSupplier = async (id) => {
+export const getSupplier = async (_id) => {
     try {
         const response = await apiClient.get(
             `/supplier/getCurrentSupplier`

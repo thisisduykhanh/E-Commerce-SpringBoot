@@ -104,7 +104,7 @@ export default function Page({ params }) {
     }
     return (
         <div>
-            <Grid container spacing={4}>
+            <Grid container={true} spacing={4}>
                 <Grid
                     size={{
                         lg: 4,

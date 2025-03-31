@@ -139,12 +139,12 @@ function FilterSupplier({ onFilterChange }) {
 
     return (
         <Box width="100%" padding={2} boxShadow={2} borderRadius={2}>
-            <Grid2 container direction="column" spacing={2}>
-              <Grid2 item>
+            <Grid2 container={true} direction="column" spacing={2}>
+              <Grid2 item={true}>
                     <Typography fontSize={18} fontWeight="bold" color="#00A6B7">
                         Sắp xếp theo giá
                     </Typography>
-                    <FormControl fullWidth size="small" sx={{ marginTop: 2 }}>
+                    <FormControl fullWidth={true} size="small" sx={{ marginTop: 2 }}>
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -157,7 +157,7 @@ function FilterSupplier({ onFilterChange }) {
                             sx={{ color: '#1a1a1a' }}
                         />
                     </FormControl>
-                    <FormControl fullWidth size="small" sx={{ marginTop: 2 }}>
+                    <FormControl fullWidth={true} size="small" sx={{ marginTop: 2 }}>
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -171,20 +171,20 @@ function FilterSupplier({ onFilterChange }) {
                         />
                     </FormControl>
                 </Grid2>
-                <Grid2 item xs={12}>
+                <Grid2 item={true} xs={12}>
                     {/* Tiêu đề "Nhà cung cấp" */}
                     <Typography variant="h6" fontSize={18} fontWeight="bold" sx={{ color: '#00A6B7' }}>
                         Nhà Cung Cấp
                     </Typography>
                 </Grid2>
-                <Grid2 item>
+                <Grid2 item={true}>
                     <FormControlLabel
                         control={<Checkbox name="verified" checked={filters.verified} onChange={handleFilterChange} />}
                         label="Nhà cung cấp được xác minh"
                     />
                 </Grid2>
 
-                <Grid2 item xs={12}>
+                <Grid2 item={true} xs={12}>
                     {/* Tiêu đề "Chứng nhận quản lý" */}
                     <Typography variant="h6" fontSize={18} fontWeight="bold" sx={{ color: '#00A6B7' }}>
                         Chứng nhận quản lý
@@ -192,7 +192,7 @@ function FilterSupplier({ onFilterChange }) {
                 </Grid2>
 
                 {/* Các checkbox cho các chứng nhận */}
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -204,7 +204,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="ISO"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -217,7 +217,7 @@ function FilterSupplier({ onFilterChange }) {
                     />
                 </Grid2>
 
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -229,7 +229,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="BRC"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -241,7 +241,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="FSC"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -253,7 +253,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="IATF 16949"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -265,7 +265,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="SEDEX"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -277,7 +277,7 @@ function FilterSupplier({ onFilterChange }) {
                         label="HACCP"
                     />
                 </Grid2>
-                <Grid2 item xs={10}>
+                <Grid2 item={true} xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -291,7 +291,7 @@ function FilterSupplier({ onFilterChange }) {
                 </Grid2>
 
                 {/* CHỨNG NHẬN SẢN PHẨM */}
-                <Grid2 item xs={12} display="flex" alignItems="center">
+                <Grid2 item={true} xs={12} display="flex" alignItems="center">
                     <Typography variant="h6" fontSize={18} fontWeight="bold" sx={{ color: '#00A6B7', flexGrow: 1 }}>
                         Chứng nhận sản phẩm
                     </Typography>
@@ -301,7 +301,7 @@ function FilterSupplier({ onFilterChange }) {
                 </Grid2>
 
                 {/* Khu vực */}
-                <Grid2 item xs={12} container alignItems="center">
+                <Grid2 item={true} xs={12} container={true} alignItems="center">
                     <Typography fontSize={18} fontWeight="bold" color="#00A6B7" sx={{ flexGrow: 1 }}>
                         Khu vực
                     </Typography>
@@ -312,10 +312,10 @@ function FilterSupplier({ onFilterChange }) {
 
                 {/* Các checkbox khu vực - chỉ hiển thị khi locationExpanded là true */}
                 <Collapse in={filters.locationExpanded}>
-                    <Grid2 item xs={12}>
+                    <Grid2 item={true} xs={12}>
                         <Box>
                             {['Hà Nội', 'TP.HCM', 'Vĩnh Long', 'Đắk Nông', 'Đà Lạt'].map((location) => (
-                                <Grid2 item xs={12} key={location}>
+                                <Grid2 item={true} xs={12} key={location}>
                                     <FormControlLabel
                                         key={location}
                                         control={
@@ -334,7 +334,7 @@ function FilterSupplier({ onFilterChange }) {
                 </Collapse>
 
                 {/*Danh mục sản phẩm */}
-                <Grid2 item xs={12} display="flex" alignItems="center">
+                <Grid2 item={true} xs={12} display="flex" alignItems="center">
                     <Typography variant="h6" fontSize={18} fontWeight="bold" sx={{ color: '#00A6B7', flexGrow: 1 }}>
                         Danh mục sản phẩm
                     </Typography>
@@ -343,10 +343,10 @@ function FilterSupplier({ onFilterChange }) {
                     </IconButton>
                 </Grid2>
                 {/*Truy xuất nguồn gốc */}
-                <Grid2 item xs={12} display="flex" alignItems="center">
+                <Grid2 item={true} xs={12} display="flex" alignItems="center">
                     <Typography
                         variant="h6"
-                        S
+                        S={true}
                         fontSize={18}
                         fontWeight="bold"
                         sx={{ color: '#00A6B7', flexGrow: 1 }}
@@ -359,15 +359,15 @@ function FilterSupplier({ onFilterChange }) {
                 </Grid2>
 
                 {/*Đánh giá */}
-                <Grid2 item xs={12}>
+                <Grid2 item={true} xs={12}>
                     <Typography fontSize={18} fontWeight="bold" sx={{ color: '#00A6B7' }}>
                         Đánh giá sao
                     </Typography>
                 </Grid2>
                 {/* Các checkbox cho các sao đánh giá */}
-                <Grid2 container direction="column" padding={2} spacing={1}>
+                <Grid2 container={true} direction="column" padding={2} spacing={1}>
                     {[5, 4, 3, 2, 1].map((star) => (
-                        <Grid2 item key={star}>
+                        <Grid2 item={true} key={star}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -389,7 +389,7 @@ function FilterSupplier({ onFilterChange }) {
                     ))}
                 </Grid2>
 
-                <Grid2 item xs={12} display="flex" justifyContent="center">
+                <Grid2 item={true} xs={12} display="flex" justifyContent="center">
                     <Button
                         variant="contained"
                         sx={{

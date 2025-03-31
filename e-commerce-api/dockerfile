@@ -1,35 +1,23 @@
-#  FROM openjdk:24-ea-22-jdk-slim-bullseye@sha256:1cf650e2d44072ff81091bf2080e4148fed3158bbea10d94ed1076949c1b3098
-# FROM openjdk:22-jdk-slim
+FROM eclipse-temurin:17.0.14_7-jdk AS build-stage
 
-FROM eclipse-temurin:17-jdk AS build-stage
-
-
-# Tạo thư mục ứng dụng trong container
 WORKDIR /app
 
-
-#Sao chép file cấu hình Gradle và cài đặt dependencies trước
 COPY gradle gradle
-# COPY build.gradle.kts settings.gradle.kts gradlew ./
 COPY build.gradle.kts gradlew ./
 
-RUN chmod +x gradlew
-RUN ./gradlew dependencies --no-daemon
-
+RUN chmod +x gradlew && \
+    ./gradlew dependencies --no-daemon
 
 COPY . .
 
 RUN ./gradlew clean build -x test --no-daemon
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Sao chép file JAR từ thư mục target vào container
 COPY --from=build-stage /app/build/libs/*.jar app.jar
 
-# Mở cổng 8080 (mặc định của Spring Boot)
 EXPOSE 8080
 
-# Chạy ứng dụng Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]

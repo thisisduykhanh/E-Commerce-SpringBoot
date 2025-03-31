@@ -127,7 +127,7 @@ export default function Page() {
                         </div>
                     </Stack>
                     <Divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }} />
-                    <Grid container spacing={4}>
+                    <Grid container={true} spacing={4}>
                         {posts.map((post) => (
                             <Grid
                                 key={post.title}
@@ -141,7 +141,7 @@ export default function Page() {
                         ))}
                     </Grid>
                     <Stack direction="row" spacing={1} sx={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Button disabled startIcon={<ArrowLeftIcon />}>
+                        <Button disabled={true} startIcon={<ArrowLeftIcon />}>
                             Newer
                         </Button>
                         <Button endIcon={<ArrowRightIcon />}>Older</Button>

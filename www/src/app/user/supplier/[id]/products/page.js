@@ -35,7 +35,7 @@ export default function Page({ params }) {
                 <CardHeader color="#1a1a1a" title="Sản phẩm" />
                 <Divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)'}}/>
                 <Input
-                    fullWidth
+                    fullWidth={true}
                     placeholder="Tìm kiếm sản phẩm"
                     startAdornment={
                         <InputAdornment  position="start">
@@ -46,9 +46,9 @@ export default function Page({ params }) {
                 />
                 <Divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)'}} />
                 <Box sx={{ p: 3 }}>
-                    <Grid container spacing={3}>
+                    <Grid container={true} spacing={3}>
                         {products.map((product) => (
-                            <Grid item xs={12} sm={6} md={2.4} key={product.id}>
+                            <Grid item={true} xs={12} sm={6} md={2.4} key={product.id}>
                                 <ProductCards product={product} />
                             </Grid>
                         ))}

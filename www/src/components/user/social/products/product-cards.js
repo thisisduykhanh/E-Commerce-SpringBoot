@@ -41,7 +41,7 @@ if (!priceString || priceString.trim() === "") {
 
 };
     return (
-        <Grid item key={product.id}>
+        <Grid item={true} key={product.id}>
             <Paper
                 border={1}
                 borderColor="grey.300"
@@ -109,7 +109,7 @@ if (!priceString || priceString.trim() === "") {
                 <Box sx={{ marginTop: 'auto' }}>
                     <Button
                         variant="contained"
-                        fullWidth
+                        fullWidth={true}
                         sx={{ background: 'linear-gradient(180deg, #00A6B7 0%, #00A6B7 100%)', color: 'white' }}
                     >
                         Mua Ngay

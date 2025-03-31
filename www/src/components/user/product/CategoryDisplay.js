@@ -361,7 +361,7 @@ function CategoryList({ category, products, selectedSubCategory, onSubCategoryCl
                         <Link
                             key={product.id}
                             href={`user/product-detail/${product.id}`}
-                            passHref
+                            passHref={true}
                             style={{ textDecoration: 'none', color: 'inherit' }}
                         >
                             <Card sx={{ ...cardStyles, width: product.isPromotion ? '520px' : '320px' ,padding:2}}>
@@ -454,7 +454,7 @@ function CategoryList({ category, products, selectedSubCategory, onSubCategoryCl
                                         >
                                             <Rating
                                                 value={product.rating || 5}
-                                                readOnly
+                                                readOnly={true}
                                                 precision={0.1}
                                                 size="small"
                                                 color="yellow"

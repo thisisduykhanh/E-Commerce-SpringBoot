@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, } from 'next/navigation';
 
 import { ChatContext } from './chat-context';
 import { MessageAdd } from './message-add';
@@ -48,14 +47,14 @@ export function ThreadView({ threadId }) {
                 fetchUser(); 
                }, []);
     const pathname = usePathname();
-     const segments = pathname.split('/').filter(Boolean); 
+     const _segments = pathname.split('/').filter(Boolean); 
      const { client } =React.useContext(WebSocketContext);
     
    
       const messagesRef = React.useRef(null);
       const [messages, setMessages] = React.useState({ contentDTOPage: { content: [] }});
       
-      const fetchMessages = React.useCallback(async (id) => {
+      const fetchMessages = React.useCallback(async (_id) => {
         const response = await getListChat(threadId);
         console.log("data: ", response.data);
         setMessages(response.data);
@@ -79,7 +78,7 @@ export function ThreadView({ threadId }) {
     
 
   
-    const handleThreadChange = React.useCallback(() => {
+    const _handleThreadChange = React.useCallback(() => {
         console.log("Marking thread as read for threadId:", threadId);
         markAsRead(threadId);
     }, [threadId, markAsRead]);
@@ -102,7 +101,7 @@ export function ThreadView({ threadId }) {
                })); 
               }, [threadId, createMessage] );
               React.useEffect(() => {
-                const token = sessionStorage.getItem('token'); 
+                const _token = sessionStorage.getItem('token'); 
                 console.log("Subscribing to messages for client:", client);
                 if (client) { 
                   console.log("Subscribing to messages for log:", client);

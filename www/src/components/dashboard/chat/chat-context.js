@@ -27,9 +27,9 @@ export function ChatProvider({
 }) {
    /*  const { client } = React.useContext(WebSocketContext); */
 
-    const [contacts, setContacts] = React.useState([]);
+    const [_contacts, _setContacts] = React.useState([]);
         const [groupChat, setGroupChat] = React.useState([]);
-        const [groupChatState, setGroupChatState] = React.useState(groupChat);
+        const [_groupChatState, _setGroupChatState] = React.useState(groupChat);
 
     const [messages, setMessages] = React.useState(new Map());
     const [openDesktopSidebar, setOpenDesktopSidebar] = React.useState(true);
@@ -52,7 +52,7 @@ export function ChatProvider({
         setGroupChat(response.data); 
     }, []);
     React.useEffect(() => {
-        const token = sessionStorage.getItem('token'); 
+        const _token = sessionStorage.getItem('token'); 
         console.log("Subscribing to messages for client:", client);
         if (client) { 
             console.log("Subscribing to messages for log:", client);

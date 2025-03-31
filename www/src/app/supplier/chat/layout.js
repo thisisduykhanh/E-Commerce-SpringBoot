@@ -1,5 +1,4 @@
 'use client';
-import { dayjs } from '@/lib/dayjs';
 import { ChatProvider } from '@/components/Supplier/chat/chat-context';
 import { ChatView } from '@/components/Supplier/chat/chat-view';
 import{getChat} from '@/services/admin'
