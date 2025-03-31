@@ -2,6 +2,7 @@ package com.example.e_commerce_api.entity.order;
 
 import com.example.e_commerce_api.entity.supply.Supplier;
 import com.example.e_commerce_api.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "orders")
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +30,10 @@ public class Order {
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_orderStatus")
     private OrderStatus orderStatus;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_supplier")
     private Supplier supplier;
     @Column(name = "quantity_item_order")
@@ -42,4 +45,6 @@ public class Order {
     private String fullname;
     private String address;
     private String phone;
+
+    private String paymentMethod;
 }

@@ -1,8 +1,9 @@
 package com.example.e_commerce_api.pattern.strategy;
 
-import java.math.BigDecimal;
+import com.example.e_commerce_api.dto.payment.PaymentRequest;
+import com.example.e_commerce_api.dto.payment.PaymentResponse;
+import com.example.e_commerce_api.entity.order.Order;
 
 public interface PaymentStrategy {
-    void pay(BigDecimal amount);
+    PaymentResponse processPayment(Order order);
 }
-

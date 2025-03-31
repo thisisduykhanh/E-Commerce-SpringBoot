@@ -5,6 +5,7 @@ import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.entity.product.Product;
 import com.example.e_commerce_api.exception.CustomException;
 import com.example.e_commerce_api.exception.Error;
+import com.example.e_commerce_api.pattern.singleton.CartSingletonService;
 import com.example.e_commerce_api.repository.cart.CartDetailRepository;
 import com.example.e_commerce_api.repository.cart.CartRepository;
 import com.example.e_commerce_api.repository.product.ProductRepository;
@@ -33,7 +34,7 @@ public class CartDetailService {
     private ProductRepository productRepository;
 
     @Autowired
-    private  CartService cartService;
+    private CartSingletonService cartService;
 
     @Transactional
     public CartDetail createOrUpdateCartDetail( Integer productId, Integer quantity) {

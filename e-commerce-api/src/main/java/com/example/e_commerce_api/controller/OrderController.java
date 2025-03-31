@@ -1,7 +1,10 @@
 package com.example.e_commerce_api.controller;
 
 import com.example.e_commerce_api.dto.ApiResponse;
+import com.example.e_commerce_api.dto.OrderDTO;
 import com.example.e_commerce_api.dto.cart.OrderCreateDTO;
+import com.example.e_commerce_api.dto.payment.PaymentRequest;
+import com.example.e_commerce_api.dto.payment.PaymentResponse;
 import com.example.e_commerce_api.entity.order.Order;
 import com.example.e_commerce_api.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +23,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
+    @PostMapping("/{orderId}/pay")
+    public ResponseEntity<ApiResponse<PaymentResponse>> payOrder(
+            @PathVariable Integer orderId,
+            @RequestParam String method) {
+
+        PaymentResponse response = orderService.processPayment(orderId, method);
+        ApiResponse<PaymentResponse> apiResponse = new ApiResponse<>(true, "Thanh toán thành công", response, null);
+        return ResponseEntity.ok(apiResponse);
+    }
+
     @PostMapping()
-    public ResponseEntity<ApiResponse<List<Order>>> createOrdersFromCartDetails(@RequestBody OrderCreateDTO orderCreateDto) {
-        List<Order> orders = orderService.createOrdersFromCartDetails(orderCreateDto);
-        ApiResponse<List<Order>> response = new ApiResponse<>( true, "Tạo đơn hàng từ giỏ hàng thành công", orders, null);
+    public ResponseEntity<ApiResponse<List<OrderDTO>>> createOrdersFromCartDetails(@RequestBody OrderCreateDTO orderCreateDto) {
+        List<OrderDTO> orders = orderService.createOrdersFromCartDetails(orderCreateDto);
+        ApiResponse<List<OrderDTO>> response = new ApiResponse<>( true, "Tạo đơn hàng từ giỏ hàng thành công", orders, null);
         return ResponseEntity.ok(response);
     }
 

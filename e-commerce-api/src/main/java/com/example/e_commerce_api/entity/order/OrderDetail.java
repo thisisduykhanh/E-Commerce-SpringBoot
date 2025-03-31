@@ -1,6 +1,7 @@
 package com.example.e_commerce_api.entity.order;
 
 import com.example.e_commerce_api.entity.product.Product;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class OrderDetail {
     @JoinColumn(name = "id_product")
     private Product product;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_order")
     private Order order;
     @Column(name = "quantity_item_cartdetail")

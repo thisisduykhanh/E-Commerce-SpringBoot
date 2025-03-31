@@ -5,8 +5,9 @@ import com.example.e_commerce_api.dto.cart.CartDTO;
 import com.example.e_commerce_api.entity.cart.Cart;
 import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.mapper.CartMapper;
+import com.example.e_commerce_api.pattern.singleton.CartSingletonService;
 import com.example.e_commerce_api.service.cart.CartDetailService;
-import com.example.e_commerce_api.service.cart.CartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class CartController {
     @Autowired
-    private CartService cartService; // Dịch vụ xử lý giỏ hàng
+    private CartSingletonService cartService; // Dịch vụ xử lý giỏ hàng
     @Autowired
     private CartDetailService cartDetailService; // Dịch vụ xử lý chi tiết giỏ hàng
     @Autowired

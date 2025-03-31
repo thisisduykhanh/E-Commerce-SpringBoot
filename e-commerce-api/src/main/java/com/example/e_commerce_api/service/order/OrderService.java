@@ -2,7 +2,10 @@ package com.example.e_commerce_api.service.order;
 
 
 
+import com.example.e_commerce_api.dto.OrderDTO;
 import com.example.e_commerce_api.dto.cart.OrderCreateDTO;
+import com.example.e_commerce_api.dto.payment.PaymentRequest;
+import com.example.e_commerce_api.dto.payment.PaymentResponse;
 import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.entity.order.Order;
 import com.example.e_commerce_api.entity.order.OrderStatus;
@@ -11,6 +14,8 @@ import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.User;
 import com.example.e_commerce_api.exception.CustomException;
 import com.example.e_commerce_api.exception.Error;
+import com.example.e_commerce_api.pattern.strategy.PaymentContext;
+import com.example.e_commerce_api.pattern.strategy.PaymentStrategy;
 import com.example.e_commerce_api.repository.cart.CartDetailRepository;
 import com.example.e_commerce_api.repository.order.OrderRepository;
 import com.example.e_commerce_api.repository.order.OrderStatusRepository;
@@ -22,8 +27,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +57,43 @@ public class OrderService {
     @Autowired
     private OrderStatusRepository orderStatusRepository;
 
-    public List<Order> createOrdersFromCartDetails(OrderCreateDTO orderCreateDto){
-        List<CartDetail> cartDetails = orderCreateDto.cartDetailIds().stream().map(integer -> cartDetailRepository.findById(integer).orElseThrow()).collect(Collectors.toList());
+    @Autowired
+    private PaymentContext paymentContext;
+
+    @Transactional
+    public PaymentResponse processPayment(Integer orderId, String method) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(Error.ORDERS_NOT_FOUND));
+
+        if (!order.getOrderStatus().getName().equals("PENDING")) {
+            throw new CustomException(Error.INVALID_ORDER_STATUS);
+        }
+
+        PaymentStrategy strategy = paymentContext.getPaymentStrategy(method);
+        if (strategy == null) {
+            throw new CustomException(Error.PAYMENT_METHOD_NOT_FOUND);
+        }
+
+        PaymentResponse response = strategy.processPayment(order);
+        orderRepository.save(order);
+        return response;
+    }
+
+
+    @Transactional
+    public List<OrderDTO> createOrdersFromCartDetails(OrderCreateDTO orderCreateDto){
+
+        List<CartDetail> cartDetails = orderCreateDto.cartDetailIds().stream()
+                .map(integer -> cartDetailRepository.findById(integer)
+                        .orElseThrow(() -> new CustomException(Error.CARTDETAIL_NOT_FOUND)))
+                .toList();
+
+
         Map<Supplier, List<CartDetail>> cartDetailsBySupplier = cartDetails.stream()
                 .collect(Collectors.groupingBy(
                         cartDetail -> cartDetail.getProduct().getSupplier()));
+
+
         List<Order> orders = cartDetailsBySupplier.entrySet().stream()
                 .map(entry ->{
                     Supplier supplier = entry.getKey();
@@ -80,7 +119,9 @@ public class OrderService {
                     });
                     return savedOrder;
                 }).collect(Collectors.toList());
-        return orders;
+
+        cartDetailRepository.deleteAllById(orderCreateDto.cartDetailIds());
+        return orders.stream().map(OrderDTO::fromEntity).toList();
 
     }
     public  void updateStatus(Integer idOrder,Integer idStatus){

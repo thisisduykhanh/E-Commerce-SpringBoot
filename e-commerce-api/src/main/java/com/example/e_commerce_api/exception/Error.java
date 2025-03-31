@@ -216,7 +216,8 @@ public enum Error {
     PRODUCT_TYPE_NOT_FOUND(20001, "product tyoe not found", HttpStatus.NOT_FOUND),
     SUPPLIER_NOT_FOUND(21001, "supplier not found", HttpStatus.NOT_FOUND),
     PRODUCT_GROUP_NOT_FOUND(22001, "product group not found", HttpStatus.NOT_FOUND),
-    ;
+    INVALID_ORDER_STATUS(1803,"invalid order status",HttpStatus.BAD_REQUEST),
+    PAYMENT_METHOD_NOT_FOUND(1804,"payment method not found",HttpStatus.BAD_REQUEST);
 
     private final int code;
     private final String message;
