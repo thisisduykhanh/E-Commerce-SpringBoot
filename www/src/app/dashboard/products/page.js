@@ -16,6 +16,7 @@ import { ProductsTable } from '@/components/dashboard/product/products-table';
 // import { config } from '@/config';
 import { paths } from '@/paths';
 import { getProduct } from '@/services/admin';
+import { getProducts } from '@/services/products';
 
 // export const metadata = { title: `List | Products | Dashboard | ${config.site.name}` };
 
@@ -100,9 +101,9 @@ export default function Page({ searchParams }) {
     }
     const currentStatus = searchParams.status;
     const fetchProducts = React.useCallback(async (page, size, status) => {
-        const response = await getProduct(status, page, size);
-        console.log('data: ', response.data.content);
-        setProducts(response.data.content);
+        const response = await getProducts(status, page, size);
+        console.log('data: ', response.data);
+        setProducts(response.data);
         setTotalElements(response.data.totalElements); // Cập nhật tổng số phần tử
     }, []);
 

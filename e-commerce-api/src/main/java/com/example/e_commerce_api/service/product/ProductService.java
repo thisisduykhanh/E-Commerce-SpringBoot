@@ -31,8 +31,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.persistence.criteria.Predicate;
+
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -103,7 +106,33 @@ public class ProductService {
             int page,
             int size) {
 
-      return  null;
+        Specification<Product> spec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (productTypeId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("productType").get("id"), productTypeId));
+            }
+            if (supplierId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("supplier").get("id"), supplierId));
+            }
+            if (minPrice != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+            }
+            if (maxPrice != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            }
+            if (status != null) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), status));
+            }
+            if (address != null && !address.isEmpty()) {
+                predicates.add(criteriaBuilder.like(root.get("address"), "%" + address + "%"));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAll(spec, pageable);
     }
 
     @Cacheable("productTypes")

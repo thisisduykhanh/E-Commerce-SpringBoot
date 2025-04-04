@@ -16,19 +16,7 @@ export const fetchProduct = async (productGroupId) => {
     return response;
 };
 
-export const createProduct = async (formData) => {
-    try {
-        const response = await apiClient.post('supplier/products', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response;
-    } catch (error) {
-        console.error('Error creating product:', error);
-        throw error;
-    }
-};
+
 export const getOrderSupply = async (orderStatus, page = 0, size = 10) => {
     try {
         const response = await apiClient.get(

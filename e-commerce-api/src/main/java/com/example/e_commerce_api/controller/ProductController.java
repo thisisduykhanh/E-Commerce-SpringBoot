@@ -81,7 +81,6 @@ public class ProductController {
             // Lấy danh sách hình ảnh và giá chính thức của sản phẩm
             List<Image> images = imageService.getImageByProduct(product);
 
-
             // Chuyển đổi sang ProductDTO
             ProductDTO productDTO = productMapper.toProductDTO(product, images);
 
@@ -162,30 +161,12 @@ public class ProductController {
                 return productMapper.toProductDTO(product, images);
             });
 
-
-        System.out.printf("productDTOs: %s\n", productDTOs);
+            System.out.printf("productDTOs: %s\n", productDTOs);
 
 
             // Tạo response cho Product
-            ApiResponse<Page<ProductDTO>> response = new ApiResponse<>(true, "Products retrieved successfully", productDTOs,null);
+            ApiResponse<List<ProductDTO>> response = new ApiResponse<>(true, "Products retrieved successfully", productDTOs.getContent(),null);
             return ResponseEntity.ok(response);
-
-
-//            // Tìm kiếm Supplier
-//            Page<Supplier> suppliers = supplyService.searchSuppliers(
-//                    address, status, page, size);
-//
-//            // Chuyển đổi Supplier sang SupplierDTO
-//            Page<SupplierDTO> supplierDTOs = suppliers.map(supplier -> {
-//                List<Delivery> deliveries = deliveryService.findBySupplier(supplier);
-//                List<ProductType> productTypes = productTypeService.findBySupplier(supplier);
-//                return supplierMapper.toDTO(supplier, deliveries, productTypes);
-//            });
-//
-//            // Tạo response cho Supplier
-//            ApiResponse<Page<SupplierDTO>> response = new ApiResponse<>(true, "Suppliers retrieved successfully", supplierDTOs,null);
-//            return ResponseEntity.ok(response);
-
     }
 //    @PostMapping()
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

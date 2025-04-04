@@ -43,6 +43,11 @@ public class ProductTypeService {
     }
 
 
+    public List<ProductType> findAll(){
+        return productTypeRepository.findAll();
+    }
+
+
     /**
      * Tìm danh sách các loại sản phẩm (`ProductType`) liên quan đến nhà cung cấp (`Supplier`).
      *

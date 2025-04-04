@@ -3,9 +3,12 @@ package com.example.e_commerce_api.seeder;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.Role;
 import com.example.e_commerce_api.entity.user.User;
+import com.example.e_commerce_api.repository.product.ProductRepository;
+import com.example.e_commerce_api.repository.product.ProductTypeRepository;
 import com.example.e_commerce_api.repository.user.RoleRepository;
 import com.example.e_commerce_api.repository.user.UserRepository;
 import com.example.e_commerce_api.service.RoleService;
+import com.example.e_commerce_api.service.product.ProductTypeService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -18,17 +21,24 @@ public class StartupSeeder {
 
     private  final RoleService roleService;
 
+    private  final ProductTypeService productTypeService;
+
+    private  final ProductTypeRepository productTypeRepository;
+
     private final AccountService accountService;
 
     private RoleRepository repository;
 
-    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository) {
+    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository, ProductTypeService productTypeService, ProductTypeRepository productTypeRepository) {
         this.userRepository = userRepository;
 
         this.roleService = roleService;
         this.accountService = accountService;
 
         this.repository = repository;
+
+        this.productTypeService = productTypeService;
+        this.productTypeRepository = productTypeRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)

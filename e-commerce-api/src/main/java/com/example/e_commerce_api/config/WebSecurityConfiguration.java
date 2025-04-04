@@ -68,7 +68,7 @@ public class WebSecurityConfiguration {
                                 apiPrefix + "/users/signin",
                                 apiPrefix + "/account/refreshtoken",
                                 apiPrefix + "/image",
-                                apiPrefix + "/product-group",
+                                apiPrefix + "/product-types",
                                 apiPrefix + "/products/**",
                                 apiPrefix + "/product-types",
                                 apiPrefix + "/category",

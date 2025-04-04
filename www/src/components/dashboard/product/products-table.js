@@ -24,12 +24,12 @@ const columns = [
     {
         formatter: (row) => (
             <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-                {row.listImage ? (
+                {row.images ? (
                     <Box
                         sx={{
                             alignItems: 'center',
                             bgcolor: 'var(--mui-palette-background-level2)',
-                            backgroundImage: `url(${row.listImage[0]?.url})`,
+                            backgroundImage: `url(${row.images[0]?.url})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             borderRadius: 1,
@@ -63,10 +63,10 @@ const columns = [
                         sx={{ whiteSpace: 'nowrap' }}
                         variant="subtitle2"
                     >
-                        {row.nameProduct}
+                        {row.productName}
                     </Link>
                     <Typography color="text.secondary" variant="body2">
-                        {row.nameProductType}
+                        {row.productTypeName}
                     </Typography>
                 </div>
             </Stack>
@@ -77,64 +77,28 @@ const columns = [
     { field: 'id', name: 'Mã sản phẩm', width: '150px' },
     //   { field: 'quantity', name: 'Stock', width: '100px' },
     {
-    formatter(row) {
-        // Hàm để xử lý chuỗi giá trị và định dạng
-        const formatPrice = (priceString) => {
-            // Sử dụng biểu thức chính quy để trích xuất giá trị trước .00
-            const matches = priceString.match(/(\d+)\.00/g);
-
-            if (matches) {
-                // Trích xuất giá trị trước .00
-                const priceBeforeDot = matches.map(item => item.replace('.00', ''));
-
-                // Định dạng tiền tệ (VNĐ) mà không cần "VNĐ"
-                const formattedPrices = priceBeforeDot.map(amount => {
-                    const formattedAmount = Number(amount).toLocaleString('vi-VN');
-                    return formattedAmount;
-                });
-
-                return formattedPrices;
-            } 
-                return [];
-            
-        };
-
-        // Gọi hàm formatPrice để xử lý giá trị price
-        const formattedPrices = formatPrice(row.price);
-
-        // Trả về chuỗi đã được định dạng với dấu gạch ngang và chữ "đ" ở cuối
-        if (formattedPrices.length > 0) {
-            return formattedPrices.map((formattedPrice, index) => (
-                `${formattedPrice} ${index < formattedPrices.length - 1 ? ' - ' : ' đ'}`
-            )).join('');
-        } 
-            return 'Không có giá trị hợp lệ.';
+        formatter(row) {
+            // Hàm định dạng giá tiền (VNĐ)
+            const formatPrice = (price) => {
+                if (price == null || isNaN(price)) return "Không có giá trị hợp lệ.";
         
-    },
-    name: 'Giá',
-    width: '150px',
-},
-    {
-        formatter: (row) => {
-
-            const verifyMapping = {
-                Pending: { label: 'Đang chờ', icon: <HourglassBottomIcon color="warning" /> },
-                Access: { label: 'Đã duyệt', icon: <CheckCircleIcon color="success" /> },
-                Reject: { label: 'Từ chối', icon: <CancelIcon color="error" /> },
+                return new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                    minimumFractionDigits: 0, // Không hiển thị số lẻ
+                })
+                    .format(price)
+                    .replace("₫", "đ"); // Thay ₫ bằng đ cho đúng văn phong tiếng Việt
             };
-
-            const { label: verifyLabel, icon: verifyIcon } =
-                verifyMapping[row.productStatusVerify] ?? { label: 'Không xác định', icon: null };
-
-            return (
-                <Stack direction="column" spacing={1}>
-                    <Chip icon={verifyIcon} label={verifyLabel} size="small" variant="outlined" sx={{width:"50%"}}/>
-                </Stack>
-            );
+        
+            return formatPrice(row.price);
         },
-        name: 'Trạng thái',
-        width: '150px',
-    },
+        
+        name: "Giá",
+        width: "150px",
+        
+},
+
     {
         formatter: (row) => (
             <Stack direction="row" spacing={1} justifyContent="flex-end">

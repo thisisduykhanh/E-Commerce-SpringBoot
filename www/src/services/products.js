@@ -1,31 +1,27 @@
 import apiClient from "./ApiClient";
 
-export const addOrder = async (
-	fullName,
-	address,
-	phone,
-	idCartDetail,
-	shippingFee,
-	taxFee,
-	city,
-	district,
+export const createProduct = async (
+	productName	,price, description, productTypeId, supplierId, quantity, attributes, images 
 ) => {
 	try {
-		const response = await apiClient.post("/orders", {
-			fullName,
-			address,
-			phone,
-			idCartDetail,
-			shippingFee,
-			taxFee,
-			city,
-			district,
+		const response = await apiClient.post("/products", {
+			productName	,price, description, productTypeId, supplierId, quantity, attributes, images
 		});
 		return response;
 	} catch (error) {
 		throw error;
 	}
 };
+
+export const getProducts = async (status , page, size) => {
+	try {
+		// const response = await apiClient.get(`/products?page=${page}&size=${size}&status=${status}`);
+		const response = await apiClient.get('http://localhost:8085/api/v1/products?page=0&size=10');
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
 
 export const getCartDetail = async () => {
 	const response = await apiClient.get("/cart");
@@ -54,4 +50,6 @@ export const getMyOrder = async (status, page, size) => {
 		throw error;
 	}
 };
+
+
 // 1 accept 2 pending 3 completed
