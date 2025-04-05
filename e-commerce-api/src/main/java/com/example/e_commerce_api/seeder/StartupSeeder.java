@@ -1,14 +1,18 @@
 package com.example.e_commerce_api.seeder;
 
+import com.example.e_commerce_api.dto.product.ProductTypeCreateDTO;
+import com.example.e_commerce_api.dto.supply.SupplierCreateDTO;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.Role;
 import com.example.e_commerce_api.entity.user.User;
 import com.example.e_commerce_api.repository.product.ProductRepository;
 import com.example.e_commerce_api.repository.product.ProductTypeRepository;
+import com.example.e_commerce_api.repository.supply.SupplierRepository;
 import com.example.e_commerce_api.repository.user.RoleRepository;
 import com.example.e_commerce_api.repository.user.UserRepository;
 import com.example.e_commerce_api.service.RoleService;
 import com.example.e_commerce_api.service.product.ProductTypeService;
+import com.example.e_commerce_api.service.supply.SupplyService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -25,11 +29,15 @@ public class StartupSeeder {
 
     private  final ProductTypeRepository productTypeRepository;
 
+    private  final SupplyService supplyService;
+
+    private  final SupplierRepository supplierRepository;
+
     private final AccountService accountService;
 
     private RoleRepository repository;
 
-    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository, ProductTypeService productTypeService, ProductTypeRepository productTypeRepository) {
+    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository, ProductTypeService productTypeService, ProductTypeRepository productTypeRepository, SupplyService supplyService, SupplierRepository supplierRepository) {
         this.userRepository = userRepository;
 
         this.roleService = roleService;
@@ -39,6 +47,9 @@ public class StartupSeeder {
 
         this.productTypeService = productTypeService;
         this.productTypeRepository = productTypeRepository;
+
+        this.supplyService = supplyService;
+        this.supplierRepository = supplierRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -47,9 +58,7 @@ public class StartupSeeder {
         if (repository.count() == 0) {
             roleService.createRole(new Role(1,"admin"));
             roleService.createRole(new Role(1, "user"));
-            roleService.createRole(new Role(1, "supplier"));
-
-            System.out.println("Seed data completed!");
+            roleService.createRole(new Role(1, "Supply"));
         }
 
         if (userRepository.count() == 0) {
@@ -65,6 +74,26 @@ public class StartupSeeder {
             userRepository.save(user);
         }
 
+        if (productTypeRepository.count() == 0) {
+            productTypeService.createProductType(new ProductTypeCreateDTO("LAPTOP"));
+            productTypeService.createProductType(new ProductTypeCreateDTO("TABLET"));
+            productTypeService.createProductType(new ProductTypeCreateDTO("PHONE"));
+            productTypeService.createProductType(new ProductTypeCreateDTO("HEADPHONE"));
+            productTypeService.createProductType(new ProductTypeCreateDTO("SMARTWATCH"));
+        }
 
+        if (supplierRepository.count() == 0) {
+            supplyService.createSupplier(new SupplierCreateDTO(null, "APPLE", null, "USA", "apple@supplier.com", "apple123"));
+
+            supplyService.createSupplier(new SupplierCreateDTO(null, "SAMSUNG", null, "KOREA", "samsung@supplier.com", "samsung123"));
+
+            supplyService.createSupplier(new SupplierCreateDTO(null, "SONY", null, "USA", "sony@supplier.com", "sony123"));
+
+            supplyService.createSupplier(new SupplierCreateDTO(null, "LG", null, "KOREA", "lg@supplier.com", "lg123"));
+
+            supplyService.createSupplier(new SupplierCreateDTO(null, "DELL", null, "USA", "dell@supplier.com", "dell123"));
+
+            supplyService.createSupplier(new SupplierCreateDTO(null, "XIAOMI", null, "CHINA", "xiaomi@supplier.com", "xiaomi123"));
+        }
     }
 }

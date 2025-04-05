@@ -36,47 +36,7 @@ function fileToBase64(file) {
     });
 }
 
-// // You could memoize this function to avoid re-creating the columns on every render.
-// function getImageColumns({ onRemove }) {
-//     return [
-//         {
-//             formatter: (row) => {
-//                 return (
-//                     <Box
-//                         sx={{
-//                             backgroundImage: `url(${row.url})`,
-//                             backgroundPosition: 'center',
-//                             backgroundSize: 'cover',
-//                             bgcolor: 'var(--mui-palette-background-level2)',
-//                             borderRadius: 1,
-//                             flex: '0 0 auto',
-//                             height: '40px',
-//                             width: '40px',
-//                         }}
-//                     />
-//                 );
-//             },
-//             name: 'Image',
-//             width: '100px',
-//         },
-//         { field: 'fileName', name: 'File name', width: '300px' },
-//         {
-//             formatter: (row) => (
-//                 <IconButton
-//                     onClick={() => {
-//                         onRemove?.(row.id);
-//                     }}
-//                 >
-//                     <TrashIcon />
-//                 </IconButton>
-//             ),
-//             name: 'Actions',
-//             hideName: true,
-//             width: '100px',
-//             align: 'right',
-//         },
-//     ];
-// }
+
 
 const schema = zod.object({
     name: zod.string().min(1, 'Tên sản phẩm là bắt buộc').max(255),

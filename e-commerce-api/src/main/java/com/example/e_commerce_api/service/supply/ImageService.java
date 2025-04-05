@@ -43,6 +43,11 @@ public class ImageService {
     public String saveImage(MultipartFile imageFile) {
         log.info("Uploading image");
         Map<String, Object> resultMap = cloudinaryService.upload(imageFile);
+
+        if (resultMap == null || !resultMap.containsKey("url")) {
+            return null; // hoặc throw exception tùy theo logic
+        }
+
         String imageUrl = (String) resultMap.get("url");
         return imageUrl;
     }

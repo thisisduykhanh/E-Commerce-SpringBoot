@@ -30,46 +30,29 @@ import { createProduct } from "@/services/products";
 import { useEffect, useState, useCallback } from "react";
 import { getGroups } from "@/services/product-group";
 
-const _schema = zod.object({
-  name: zod.string().min(1, "Name is required").max(255),
-  handle: zod.string().max(255).optional(),
-  category: zod.string().max(255).optional(),
-  type: zod.string().max(255).optional(),
-  description: zod.string().max(5000).optional(),
-  tags: zod.string().max(255).optional(),
-});
 
-const _defaultValues = {
-  name: "", // Product name
-  price: "", // Product Price
-  productGroupId: "", // Product Group ID
-  productTypeId: "", // Product Type ID// 
-  images: Array.from({ length: 4 }, () => ""), // Images
-};
 
-const hardwareOptions = ["CPU", "SSD", "RAM"];
 const suppliers = [
   { id: 1, name: "Apple" },
   { id: 2, name: "Oppo" },
 ];
 
 const groupAttributes = {
-  Headphone: ["Driver Size", "Battery Life", "Noise Cancellation"],
-  Laptop: ["Processor", "RAM", "Storage"],
-  Smartwatch: ["Screen Size", "Battery Life", "Water Resistance"],
-  Phone: ["Screen Size", "Camera", "Battery Capacity"],
-  Tablet: ["Screen Size", "Storage", "Battery Life"],
+  headphone: ["is Wireless", "Battery Life", "Noise Cancellation"],
+  laptop: ["CPU", "RAM", "Storage"],
+  smartwatch: ["GPS", "Water Resistance", "Battery Life"],
+  phone: ["Battery Capacity", "Camera", "Screen Size"],
+  tablet: ["Screen Size", "Battery Life", "Pen Support"],
 };
 
 export function ProductCreateForm() {
   const _router = useRouter();
 
   const [productTypes, setProductTypes] = useState([]);
-  const [selectedProductType, setSelectedProductType] = useState(false);
+  const [selectedProductType, setSelectedProductType] = useState("");
   const [preview, setPreview] = useState({});
   const [imageInputs, setImageInputs] = useState([0]); // Default to one input
-  const [selectedGroup, setSelectedGroup] = useState("");
-  const [hardwareSelections, setHardwareSelections] = useState({});
+  const [attributesSelections, setAttributesSelections] = useState({});
   const [groupAttributesList, setGroupAttributesList] = useState([]);
 
   const fetchProductTypes = async () => {
@@ -95,28 +78,17 @@ export function ProductCreateForm() {
 
 
 
-  const handleTypeChange = async (event) => {
-    const groupId = event.target.value;
-    selectedProductType(groupId);
-
-    // Fetch product types based on selected group
-    try {
-      const response = await getProductType(groupId);
-      if (response && response.data) {
-        setProductTypes(response.data.productTypeDTOList);
-      } else {
-        console.error("No data found in response:", response);
-      }
-    } catch (error) {
-      console.error("Error fetching product types:", error);
-    }
-  };
-
   const handleGroupChange = (event) => {
     const groupId = event.target.value;
-    setSelectedGroup(groupId);
-    setHardwareSelections({}); // Reset hardware selections when group changes
-    setGroupAttributesList(groupAttributes[groupId] || []);
+    setSelectedProductType(groupId);
+    
+    setAttributesSelections({}); // Reset hardware selections when group changes
+    const selectedGroupName = productTypes.find((type) => type.id === groupId)?.productTypeName;
+    setGroupAttributesList(groupAttributes[selectedGroupName.toLowerCase()] || []);
+
+    console.log("Selected group:", selectedGroupName);
+    console.log("Group attributes:", groupAttributesList);
+
   };
 
   const addImageInput = () => {
@@ -132,21 +104,24 @@ export function ProductCreateForm() {
   const onSubmit = useCallback(async (event) => {
     console.log("Form :", event);
 
-    // Lấy dữ liệu từ các trường của form
+    // Include attributesSelections in the form data
     const formData = new FormData();
-    formData.append("name", event.name);
+    formData.append("productName", event.name);
+    formData.append("supplierId", event.supplierId);
+    // formData.append("attributes", JSON.stringify(Object.values(attributesSelections)));
     formData.append("price", event.price);
     formData.append("productTypeId", event.productTypeId);
     formData.append("description", event.description);
     formData.append("quantity", event.quantity);
 
-    if (event.images) {
-      for (let i = 0; i < event.images.length; i++) {
-        if (event.images[i]) {
-          formData.append(`images[${i}]`, event.images[i][0]);
-        }
-      }
-    }
+
+    Object.values(attributesSelections).forEach((value) => {
+      formData.append("attributes", value);
+    });
+
+    event.images.forEach((imgFile) => {
+      formData.append("images", imgFile[0]); 
+    });
 
 
     for (let [key, value] of formData.entries()) {
@@ -156,7 +131,13 @@ export function ProductCreateForm() {
     // Gửi dữ liệu qua fetch
     try {
       const response = await createProduct(formData);
-      console.log("Response:", response);
+      
+      if (response.success) {
+        console.log("Product created successfully:", response);
+        _router.push(paths.supplier.products.list);
+      }
+
+
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -215,13 +196,13 @@ export function ProductCreateForm() {
                   <Grid item={true} md={6} xs={12}>
                     <Controller
                       control={control}
-                      name="productGroupId"
+                      name="productTypeId"
                       render={({ field }) => (
                         <FormControl
-                          error={Boolean(errors.productGroupId)}
+                          error={Boolean(errors.selectedProductType)}
                           fullWidth={true}
                         >
-                          <InputLabel>Nhóm sản phẩm</InputLabel>
+                          <InputLabel>Loại sản phẩm</InputLabel>
                           <Select
                             {...field}
                             onChange={(e) => {
@@ -231,7 +212,7 @@ export function ProductCreateForm() {
                             value={field.value ?? ""}
                           >
                             <MenuItem value="" disabled={true}>
-                              Chọn nhóm sản phẩm
+                              Chọn loại sản phẩm
                             </MenuItem>
                             {productTypes.map((type) => (
                               <MenuItem key={type.id} value={type.id}>
@@ -239,48 +220,17 @@ export function ProductCreateForm() {
                               </MenuItem>
                             ))}
                           </Select>
-                          {errors.productGroupId ? (
+                          {errors.selectedProductType ? (
                             <FormHelperText>
-                              {errors.productGroupId.message}
+                              {errors.selectedProductType.message}
                             </FormHelperText>
                           ) : null}
                         </FormControl>
                       )}
                     />
                   </Grid>
-                  {selectedGroup && (
-                    <Grid item={true} xs={12}>
-                      <Typography variant="h6">Tùy chọn phần cứng</Typography>
-                      <Grid container={true} spacing={2}>
-                        {hardwareOptions.map((option) => (
-                          <Grid item={true} xs={12} sm={4} key={option}>
-                            <Controller
-                              control={control}
-                              name={`hardware.${option}`}
-                              render={({ field }) => (
-                                <FormControl fullWidth={true}>
-                                  <InputLabel>{option}</InputLabel>
-                                  <OutlinedInput
-                                    {...field}
-                                    placeholder={`Nhập ${option}`}
-                                    value={hardwareSelections[option] || ""}
-                                    onChange={(e) => {
-                                      field.onChange(e);
-                                      setHardwareSelections((prev) => ({
-                                        ...prev,
-                                        [option]: e.target.value,
-                                      }));
-                                    }}
-                                  />
-                                </FormControl>
-                              )}
-                            />
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Grid>
-                  )}
-                  {selectedGroup && groupAttributesList.length > 0 && (
+                  
+                  {selectedProductType && groupAttributesList.length > 0 && (
                     <Grid item={true} xs={12}>
                       <Typography variant="h6">Thuộc tính nhóm sản phẩm</Typography>
                       <Grid container={true} spacing={2}>
@@ -295,14 +245,16 @@ export function ProductCreateForm() {
                                   <OutlinedInput
                                     {...field}
                                     placeholder={`Nhập ${attribute}`}
-                                    value={hardwareSelections[attribute] || ""}
+                                    value={attributesSelections[attribute] || ""}
                                     onChange={(e) => {
-                                      field.onChange(e);
-                                      setHardwareSelections((prev) => ({
+                                      const value = e.target.value;
+                                      field.onChange(value);
+                                      setAttributesSelections((prev) => ({
                                         ...prev,
-                                        [attribute]: e.target.value,
+                                        [attribute]: value, // dynamically set the correct key
                                       }));
                                     }}
+
                                   />
                                 </FormControl>
                               )}
@@ -344,59 +296,7 @@ export function ProductCreateForm() {
                       )}
                     />
                   </Grid>
-                  {selectedProductType && (
-                    <Grid item={true} md={6} xs={3}>
-                      <Controller
-                        control={control}
-                        name="productTypeId"
-                        render={({ field }) => (
-                          <FormControl
-                            error={Boolean(errors.productTypeId)}
-                            fullWidth={true}
-                          >
-                            <InputLabel>Loại sản phẩm</InputLabel>
-                            <Select
-                              {...field}
-                              value={field.value ?? ""}
-                              disabled={!selectedGroup}
-                              MenuProps={{
-                                PaperProps: {
-                                  style: {
-                                    maxHeight: 200,
-                                    overflow: "auto",
-                                    overflowX: "hidden",
-                                  },
-                                },
-                                anchorOrigin: {
-                                  vertical: "bottom",
-                                  horizontal: "left",
-                                },
-                                transformOrigin: {
-                                  vertical: "top",
-                                  horizontal: "left",
-                                },
-                              }}
-                            >
-                              <MenuItem value="" disabled={true}>
-                                Chọn loại
-                              </MenuItem>
-                              {productTypes?.map((type) => (
-                                <MenuItem key={type.id} value={type.id}>
-                                  {" "}
-                                  {type.nameProductType}
-                                </MenuItem>
-                              ))}
-                            </Select>{" "}
-                            {errors.productTypeId ? (
-                              <FormHelperText>
-                                {errors.productTypeId.message}
-                              </FormHelperText>
-                            ) : null}
-                          </FormControl>
-                        )}
-                      />
-                    </Grid>
-                  )}
+                  
                   <Grid item={true} xs={12} width="100%">
                     <Controller
                       control={control}

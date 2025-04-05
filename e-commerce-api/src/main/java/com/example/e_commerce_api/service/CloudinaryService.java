@@ -30,6 +30,10 @@ public class CloudinaryService {
 
     // tai hinh anh len cloud
     public Map upload(MultipartFile multipartFile) {
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            return null;
+        }
+
         try {
             log.info("Uploading photo to cloud: {}", multipartFile.getOriginalFilename());
             File file = convert(multipartFile);

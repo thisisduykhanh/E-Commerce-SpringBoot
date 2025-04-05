@@ -108,9 +108,15 @@ public class SupplyService {
         supplier.setAccount(accountSave);
         supplier.setStatus(false);
         Supplier supplier1= supplierRepository.save(supplier);
-        supplierDTO.deliveryCreateDTOs().forEach(delivery->{
-            deliveryService.createDelivery(delivery,supplier);
-        });
+
+
+
+        if (supplierDTO.deliveryCreateDTOs() != null) {
+            supplierDTO.deliveryCreateDTOs().forEach(delivery->{
+                deliveryService.createDelivery(delivery,supplier);
+            });
+        }
+
 
 
         return supplier1;
