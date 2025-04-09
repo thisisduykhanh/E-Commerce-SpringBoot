@@ -217,6 +217,10 @@ public enum Error {
     SUPPLIER_NOT_FOUND(21001, "supplier not found", HttpStatus.NOT_FOUND),
     PRODUCT_GROUP_NOT_FOUND(22001, "product group not found", HttpStatus.NOT_FOUND),
     INVALID_ORDER_STATUS(1803,"invalid order status",HttpStatus.BAD_REQUEST),
+    ORDER_STATUS_ERRO_CANNCELED(1803,"order cannceled before",HttpStatus.BAD_REQUEST),
+    ORDER_STATUS_ERRO_UPDATE(1803,"order paid so cannot cancel or return pending",HttpStatus.BAD_REQUEST),
+
+
     PAYMENT_METHOD_NOT_FOUND(1804,"payment method not found",HttpStatus.BAD_REQUEST);
 
     private final int code;

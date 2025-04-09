@@ -5,6 +5,7 @@ import com.example.e_commerce_api.dto.supply.SupplierCreateDTO;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.Role;
 import com.example.e_commerce_api.entity.user.User;
+import com.example.e_commerce_api.repository.order.OrderStatusRepository;
 import com.example.e_commerce_api.repository.product.ProductTypeRepository;
 import com.example.e_commerce_api.repository.supply.SupplierRepository;
 import com.example.e_commerce_api.repository.user.RoleRepository;
@@ -36,7 +37,10 @@ public class StartupSeeder {
 
     private RoleRepository repository;
 
-    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository, ProductTypeService productTypeService, ProductTypeRepository productTypeRepository, SupplyService supplyService, SupplierRepository supplierRepository) {
+
+    private final OrderStatusRepository orderStatusRepository;
+
+    public StartupSeeder(UserRepository userRepository, RoleService roleService, AccountService accountService, RoleRepository repository, ProductTypeService productTypeService, ProductTypeRepository productTypeRepository, SupplyService supplyService, SupplierRepository supplierRepository, OrderStatusRepository orderStatusRepository) {
         this.userRepository = userRepository;
 
         this.roleService = roleService;
@@ -49,6 +53,8 @@ public class StartupSeeder {
 
         this.supplyService = supplyService;
         this.supplierRepository = supplierRepository;
+
+        this.orderStatusRepository = orderStatusRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -93,6 +99,12 @@ public class StartupSeeder {
             supplyService.createSupplier(new SupplierCreateDTO(null, "DELL", null, "USA", "dell@supplier.com", "dell123"));
 
             supplyService.createSupplier(new SupplierCreateDTO(null, "XIAOMI", null, "CHINA", "xiaomi@supplier.com", "xiaomi123"));
+        }
+
+        if(orderStatusRepository.count() == 0) {
+            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(1, "PENDING"));
+            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(2, "PAID"));
+            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(3, "CANCELLED"));
         }
     }
 }

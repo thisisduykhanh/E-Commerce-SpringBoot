@@ -4,7 +4,6 @@ package com.example.e_commerce_api.service.order;
 
 import com.example.e_commerce_api.dto.OrderDTO;
 import com.example.e_commerce_api.dto.cart.OrderCreateDTO;
-import com.example.e_commerce_api.dto.payment.PaymentRequest;
 import com.example.e_commerce_api.dto.payment.PaymentResponse;
 import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.entity.order.Order;
@@ -30,7 +29,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -125,18 +123,27 @@ public class OrderService {
 
     }
     public  void updateStatus(Integer idOrder,Integer idStatus){
+
         Order orders=orderRepository.findById(idOrder)
                 .orElseThrow(()->new CustomException(Error.ORDERS_NOT_FOUND));
         OrderStatus orderStatus=orderStatusRepository.findById(idStatus).orElseThrow();
+
+        if(orders.getOrderStatus().getName().equals("CANCELLED")){
+            throw new CustomException(Error.ORDER_STATUS_ERRO_CANNCELED);
+        }
+
+        if(orders.getOrderStatus().getName().equals("PAID")){
+            throw new CustomException(Error.ORDER_STATUS_ERRO_UPDATE);
+        }
+
         orders.setOrderStatus(orderStatus);
         orderRepository.save(orders);
 
     }
 
-    public Page<Order> getOrdersBySupplierAndStatus( Integer orderStatusId, Pageable pageable) {
+    public Page<Order> getOrdersByStatus( Integer orderStatusId, Pageable pageable) {
         OrderStatus orderStatus=orderStatusRepository.findById(orderStatusId).orElseThrow();
-        Supplier supplier = supplyService.getCurrentSupplier();
-        return orderRepository.findBySupplierAndOrderStatusOrderByCreateDateDesc(supplier, orderStatus, pageable);
+        return orderRepository.findByOrderStatus(orderStatus, pageable);
     }
     public Page<Order> getOrdersByUser(Pageable pageable) {
         User user=userService.findUserByAccount(getCurrentUser());
