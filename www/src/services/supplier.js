@@ -11,7 +11,7 @@ export const getProductType = async (productGroupId) => {
     const response = await apiClient.get(`supplier/productGroup?id=${productGroupId}`);
     return response;
 };
-export const fetchProduct = async (productGroupId) => {
+export const fetchProduct2 = async (productGroupId) => {
     const response = await apiClient.get(`users/search/product?id=${productGroupId}`);
     return response;
 };
