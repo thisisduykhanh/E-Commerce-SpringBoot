@@ -1,26 +1,24 @@
 package com.example.e_commerce_api.pattern.observer;
 
-import com.example.e_commerce_api.entity.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartSubject {
     private final List<CartObserver> observers = new ArrayList<>();
-    private int itemCount = 0;
 
-    public void addObserver(CartObserver observer) {
+    public void attach(CartObserver observer) {
         observers.add(observer);
     }
 
-    public void setItemCount(int count) {
-        this.itemCount = count;
-        notifyObservers();
+    public void detach(CartObserver observer) {
+        observers.remove(observer);
     }
 
-    private void notifyObservers() {
+    public void notifyCartUpdated(Integer accountId) {
         for (CartObserver observer : observers) {
-            observer.update(itemCount);
+            observer.updateCart(accountId);
         }
     }
 }
+

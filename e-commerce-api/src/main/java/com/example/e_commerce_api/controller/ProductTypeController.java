@@ -5,9 +5,7 @@ import com.example.e_commerce_api.dto.product.ProductTypeCreateDTO;
 import com.example.e_commerce_api.dto.product.ProductTypeUpdateDTO;
 import com.example.e_commerce_api.entity.product.ProductType;
 import com.example.e_commerce_api.service.product.ProductTypeService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

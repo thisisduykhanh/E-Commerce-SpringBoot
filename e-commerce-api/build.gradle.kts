@@ -56,7 +56,8 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 
 
-
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket
+	implementation("org.springframework.boot:spring-boot-starter-websocket:3.4.4")
 
 }
 

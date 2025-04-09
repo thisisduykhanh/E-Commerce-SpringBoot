@@ -5,10 +5,13 @@ import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.entity.product.Product;
 import com.example.e_commerce_api.exception.CustomException;
 import com.example.e_commerce_api.exception.Error;
+import com.example.e_commerce_api.pattern.observer.CartUpdateSubject;
+import com.example.e_commerce_api.pattern.observer.CartWebSocketNotifier;
 import com.example.e_commerce_api.pattern.singleton.CartSingletonService;
 import com.example.e_commerce_api.repository.cart.CartDetailRepository;
 import com.example.e_commerce_api.repository.cart.CartRepository;
 import com.example.e_commerce_api.repository.product.ProductRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -36,8 +39,18 @@ public class CartDetailService {
     @Autowired
     private CartSingletonService cartService;
 
+    @Autowired
+    private CartUpdateSubject cartUpdateSubject;
+    @Autowired
+    private CartWebSocketNotifier cartWebSocketNotifier;
+
+    @PostConstruct
+    public void initObserver() {
+        cartUpdateSubject.attach(cartWebSocketNotifier);
+    }
+
     @Transactional
-    public CartDetail createOrUpdateCartDetail( Integer productId, Integer quantity) {
+    public CartDetail createOrUpdateCartDetail(Integer productId, Integer quantity) {
         // Tìm Cart
         Cart cart = cartService.getCartForCurrentUser();
 
@@ -57,11 +70,14 @@ public class CartDetailService {
             // remove cartDetail if quantity <= 0
             if (existingCartDetail.getQuantity() <= 0) {
                 cartDetailRepository.delete(existingCartDetail);
+                cartUpdateSubject.notifyCartUpdated(cart.getAccount().getId()); // Thông báo sau khi xóa
                 return null;
             }
 
             try {
-                return cartDetailRepository.save(existingCartDetail);
+                CartDetail savedDetail = cartDetailRepository.save(existingCartDetail);
+                cartUpdateSubject.notifyCartUpdated(cart.getAccount().getId()); // Thông báo sau khi lưu
+                return savedDetail;
             } catch (ObjectOptimisticLockingFailureException e) {
                 throw new CustomException(Error.CART_UNABLE_TO_SAVE);
             }
@@ -76,9 +92,12 @@ public class CartDetailService {
             newCartDetail.setCart(cart);
             newCartDetail.setProduct(product);
             newCartDetail.setQuantity(quantity);
-            return cartDetailRepository.save(newCartDetail);
+            CartDetail savedDetail = cartDetailRepository.save(newCartDetail);
+            cartUpdateSubject.notifyCartUpdated(cart.getAccount().getId()); // Thông báo sau khi thêm mới
+            return savedDetail;
         }
     }
+
     public void deleteCartDetail( Integer cartDetailId) {
         // Tìm Cart
         CartDetail cartDetail =cartDetailRepository.findById(cartDetailId).orElseThrow(()->new CustomException(Error.CARTDETAIL_NOT_FOUND));

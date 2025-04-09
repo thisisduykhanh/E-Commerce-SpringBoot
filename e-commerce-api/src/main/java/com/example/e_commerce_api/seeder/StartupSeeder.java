@@ -5,7 +5,6 @@ import com.example.e_commerce_api.dto.supply.SupplierCreateDTO;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.Role;
 import com.example.e_commerce_api.entity.user.User;
-import com.example.e_commerce_api.repository.product.ProductRepository;
 import com.example.e_commerce_api.repository.product.ProductTypeRepository;
 import com.example.e_commerce_api.repository.supply.SupplierRepository;
 import com.example.e_commerce_api.repository.user.RoleRepository;
