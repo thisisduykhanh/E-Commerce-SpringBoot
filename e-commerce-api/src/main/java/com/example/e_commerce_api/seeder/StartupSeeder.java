@@ -2,6 +2,7 @@ package com.example.e_commerce_api.seeder;
 
 import com.example.e_commerce_api.dto.product.ProductTypeCreateDTO;
 import com.example.e_commerce_api.dto.supply.SupplierCreateDTO;
+import com.example.e_commerce_api.entity.order.OrderStatus;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.Role;
 import com.example.e_commerce_api.entity.user.User;
@@ -102,9 +103,9 @@ public class StartupSeeder {
         }
 
         if(orderStatusRepository.count() == 0) {
-            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(1, "PENDING"));
-            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(2, "PAID"));
-            orderStatusRepository.save(new com.example.e_commerce_api.entity.order.OrderStatus(3, "CANCELLED"));
+            orderStatusRepository.save(new OrderStatus(1, "PENDING"));
+            orderStatusRepository.save(new OrderStatus(2, "PAID"));
+            orderStatusRepository.save(new OrderStatus(3, "CANCELLED"));
         }
     }
 }
