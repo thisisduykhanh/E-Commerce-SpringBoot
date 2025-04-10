@@ -93,7 +93,7 @@ export default function Page({ searchParams }) {
     const [products, setProducts] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(2);
-    const [totalElements, setTotalElements] = React.useState(0); // Thêm state cho tổng số phần tử
+    const [totalElements, setTotalElements] = React.useState(0);
 
     const { category, previewId, sortDir, sku, status } = searchParams;
     if (searchParams.status == null) {
@@ -101,10 +101,9 @@ export default function Page({ searchParams }) {
     }
     const currentStatus = searchParams.status;
     const fetchProducts = React.useCallback(async (page, size, status) => {
-        const response = await getProducts(status, page, size);
-        console.log('data: ', response.data);
+        const response = await getProducts(page, size);
         setProducts(response.data);
-        setTotalElements(response.data.totalElements); // Cập nhật tổng số phần tử
+        setTotalElements(response.data.totalElements);
     }, []);
 
     React.useEffect(() => {

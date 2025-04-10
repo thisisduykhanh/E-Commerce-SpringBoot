@@ -26,6 +26,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { CompanyShare } from './components/social-share';
 import { SimilarProducts } from './similar-products';
+import {fetchProduct2} from "@/services/supplier";
 
 function ProductDetailPage() {
     const params = useParams();
@@ -35,18 +36,20 @@ function ProductDetailPage() {
     useEffect(() => {
         const getProductDetail = async () => {
             try {
-                const response = await fetchProductDetail(id);
-                if (response?.data?.officialPriceDTO) {
-                    response.data.officialPriceDTO.sort((a, b) => a.price - b.price);
+                const {data} = await getProduct(id)
+              logger.debug("data", data)
+                if (data?.price) {
+                    data.price.sort((a, b) => a.price - b.price);
                 }
-                logger.debug('Product detail:', response.data);
-                setProductDetail(response.data);
+                logger.debug('Product detail:', data);
+                setProductDetail(data);
             } catch (error) {
                 logger.error('Error fetching product detail:', error);
             }
         };
 
         if (id) {
+          logger.debug('Product detail:', id);
             getProductDetail();
         }
     }, [id]);
@@ -427,7 +430,7 @@ function ProductDetailPage() {
                         {/* Tên sản phẩm và trạng thái */}
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <Typography variant="h4" fontWeight="bold">
-                                {productDetail?.nameProduct}
+                                {productDetail?.productName}
                             </Typography>
                             <Typography
                                 variant="body2"

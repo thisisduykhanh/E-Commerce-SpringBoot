@@ -17,31 +17,10 @@ export const createProduct = async (
   };
 
 
-/**
- * Fetch products from the API
- * @param {number} page - The page number to fetch
- * @param {number} size - The number of items per page
- * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API
- */
-export const getProducts = async (page = 0, size = 10) => {
+export const getUsers = async (page = 0, size = 10) => {
   try {
-    const response = await apiClient.get(`/products?page=${page}&size=${size}`);
+    const response = await apiClient.get(`/users?page=${page}&size=${size}`);
     return response; // This will return the entire response object
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    throw error;
-  }
-}
-
-/**
- * Fetch a specific product by ID
- * @param {number} id - The ID of the product to fetch
- * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API
- */
-export const getProduct = async (id) => {
-  try {
-    const response = await apiClient.get(`/products/${id}`);
-    return response;
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;

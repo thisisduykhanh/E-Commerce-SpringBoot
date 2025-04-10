@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box, CircularProgress, Grid2 as Grid, IconButton, Modal } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
+import {getProducts} from "@/services/products";
 
 const useStyles = makeStyles(() => ({
     left: {
@@ -58,20 +59,21 @@ function Product() {
             setLoading(true);
             setError(null);
             try {
-                const { data } = await apiClient.get('/products', {
-                    params: {
-                        isProduct: true,
-                        supplierId: filters.supplierId,
-                        productCategory: filters.productCategory,
-                        address: filters.address,
-                        minPrice: filters.priceRange.min,
-                        maxPrice: filters.priceRange.max,
-                        page: currentPage - 1,
-                        size: 12,
-                    },
-                });
-                const productsData = data?.content || [];
-                setProducts(productsData);
+                // const { data } = await apiClient.get('/products', {
+                //     params: {
+                //         isProduct: true,
+                //         supplierId: filters.supplierId,
+                //         productCategory: filters.productCategory,
+                //         address: filters.address,
+                //         minPrice: filters.priceRange.min,
+                //         maxPrice: filters.priceRange.max,
+                //         page: currentPage - 1,
+                //         size: 12,
+                //     },
+                // });
+              const {data} = await getProducts(0 , 10)
+                logger.debug("data", data)
+                setProducts(data || []);
             } catch (err) {
                 logger.error('Error fetching data from API:', err);
                 setError('Failed to load products');
@@ -82,6 +84,7 @@ function Product() {
         };
 
         fetchProducts();
+
     }, [filters, currentPage]);
 
     const handleFilterChange = (newFilter) => {
