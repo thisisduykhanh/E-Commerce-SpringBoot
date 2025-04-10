@@ -6,6 +6,8 @@ import com.example.e_commerce_api.entity.order.Order;
 import com.example.e_commerce_api.entity.order.OrderDetail;
 import com.example.e_commerce_api.repository.order.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,4 +26,9 @@ public class OrderDetailService {
         orderDetail.setOrder(order);
         orderDetailRepository.save(orderDetail);
     }
+
+    public Page<OrderDetail> getOrderDetailByOrderId(Integer orderId, Pageable pageable) {
+        return orderDetailRepository.getOrderDetailByOrderId(orderId, pageable);
+    }
+
 }

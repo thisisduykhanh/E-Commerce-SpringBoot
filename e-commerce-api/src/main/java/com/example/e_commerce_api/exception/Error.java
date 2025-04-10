@@ -220,6 +220,7 @@ public enum Error {
     ORDER_STATUS_ERRO_CANNCELED(1803,"order cannceled before",HttpStatus.BAD_REQUEST),
     ORDER_STATUS_ERRO_UPDATE(1803,"order paid so cannot cancel or return pending",HttpStatus.BAD_REQUEST),
 
+    PRODUCT_OUT_OF_STOCK(1801,"product out of stock",HttpStatus.BAD_REQUEST),
 
     PAYMENT_METHOD_NOT_FOUND(1804,"payment method not found",HttpStatus.BAD_REQUEST);
 

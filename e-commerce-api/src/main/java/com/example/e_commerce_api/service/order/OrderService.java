@@ -7,7 +7,9 @@ import com.example.e_commerce_api.dto.cart.OrderCreateDTO;
 import com.example.e_commerce_api.dto.payment.PaymentResponse;
 import com.example.e_commerce_api.entity.cart.CartDetail;
 import com.example.e_commerce_api.entity.order.Order;
+import com.example.e_commerce_api.entity.order.OrderDetail;
 import com.example.e_commerce_api.entity.order.OrderStatus;
+import com.example.e_commerce_api.entity.product.Product;
 import com.example.e_commerce_api.entity.supply.Supplier;
 import com.example.e_commerce_api.entity.user.Account;
 import com.example.e_commerce_api.entity.user.User;
@@ -16,8 +18,10 @@ import com.example.e_commerce_api.exception.Error;
 import com.example.e_commerce_api.pattern.strategy.PaymentContext;
 import com.example.e_commerce_api.pattern.strategy.PaymentStrategy;
 import com.example.e_commerce_api.repository.cart.CartDetailRepository;
+import com.example.e_commerce_api.repository.order.OrderDetailRepository;
 import com.example.e_commerce_api.repository.order.OrderRepository;
 import com.example.e_commerce_api.repository.order.OrderStatusRepository;
+import com.example.e_commerce_api.repository.product.ProductRepository;
 import com.example.e_commerce_api.service.UserService;
 import com.example.e_commerce_api.service.supply.SupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +62,13 @@ public class OrderService {
     @Autowired
     private PaymentContext paymentContext;
 
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+
     @Transactional
     public PaymentResponse processPayment(Integer orderId, String method) {
         Order order = orderRepository.findById(orderId)
@@ -86,6 +97,18 @@ public class OrderService {
                         .orElseThrow(() -> new CustomException(Error.CARTDETAIL_NOT_FOUND)))
                 .toList();
 
+        // ✅ Kiểm tra số lượng tồn kho cho từng sản phẩm
+        for (CartDetail cartDetail : cartDetails) {
+            int orderedQuantity = cartDetail.getQuantity();
+            int availableQuantity = cartDetail.getProduct().getQuantity();
+
+            if (orderedQuantity > availableQuantity) {
+                throw new CustomException(
+                        Error.PRODUCT_OUT_OF_STOCK
+                );
+            }
+        }
+
 
         Map<Supplier, List<CartDetail>> cartDetailsBySupplier = cartDetails.stream()
                 .collect(Collectors.groupingBy(
@@ -113,7 +136,17 @@ public class OrderService {
                     order.setCreateDate(LocalDateTime.now());
                     Order savedOrder = orderRepository.save(order);
                     details.forEach(cartDetail -> {
-                        orderDetailService.createOrderDetail(cartDetail,savedOrder);
+                        Product product = cartDetail.getProduct();
+
+                        // Trừ số lượng tồn kho
+                        int remaining = product.getQuantity() - cartDetail.getQuantity();
+                        product.setQuantity(remaining);
+
+                        // Lưu sản phẩm đã cập nhật số lượng
+                        productRepository.save(product);
+
+                        // Tạo OrderDetail
+                        orderDetailService.createOrderDetail(cartDetail, savedOrder);
                     });
                     return savedOrder;
                 }).collect(Collectors.toList());
@@ -122,18 +155,30 @@ public class OrderService {
         return orders.stream().map(OrderDTO::fromEntity).toList();
 
     }
-    public  void updateStatus(Integer idOrder,Integer idStatus){
+    public void updateStatus(Integer idOrder,Integer idStatus){
 
         Order orders=orderRepository.findById(idOrder)
                 .orElseThrow(()->new CustomException(Error.ORDERS_NOT_FOUND));
         OrderStatus orderStatus=orderStatusRepository.findById(idStatus).orElseThrow();
 
-        if(orders.getOrderStatus().getName().equals("CANCELLED")){
+        if(orders.getOrderStatus().getName().equalsIgnoreCase("CANCELLED")){
             throw new CustomException(Error.ORDER_STATUS_ERRO_CANNCELED);
         }
 
-        if(orders.getOrderStatus().getName().equals("PAID")){
+        if(orders.getOrderStatus().getName().equalsIgnoreCase("PAID")){
             throw new CustomException(Error.ORDER_STATUS_ERRO_UPDATE);
+        }
+
+
+        if ("CANCELLED".equalsIgnoreCase(orderStatus.getName())) {
+            List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(orders);
+
+            for (OrderDetail detail : orderDetails) {
+                Product product = detail.getProduct();
+                int restoredQuantity = product.getQuantity() + detail.getQuantity();
+                product.setQuantity(restoredQuantity);
+                productRepository.save(product);
+            }
         }
 
         orders.setOrderStatus(orderStatus);
@@ -153,5 +198,10 @@ public class OrderService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account account = (Account) authentication.getPrincipal();
         return account;
+    }
+
+    public Order getOrderById(Integer orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(Error.ORDERS_NOT_FOUND));
     }
 }
