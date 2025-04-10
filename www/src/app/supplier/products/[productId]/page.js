@@ -9,7 +9,7 @@ import * as React from 'react';
 import { paths } from '@/paths';
 import { ProductEditForm } from '@/components/dashboard/product/product-edit-form';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { fetchProduct } from '@/services/supplier';
+import { fetchProduct2 } from '@/services/supplier';
 
 
 // export const metadata = { title: `Details | Products | Dashboard | ${config.site.name}` };
@@ -26,7 +26,7 @@ export default function Page() {
 
     const fetchProductsDetailAsync = React.useCallback(async () => {
         try {
-            const response = await fetchProduct(id);
+            const response = await fetchProduct2(id);
             console.log('data', response);
             setProductsDetail(response.data);
         } catch (error) {

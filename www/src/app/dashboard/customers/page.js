@@ -13,6 +13,8 @@ import { CustomersSelectionProvider } from '@/components/dashboard/customer/cust
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import * as React from 'react';
 import{getUser} from '@/services/admin'
+import {getUsers} from "@/services/users";
+import {logger} from "@/lib/default-logger";
 
 
 
@@ -74,32 +76,32 @@ export default function Page({ searchParams }) {
         //   const [customers, setCustomers] = React.useState([]);
         const [user, setUser] = React.useState([]);
          const [page, setPage] = React.useState(0);
-          const [rowsPerPage, setRowsPerPage] = React.useState(2);
+          const [rowsPerPage, setRowsPerPage] = React.useState(10);
           const [totalElements, setTotalElements] = React.useState(0);
-       
-    
-       if (searchParams.status == null) { 
+
+
+       if (searchParams.status == null) {
          searchParams.status = "Pending";
-     
+
         } const currentStatus = searchParams.status;
        const fetchUser = React.useCallback(async (page, size ) => {
-         const response = await getUser(page, size);
-         console.log("data: ", response.data.content);
+         const response = await getUsers(page, size);
+         logger.debug(response)
          setUser(response.data.content);
-         setTotalElements(response.data.totalElements); // Cập nhật tổng số phần tử
+         setTotalElements(response.data.totalElements);
        }, []);
-     
+
        React.useEffect(() => {
         fetchUser(page, rowsPerPage, currentStatus);
        }, [fetchUser, page, rowsPerPage, currentStatus]);
-       
-    
+
+
       const handlePageChange = (_event, newPage) => {
         console.log("1");
         setPage(newPage);
         fetchUser(newPage, rowsPerPage); // Fetch lại dữ liệu khi thay đổi trang
       };
-    
+
       const handleRowsPerPageChange = (event) => {
         const newSize = parseInt(event.target.value, 10);
         setRowsPerPage(newSize);
@@ -137,7 +139,7 @@ export default function Page({ searchParams }) {
                         <CustomersPagination count={totalElements} // Sử dụng tổng số phần tử từ BE
               page={page}
               onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange} /> 
+              onRowsPerPageChange={handleRowsPerPageChange} />
                     </Card>
                 </CustomersSelectionProvider>
             </Stack>

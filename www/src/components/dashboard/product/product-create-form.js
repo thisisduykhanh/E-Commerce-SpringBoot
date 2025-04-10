@@ -29,6 +29,7 @@ import { createProduct } from "@/services/products";
 
 import { useEffect, useState, useCallback } from "react";
 import { getGroups } from "@/services/product-group";
+import {logger} from "@/lib/default-logger";
 
 
 
@@ -51,7 +52,7 @@ export function ProductCreateForm() {
   const [productTypes, setProductTypes] = useState([]);
   const [selectedProductType, setSelectedProductType] = useState("");
   const [preview, setPreview] = useState({});
-  const [imageInputs, setImageInputs] = useState([0]); // Default to one input
+  const [imageInputs, setImageInputs] = useState([0]);
   const [attributesSelections, setAttributesSelections] = useState({});
   const [groupAttributesList, setGroupAttributesList] = useState([]);
 
@@ -66,7 +67,7 @@ export function ProductCreateForm() {
         } else {
             console.error("No data found in response:", response);
         }
-      
+
     } catch (error) {
       console.error("Error fetching product types:", error);
     }
@@ -81,13 +82,13 @@ export function ProductCreateForm() {
   const handleGroupChange = (event) => {
     const groupId = event.target.value;
     setSelectedProductType(groupId);
-    
+
     setAttributesSelections({}); // Reset hardware selections when group changes
     const selectedGroupName = productTypes.find((type) => type.id === groupId)?.productTypeName;
     setGroupAttributesList(groupAttributes[selectedGroupName.toLowerCase()] || []);
 
-    console.log("Selected group:", selectedGroupName);
-    console.log("Group attributes:", groupAttributesList);
+    // console.log("Selected group:", selectedGroupName);
+    // console.log("Group attributes:", groupAttributesList);
 
   };
 
@@ -102,7 +103,7 @@ export function ProductCreateForm() {
   } = useForm();
 
   const onSubmit = useCallback(async (event) => {
-    console.log("Form :", event);
+
 
     // Include attributesSelections in the form data
     const formData = new FormData();
@@ -120,20 +121,22 @@ export function ProductCreateForm() {
     });
 
     event.images.forEach((imgFile) => {
-      formData.append("images", imgFile[0]); 
+      formData.append("images", imgFile[0]);
     });
 
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
+
+    logger.debug(formData)
 
     // Gửi dữ liệu qua fetch
     try {
       const response = await createProduct(formData);
-      
+
       if (response.success) {
-        console.log("Product created successfully:", response);
+
         _router.push(paths.supplier.products.list);
       }
 
@@ -143,7 +146,7 @@ export function ProductCreateForm() {
     }
   }, []);
 
-  console.log(productTypes);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -229,7 +232,7 @@ export function ProductCreateForm() {
                       )}
                     />
                   </Grid>
-                  
+
                   {selectedProductType && groupAttributesList.length > 0 && (
                     <Grid item={true} xs={12}>
                       <Typography variant="h6">Thuộc tính nhóm sản phẩm</Typography>
@@ -296,7 +299,7 @@ export function ProductCreateForm() {
                       )}
                     />
                   </Grid>
-                  
+
                   <Grid item={true} xs={12} width="100%">
                     <Controller
                       control={control}
