@@ -7,6 +7,7 @@ export const createProduct = async (
 	  const response = await apiClient.post('/products', formData, {
 		headers: {
 		  'Content-Type': 'multipart/form-data',
+
 		},
 	  });
 

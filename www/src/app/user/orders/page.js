@@ -417,31 +417,7 @@ function Orders() {
                                         }}
                                     />
 
-                                    <FormControlLabel
-                                        control={<Checkbox />}
-                                        label={
-                                            <Box display="flex" alignItems="center">
-                                                <img
-                                                    src="/payment/visa.png"
-                                                    alt="ngân hàng"
-                                                    style={{
-                                                        width: 60,
-                                                        height: 40,
-                                                        marginRight: 8,
-                                                        objectFit: 'contain',
-                                                    }}
-                                                />
-                                                <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                                                    Thẻ ATM/Internet Banking (Miễn phí thanh toán)
-                                                </span>
-                                            </Box>
-                                        }
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            marginBottom: 1,
-                                        }}
-                                    />
+                                
                                     <FormControlLabel
                                         control={<Checkbox />}
                                         label={
@@ -457,7 +433,7 @@ function Orders() {
                                                     }}
                                                 />{' '}
                                                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>
-                                                    Visa, Master, JCB (Miễn phí thanh toán)
+                                                    Thẻ tín dụng
                                                 </span>
                                             </Box>
                                         }

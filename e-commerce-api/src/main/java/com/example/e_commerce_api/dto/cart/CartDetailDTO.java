@@ -2,7 +2,8 @@ package com.example.e_commerce_api.dto.cart;
 
 import java.math.BigDecimal;
 
-public record CartDetailDTO(
+public record
+CartDetailDTO(
         Integer id,
         Integer productId,
         Integer quantity,

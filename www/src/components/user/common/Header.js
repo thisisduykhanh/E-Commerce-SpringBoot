@@ -113,24 +113,7 @@ export default function Header() {
             width: "auto",
           }}
         >
-          <Button
-            variant="text"
-            component={Link}
-            href="/auth/custom/sign-up"
-            sx={{
-              color: "#666666 !important",
-              textTransform: "none",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Đăng Ký Nhà Bán
-          </Button>
-          <Divider
-            orientation="vertical"
-            flexItem={true}
-            sx={{ borderColor: "#666666", margin: "0 10px", opacity: 0.5 }}
-          />
+         
           <Button
             variant="text"
             startIcon={<LocalShippingIcon sx={{ color: "#00A6B7" }} />}

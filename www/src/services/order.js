@@ -31,9 +31,13 @@ export const getOrderSupply = async (orderStatus, page = 0, size = 10) => {
     }
 };
 
-export const getMyOrder = async (status,page,size) => {
+/**
+ * Get my order details 
+ * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API
+ */
+export const getMyOrder = async () => {
     try {
-        const response = await apiClient.get(`/users/orders?orderStatus=${status}&page=${page}&size=${size}`);
+        const response = await apiClient.get(`/orders/myOrders`);
         return response;
     } catch (error) {
         throw error;

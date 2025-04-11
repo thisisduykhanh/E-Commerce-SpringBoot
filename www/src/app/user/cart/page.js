@@ -9,10 +9,9 @@ import CartItem from "./cart-item";
 import OrderSummary from '../orders/order_summary/page';
 
 function CartPage() {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartData, setCartData] = useState(null);
     const [confirmDialog, setConfirmDialog] = useState({ open: false, itemId: null });
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const taxRate = 0.1; // Thuế 10%
@@ -22,10 +21,10 @@ function CartPage() {
         const getCart = async () => {
             try {
                 const response = await fetchCart();
-                if (response?.data) {
-                    const cartData = response.data;
-                    setCartItems(cartData);
-                    setTotalPrice(cartData.totalPrice);
+                if (response.success) {
+                    setCartData(response.data);
+                } else {
+                    logger.error('Lỗi khi lấy giỏ hàng:', response.message);
                 }
             } catch (error) {
                 logger.error('Lỗi khi lấy giỏ hàng:', error);
@@ -35,106 +34,48 @@ function CartPage() {
         getCart();
     }, []);
 
- const handleQuantityChange = async (id, delta) => {
-    // Tìm item cần thay đổi trong giỏ hàng
-    const item = cartItems.cartSupplierDTOS
-        .flatMap((supplier) => supplier.cartDetailDTOS)
-        .find((item) => item.id === id);
+    const handleQuantityChange = async (id, delta) => {
+        const updatedCartData = { ...cartData };
+        const item = updatedCartData.cartSupplierDTOs
+            .flatMap((supplier) => supplier.cartDetailDTOs)
+            .find((item) => item.id === id);
 
-    if (!item) return;
+        if (!item) return;
 
-    const newQuantity = Math.max(item.quantity + delta, 1); // Đảm bảo số lượng không nhỏ hơn 1
+        item.quantity = Math.max(item.quantity + delta, 1);
+        item.totalPrice = item.quantity * item.unitPrice;
 
-    // Cập nhật trực tiếp giỏ hàng trong state (không cần gọi API ngay lập tức)
-    const updatedCartItems = {
-        ...cartItems,
-        cartSupplierDTOS: cartItems.cartSupplierDTOS.map((supplier) => ({
-            ...supplier,
-            cartDetailDTOS: supplier.cartDetailDTOS.map((cartItem) =>
-                cartItem.id === id ? { ...cartItem, quantity: newQuantity } : cartItem
-            ),
-        })),
-    };
-
-    setCartItems(updatedCartItems); // Cập nhật giỏ hàng trong state
-
-    // Tính lại tổng giá trị giỏ hàng sau khi cập nhật số lượng
-    const newTotalPrice = updatedCartItems.cartSupplierDTOS.reduce((total, supplier) => {
-        const supplierTotal = supplier.cartDetailDTOS.reduce(
-            (sum, cartItem) => sum + cartItem.unitPrice * cartItem.quantity,
-            0
-        );
-        return total + supplierTotal;
-    }, 0);
-
-    setTotalPrice(newTotalPrice); // Cập nhật lại tổng giá trị giỏ hàng
-
-    try {
-        const response = await updateCart(id, newQuantity);
-
-        if (response.success) {
-            // Chỉ cập nhật giỏ hàng và tổng giá trị nếu cập nhật thành công
-            // Không cần làm gì thêm
-        } else {
-            // Nếu API trả về lỗi, hiển thị thông báo lỗi
-            logger.error('API trả về lỗi:', response.message);
+        try {
+            const response = await updateCart(id, item.quantity);
+            if (response.success) {
+                setCartData(updatedCartData);
+            } else {
+                logger.error('API trả về lỗi:', response.message);
+                setSnackbarMessage('Không thể cập nhật số lượng sản phẩm.');
+                setOpenSnackbar(true);
+            }
+        } catch (error) {
+            logger.error('Lỗi khi cập nhật giỏ hàng:', error);
             setSnackbarMessage('Không thể cập nhật số lượng sản phẩm.');
             setOpenSnackbar(true);
         }
-    } catch (error) {
-        // Nếu có lỗi trong quá trình gọi API, hiển thị thông báo lỗi
-        logger.error('Lỗi khi cập nhật giỏ hàng:', error);
-        setSnackbarMessage('Không thể cập nhật số lượng sản phẩm.');
-        setOpenSnackbar(true);
-    }
-};
-
-
-
-
-
-    // const handleChangeInput = (e, item) => {
-    //     const newQuantity = parseInt(e.target.value, 10);
-    //     if (!isNaN(newQuantity) && newQuantity > 0) {
-    //         const updatedItems = cartItems.map((supplier) => ({
-    //             ...supplier,
-    //             cartDetailDTOS: supplier.cartDetailDTOS.map((i) =>
-    //                 i.idProduct === item.idProduct ? { ...i, quantity: newQuantity } : i
-    //             ),
-    //         }));
-    //         setCartItems(updatedItems);
-    //     }
-    // };
-
-    // const handleBlur = async (e, item) => {
-    //     const newQuantity = parseInt(e.target.value, 10);
-    //     if (newQuantity >= 1 && newQuantity !== item.quantity) {
-    //         await updateCart(item.idProduct, newQuantity);
-    //     }
-    // };
+    };
 
     const handleRemoveItem = async (id) => {
         try {
             const response = await deleteProductInCart(id);
             if (response.success) {
-                // Nếu xóa thành công, gọi lại API để lấy lại giỏ hàng mới
                 const updatedCartResponse = await fetchCart();
-
-                if (updatedCartResponse?.data) {
-                    // Cập nhật lại cartItems và tổng giá trị
-                    setCartItems(updatedCartResponse.data);
-                    setTotalPrice(updatedCartResponse.data.totalPrice);
+                if (updatedCartResponse.success) {
+                    setCartData(updatedCartResponse.data);
+                    setSnackbarMessage('Sản phẩm đã được xóa thành công');
+                    setOpenSnackbar(true);
                 }
-
-                // Đóng dialog và hiển thị thông báo
-                setConfirmDialog({ open: false, itemId: null });
-                setSnackbarMessage('Sản phẩm đã được xóa thành công');
-                setOpenSnackbar(true);
             } else {
-                console.error('Lỗi khi xóa sản phẩm:', response.message);
+                logger.error('Lỗi khi xóa sản phẩm:', response.message);
             }
         } catch (error) {
-            console.error('Lỗi khi xóa sản phẩm:', error);
+            logger.error('Lỗi khi xóa sản phẩm:', error);
         }
     };
 
@@ -142,7 +83,6 @@ function CartPage() {
         if (confirmDialog.itemId) {
             await handleRemoveItem(confirmDialog.itemId);
         }
-        logger.debug('Đóng dialog xác nhận');
         setConfirmDialog({ open: false, itemId: null });
     };
 
@@ -150,73 +90,29 @@ function CartPage() {
         window.location.href = '/user/orders';
     };
 
-    logger.debug('cartItems:', cartItems?.cartSupplierDTOS);
-
     return (
         <Box p={2} display="flex" justifyContent="center" paddingX={0}>
-            <Grid container={true} spacing={2} paddingX={0}>
-                {/* Tựa đề và Danh sách sản phẩm */}
-                <Grid item={true} xs={12} md={8} paddingX={0}>
-                    <Card
-                        sx={{
-                            color: 'black',
-                            boxShadow: 'none !important',
-                            marginBottom: 2,
-                            // padding: '16px 64px',
-                            // bgcolor: '#f9f9f9',
-                            width: '100%',
-                        }}
-                    >
-                        {/* Tựa đề "Giỏ mua hàng" */}
-                        <Card
-                            sx={{
-                                bgcolor: 'white',
-                                color: 'black',
-                                boxShadow: 'none !important',
-                                marginBottom: 2,
-                                // padding: '16px 32px',
-                                paddingY: '16px',
-                                width: '100%',
-                            }}
-                        >
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    fontSize: '1.5rem',
-                                    fontWeight: 700,
-                                    color: '#000',
-                                    marginBottom: '1rem',
-                                }}
-                            >
+            <Grid container spacing={2} paddingX={0}>
+                <Grid item xs={12} md={8} paddingX={0}>
+                    <Card sx={{ color: 'black', boxShadow: 'none', marginBottom: 2, width: '100%' }}>
+                        <Card sx={{ bgcolor: 'white', color: 'black', boxShadow: 'none', marginBottom: 2, paddingY: '16px', width: '100%' }}>
+                            <Typography variant="h6" sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#000', marginBottom: '1rem' }}>
                                 Giỏ mua hàng
                             </Typography>
                         </Card>
-
-                        {/* Danh sách sản phẩm */}
-                        <Card
-                            sx={{
-                                bgcolor: 'white',
-                                color: 'black',
-                                boxShadow: 'none !important',
-                                marginBottom: 2,
-                                // padding: 2,
-                                width: '100%',
-                            }}
-                        >
+                        <Card sx={{ bgcolor: 'white', color: 'black', boxShadow: 'none', marginBottom: 2, width: '100%' }}>
                             <CartItem
-                                cartData={cartItems}
+                                cartData={cartData?.cartSupplierDTOs || []}
                                 handleQuantityChange={handleQuantityChange}
                                 handleRemoveItem={(id) => setConfirmDialog({ open: true, itemId: id })}
                             />
                         </Card>
                     </Card>
                 </Grid>
-
-                {/* Tóm tắt đơn hàng */}
-                {cartItems?.cartSupplierDTOS?.length > 0 && (
-                    <Grid item={true} xs={12} md={4}>
+                {cartData?.cartSupplierDTOs?.length > 0 && (
+                    <Grid item xs={12} md={4}>
                         <OrderSummary
-                            totalPrice={totalPrice}
+                            totalPrice={cartData.totalPrice}
                             taxRate={taxRate}
                             shippingFee={shippingFee}
                             onPayment={handlePayment}
@@ -224,7 +120,6 @@ function CartPage() {
                     </Grid>
                 )}
             </Grid>
-
             <ConfirmationDialog
                 open={confirmDialog.open}
                 onClose={() => setConfirmDialog({ open: false, itemId: null })}
@@ -236,10 +131,7 @@ function CartPage() {
                 open={openSnackbar}
                 autoHideDuration={3000}
                 onClose={() => setOpenSnackbar(false)}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
                 <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
                     {snackbarMessage}

@@ -37,13 +37,27 @@ public class SupplierController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping()
-    public ResponseEntity<ApiResponse<?>> get(@RequestParam Integer id) {
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponse<?>> get(@PathVariable Integer id) {
         Supplier supplier = supplyService.findById(id);
         List<Delivery> deliveries = deliveryService.findBySupplier(supplier);
         List<ProductType> productTypes = productTypeService.findBySupplier(supplier);
         SupplierDTO supplierDTO = supplierMapper.toDTO(supplier, deliveries, productTypes);
         ApiResponse<SupplierDTO> response = new ApiResponse<>(true, "lay nha cung cap thanh cong", supplierDTO, null);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<ApiResponse<?>> getAll() {
+        List<Supplier> suppliers = supplyService.findAll();
+        List<SupplierDTO> supplierDTOs = suppliers.stream()
+                .map(supplier -> {
+                    List<Delivery> deliveries = deliveryService.findBySupplier(supplier);
+                    List<ProductType> productTypes = productTypeService.findBySupplier(supplier);
+                    return supplierMapper.toDTO(supplier, deliveries, productTypes);
+                })
+                .toList();
+        ApiResponse<List<SupplierDTO>> response = new ApiResponse<>(true, "lay danh sach nha cung cap thanh cong", supplierDTOs, null);
         return ResponseEntity.ok(response);
     }
 

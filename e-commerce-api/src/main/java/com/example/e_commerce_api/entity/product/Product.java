@@ -1,11 +1,13 @@
 package com.example.e_commerce_api.entity.product;
 
+import com.example.e_commerce_api.entity.supply.Image;
 import com.example.e_commerce_api.entity.supply.Supplier;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -47,4 +49,5 @@ public class Product {
     private Supplier supplier;
     private Boolean statusVerify;
     private Boolean statusActivity;
+
 }

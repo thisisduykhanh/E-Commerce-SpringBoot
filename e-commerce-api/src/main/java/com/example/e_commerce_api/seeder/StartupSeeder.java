@@ -61,6 +61,8 @@ public class StartupSeeder {
     @EventListener(ApplicationReadyEvent.class)
     public void seedData() {
 
+
+
         if (repository.count() == 0) {
             roleService.createRole(new Role(1,"admin"));
             roleService.createRole(new Role(1, "user"));

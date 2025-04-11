@@ -45,7 +45,7 @@ export const getOrderSupply = async (orderStatus, page = 0, size = 10) => {
 	}
 };
 
-export const getMyOrder = async (status, page, size) => {
+export const getMyOrder1 = async (status, page, size) => {
 	try {
 		const response = await apiClient.get(
 			`/users/orders?orderStatus=${status}&page=${page}&size=${size}`,

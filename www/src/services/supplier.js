@@ -47,6 +47,20 @@ export const getSupplier = async (_id) => {
         throw error;
     }
 };
+
+
+export const getSuppliers = async (_id) => {
+    try {
+        const response = await apiClient.get(
+            `/supplier`
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 export const updateOrderStatus = async (orderStatus,idOrder) => {
     try {
         const response = await apiClient.get(

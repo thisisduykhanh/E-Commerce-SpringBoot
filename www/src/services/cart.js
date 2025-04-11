@@ -1,15 +1,15 @@
 import { logger } from '@/lib/default-logger';
 import apiClient from './ApiClient';
 
+/**
+ * Get the cart details
+ * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API
+ */
 export const fetchCart = async () => {
     try {
-        const response = await apiClient.get('/users/cart');
+        const response = await apiClient.get('/cart');
 
-        if (response && response.data && response.data.cartSupplierDTOS) {
-            return response;
-        } else {
-            throw new Error('Dữ liệu giỏ hàng bị thiếu trong phản hồi');
-        }
+        return response; // Trả về dữ liệu từ API
     } catch (error) {
         logger.error('Lỗi khi lấy giỏ hàng:', error);
         throw error;

@@ -22,7 +22,7 @@ import { z as zod } from "zod";
 import { paths } from "@/paths";
 import { TextEditor } from "@/components/core/text-editor/text-editor";
 import {
-  getProductType,
+  getSuppliers,
 } from "@/services/supplier";
 
 import { createProduct } from "@/services/products";
@@ -30,13 +30,14 @@ import { createProduct } from "@/services/products";
 import { useEffect, useState, useCallback } from "react";
 import { getGroups } from "@/services/product-group";
 import {logger} from "@/lib/default-logger";
+import { getSupplier } from "@/services/admin";
 
 
 
-const suppliers = [
-  { id: 1, name: "Apple" },
-  { id: 2, name: "Oppo" },
-];
+// const suppliers = [
+//   { id: 1, name: "Apple" },
+//   { id: 2, name: "Oppo" },
+// ];
 
 const groupAttributes = {
   headphone: ["is Wireless", "Battery Life", "Noise Cancellation"],
@@ -56,6 +57,8 @@ export function ProductCreateForm() {
   const [attributesSelections, setAttributesSelections] = useState({});
   const [groupAttributesList, setGroupAttributesList] = useState([]);
 
+  const [suppliers, setSuppliers] = useState([]);
+
   const fetchProductTypes = async () => {
     try {
       const response = await getGroups();
@@ -73,8 +76,24 @@ export function ProductCreateForm() {
     }
   };
 
+
+  const fetchSuppliers = async () => {
+    try {
+      const response = await getSuppliers();
+      if (response && response.data) {
+        console.log("Suppliers:", response.data);
+        setSuppliers(response.data);
+      } else {
+        console.error("No data found in response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching suppliers:", error);
+    }
+  };
+
   useEffect(() => {
     fetchProductTypes();
+    fetchSuppliers();
   }, []);
 
 
@@ -125,9 +144,9 @@ export function ProductCreateForm() {
     });
 
 
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     logger.debug(formData)
 
@@ -137,7 +156,7 @@ export function ProductCreateForm() {
 
       if (response.success) {
 
-        _router.push(paths.supplier.products.list);
+        _router.push(paths.dashboard.products.list);
       }
 
 
@@ -286,7 +305,7 @@ export function ProductCreateForm() {
                             </MenuItem>
                             {suppliers.map((supplier) => (
                               <MenuItem key={supplier.id} value={supplier.id}>
-                                {supplier.name}
+                                {supplier.supplyName}
                               </MenuItem>
                             ))}
                           </Select>

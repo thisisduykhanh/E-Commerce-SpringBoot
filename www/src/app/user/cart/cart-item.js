@@ -3,8 +3,7 @@ import HouseIcon from '@mui/icons-material/House';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
-    // Kiểm tra nếu không có nhà cung cấp hoặc danh sách sản phẩm
-    if (!cartData?.cartSupplierDTOS?.length) {
+    if (!cartData) {
         return (
             <Typography
                 variant="body1"
@@ -28,20 +27,20 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
 
     return (
         <>
-            {/* Lặp qua từng nhà cung cấp */}
-            {cartData.cartSupplierDTOS.map((supplier) => (
+            {/* Iterate over suppliers */}
+            {cartData.map((supplier) => (
                 <Box key={supplier.id} mb={3}>
-                    {/* Hiển thị thông tin nhà cung cấp */}
+                    {/* Supplier information */}
                     <Box mb={2}>
                         <Box display="flex" alignItems="center">
                             <HouseIcon sx={{ marginRight: 1, color: '#000' }} />
-                            <Typography variant="h6">{supplier.nameSupplier}</Typography>
+                            <Typography variant="h6">{supplier.supplierName}</Typography>
                         </Box>
                         <Divider sx={{ margin: '1rem 0', borderColor: '#F9F9F9', borderWidth: '1px' }} />
                     </Box>
 
-                    {/* Hiển thị danh sách sản phẩm của nhà cung cấp */}
-                    {supplier.cartDetailDTOS.map((item) => (
+                    {/* Iterate over products */}
+                    {supplier.cartDetailDTOs.map((item) => (
                         <Box
                             key={item.id}
                             display="flex"
@@ -50,13 +49,13 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                             sx={{
                                 padding: 2,
                                 borderRadius: '8px',
-                                flexDirection: 'row', // Đảm bảo hướng là ngang
-                                gap: 2, // Thêm khoảng cách giữa các phần tử
+                                flexDirection: 'row',
+                                gap: 2,
                             }}
                         >
-                            {/* Thông tin sản phẩm */}
+                            {/* Product information */}
                             <Box display="flex" alignItems="center" sx={{ gap: 2 }}>
-                                {/* Hình ảnh sản phẩm */}
+                                {/* Product image */}
                                 <Box
                                     sx={{
                                         width: 60,
@@ -69,7 +68,7 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                     }}
                                 >
                                     <img
-                                        src={supplier.image}
+                                        src={item.image || '/placeholder.png'}
                                         alt={item.productName}
                                         style={{
                                             width: '100%',
@@ -79,23 +78,19 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                     />
                                 </Box>
 
-                                {/* Thông tin sản phẩm */}
+                                {/* Product details */}
                                 <Box sx={{ flex: 1 }}>
-                                    {/* Tên sản phẩm */}
                                     <Typography variant="subtitle1" sx={{ fontWeight: 600, marginBottom: 1 }}>
                                         {item.productName}
                                     </Typography>
-
-                                    {/* Đơn giá */}
                                     <Typography variant="body2" sx={{ color: 'text.secondary', marginBottom: 1 }}>
                                         Đơn giá: {(item.unitPrice ?? 0).toLocaleString()}₫
                                     </Typography>
                                 </Box>
                             </Box>
 
-                            {/* Điều chỉnh số lượng và tổng giá */}
+                            {/* Quantity adjustment and total price */}
                             <Box display="flex" alignItems="center" sx={{ gap: 2, minWidth: '180px' }}>
-                                {/* Điều chỉnh số lượng */}
                                 <Box
                                     display="flex"
                                     alignItems="center"
@@ -107,7 +102,6 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                         bgcolor: '#f9f9f9',
                                     }}
                                 >
-                                    {/* Nút giảm */}
                                     <Button
                                         size="small"
                                         variant="outlined"
@@ -126,8 +120,6 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                     >
                                         -
                                     </Button>
-
-                                    {/* Hiển thị số lượng */}
                                     <Typography
                                         sx={{
                                             width: 30,
@@ -138,8 +130,6 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                     >
                                         {item.quantity}
                                     </Typography>
-
-                                    {/* Nút tăng */}
                                     <Button
                                         size="small"
                                         variant="outlined"
@@ -159,13 +149,9 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                         +
                                     </Button>
                                 </Box>
-
-                                {/* Tổng giá */}
                                 <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#00A6B7' }}>
-                                    {(item.unitPrice * item.quantity).toLocaleString()}₫
+                                    {(item.totalPrice ?? 0).toLocaleString()}₫
                                 </Typography>
-
-                                {/* Nút xóa */}
                                 <IconButton color="error" sx={{ marginLeft: 3 }} onClick={() => handleRemoveItem(item.id)}>
                                     <DeleteIcon />
                                 </IconButton>

@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SupplyService {
     @Autowired
@@ -72,6 +74,10 @@ public class SupplyService {
 
         // Truy vấn cơ sở dữ liệu sử dụng Specification và Pageable
         return supplierRepository.findAllByStatusVerify(status, pageable);
+    }
+
+    public List<Supplier> findAll() {
+        return supplierRepository.findAll();
     }
 
 

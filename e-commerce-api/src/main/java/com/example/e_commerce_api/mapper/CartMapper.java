@@ -5,14 +5,25 @@ import com.example.e_commerce_api.dto.cart.CartDetailDTO;
 import com.example.e_commerce_api.dto.cart.CartSupplierDTO;
 import com.example.e_commerce_api.entity.cart.Cart;
 import com.example.e_commerce_api.entity.cart.CartDetail;
+import com.example.e_commerce_api.entity.supply.Image;
+import com.example.e_commerce_api.service.supply.ImageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.example.e_commerce_api.entity.product.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
 
 @Component
 public class CartMapper {
+
+    @Autowired
+    private ImageService imageService;
+
+
     public CartDTO toDTO(Cart cart, List<CartDetail> cartDetails) {
         List<CartSupplierDTO> cartSupplierDTOS = mapCartDetailsToCartSupplierDTOs(cartDetails);
 
@@ -34,21 +45,28 @@ public class CartMapper {
     }
 
     public List<CartDetailDTO> toCartDetailDTOList(List<CartDetail> cartDetails) {
-        return cartDetails.stream().map(cartDetail ->
-                new CartDetailDTO(
-                        cartDetail.getId(),
-                        cartDetail.getProduct().getId(),
+        return cartDetails.stream().map(cartDetail -> {
+            Product product = cartDetail.getProduct();
+            List<Image> images = imageService.getImageByProduct(product);
+            String imageUrl = null;
 
-                        cartDetail.getQuantity(),
-                        cartDetail.getProduct().getPrice(),
-                        BigDecimal.valueOf(cartDetail.getQuantity()).multiply(cartDetail.getProduct().getPrice()),
+            if (images != null && !images.isEmpty() && images.getFirst() != null) {
+                imageUrl = images.getFirst().getUrl();
+            }
 
-                        cartDetail.getProduct().getProductName(),
-                        cartDetail.getProduct().getSupplier().getImage(),
+            System.out.println("Image URL: " + imageUrl);
 
-                        cartDetail.getProduct().getSupplier().getId()
-                )
-        ).collect(Collectors.toList());
+            return new CartDetailDTO(
+                    cartDetail.getId(),
+                    product.getId(),
+                    cartDetail.getQuantity(),
+                    product.getPrice(),
+                    BigDecimal.valueOf(cartDetail.getQuantity()).multiply(product.getPrice()),
+                    product.getProductName(),
+                    imageUrl,
+                    product.getSupplier() != null ? product.getSupplier().getId() : null
+            );
+        }).collect(Collectors.toList());
     }
 
     public List<CartSupplierDTO> mapCartDetailsToCartSupplierDTOs(List<CartDetail> cartDetails) {
@@ -59,6 +77,10 @@ public class CartMapper {
                 ))
                 .entrySet().stream()
                 .map(entry -> {
+
+
+
+
                     return new CartSupplierDTO(
                             entry.getKey().getId(),
                             entry.getKey().getNameSupply(),
@@ -80,6 +102,16 @@ public class CartMapper {
 
     private CartDetailDTO mapCartDetailToCartDetailDTO(CartDetail cartDetail) {
 
+        Product product = cartDetail.getProduct();
+        List<Image> images = imageService.getImageByProduct(product);
+        String imageUrl = null;
+
+        if (images != null && !images.isEmpty() && images.getFirst() != null) {
+            imageUrl = images.getFirst().getUrl();
+        }
+
+
+
         return new CartDetailDTO(
                 cartDetail.getId(),
                 cartDetail.getProduct().getId(),
@@ -87,7 +119,7 @@ public class CartMapper {
                 cartDetail.getProduct().getPrice(),
                 BigDecimal.valueOf(cartDetail.getQuantity()).multiply(cartDetail.getProduct().getPrice()),
                 cartDetail.getProduct().getProductName(),
-                cartDetail.getProduct().getSupplier().getImage(),
+                imageUrl,
                 cartDetail.getProduct().getSupplier().getId()
         );
     }

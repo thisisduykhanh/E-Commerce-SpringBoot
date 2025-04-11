@@ -5,6 +5,10 @@ import { useState } from 'react';
 import OrderCard from './OrderCard';
 import Pagination from './Pagination';
 import Sidebar from './Sidebar';
+import { getMyOrder1 } from '@/services/users';
+import { getMyOrder } from '@/services/order';
+import { useEffect } from 'react';
+import { logger } from '@/lib/default-logger';
 
 const styles = {
     primaryColor: '#00A6B7',
@@ -47,6 +51,22 @@ const styles = {
 
 const OrderHistory = () => {
     const [selectedMenu, setSelectedMenu] = useState('Đơn hàng của tôi');
+    const [orders, setOrders] = useState([]);
+
+    const getOrders = async () => {
+        const response = await getMyOrder();
+        if (response && response.data) {
+            setOrders(response.data);
+            logger.debug('Orders:', response.data);
+        }
+    }
+
+    useEffect(() => {
+        getOrders();
+    }
+        , []);
+    
+
 
     const menuItems = [
         'Thông tin tài khoản',
@@ -120,7 +140,7 @@ const OrderHistory = () => {
                             />
                             <SearchIcon sx={{ ...styles.searchIcon }} />
                         </Box>
-                        {selectedMenu === 'Đơn hàng của tôi' && <OrderCard />}
+                        {selectedMenu === 'Đơn hàng của tôi' && <OrderCard orders={orders} />}
                         {selectedMenu === 'Sản phẩm yêu thích' && (
                             <Box sx={{ bgcolor: '#fff', borderRadius: 2, boxShadow: 1, p: '0 !important' }}>
                                 <Typography>Danh sách sản phẩm yêu thích</Typography>

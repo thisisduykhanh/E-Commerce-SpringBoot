@@ -1,7 +1,8 @@
 import { Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
 
-const OrderCard = () => {
+const OrderCard = ({orders}) => {
     return (
+        orders.map((order, index) => (
         <Card sx={{ bgcolor: '#fff', mb: 2, boxShadow: 1, color: '#000' }}>
             <CardContent>
                 <Grid container={true} spacing={2} flexDirection="column" alignItems="left" sx={{ maxWidth: 1200 }}>
@@ -16,18 +17,24 @@ const OrderCard = () => {
                                 <Grid container={true} spacing={1} alignItems="center">
                                     <Grid item={true}>
                                         <Typography variant="body1" fontWeight="bold">
-                                            #25010617344924
+                                            {order.id}
                                         </Typography>
                                     </Grid>
                                     <Grid item={true}>
                                         <Typography variant="body2" color="text.secondary">
-                                            đặt lúc 16:34 6 thg 1, 2025
+                                            đặt lúc {Intl.DateTimeFormat('vi-VN', {
+                                                year: 'numeric',
+                                                month: '2-digit',
+                                                day: '2-digit',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                            }).format(new Date(order.createDate))}
                                         </Typography>
                                     </Grid>
                                     <Grid item={true}>
                                         <Box
                                             component="img"
-                                            src="https://via.placeholder.com/24"
+                                            src={order.supplier.image ? order.supplier.image : "https://via.placeholder.com/24"}
                                             alt="Avatar"
                                             sx={{
                                                 width: 24,
@@ -47,14 +54,14 @@ const OrderCard = () => {
                                                 textOverflow: 'ellipsis',
                                             }}
                                         >
-                                            Dương susann
+                                            {order.supplier.nameSupply}
                                         </Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item={true}>
                                 <Typography variant="body2" color="error" sx={{ fontWeight: 'bold' }}>
-                                    Đã hủy
+                                    {order.orderStatus.name}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -106,7 +113,8 @@ const OrderCard = () => {
                 </Grid>
             </CardContent>
         </Card>
-    );
+    )
+    ))
 };
 
 export default OrderCard;
