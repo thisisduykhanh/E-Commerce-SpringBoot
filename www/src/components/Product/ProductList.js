@@ -1,5 +1,5 @@
-import apiClient from '@/services/ApiClient';
-import PeopleIcon from '@mui/icons-material/People';
+import apiClient from "@/services/ApiClient";
+import PeopleIcon from "@mui/icons-material/People";
 import {
   Avatar,
   Box,
@@ -8,10 +8,12 @@ import {
   Pagination,
   Rating,
   Typography,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import Link from 'next/link';
-import * as React from 'react';
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import Link from "next/link";
+import * as React from "react";
+
+import { getReviews } from "@/services/review";
 
 /**
  * @param {Object} props
@@ -21,10 +23,45 @@ import * as React from 'react';
  * @param {function} props.onImageClick - Callback when image is clicked.
  * @param {Object} props.filters - Filter object used for search.
  */
-function ProductList({ products, currentPage, onPageChange, onImageClick, filters }) {
+function ProductList({
+  products,
+  currentPage,
+  onPageChange,
+  onImageClick,
+  filters,
+}) {
   const classes = useStyles();
 
+  const [ratings, setRatings] = React.useState({});
 
+  const getStar = async (id) => {
+    try {
+      const { data } = await getReviews(id);
+
+      console.log("data", data);
+
+      const totalStars = data.reduce((sum, r) => sum + r.rating, 0);
+    const average = totalStars / data.length;
+
+    setRatings((prev) => ({ ...prev, [id]: parseFloat(average.toFixed(1)) }));
+  
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // Không có đánh giá -> gán mặc định "chưa đánh giá"
+        setRatings((prev) => ({ ...prev, [id]: "chưa đánh giá" }));
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    products.forEach((product) => {
+      if (!ratings[product.id]) {
+        getStar(product.id);
+      }
+
+    });
+
+  }, [products]);
 
   if (!products) {
     return (
@@ -48,9 +85,9 @@ function ProductList({ products, currentPage, onPageChange, onImageClick, filter
     <Box width="100%">
       <Grid container spacing={2}>
         {products.map((product) => {
-          const formattedPrices = Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
+          const formattedPrices = Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
           }).format(product.price);
           return (
             <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
@@ -67,55 +104,93 @@ function ProductList({ products, currentPage, onPageChange, onImageClick, filter
                 <Link href={`/user/product-detail/${product.id}`} passHref>
                   <button
                     type="button"
-                    style={{ border: 'none', background: 'none', padding: 0, height: '260px', width: '270px' }}
+                    style={{
+                      border: "none",
+                      background: "none",
+                      padding: 0,
+                      height: "260px",
+                      width: "270px",
+                    }}
                     onClick={() => onImageClick?.(product)}
                   >
                     <img
-                      src={product.images?.[0]?.url || '/default-image.jpg'}
+                      src={product.images?.[0]?.url || "/default-image.jpg"}
                       alt={product.productName}
                       className={classes.imageThumbnail}
-                      style={{ height: '260px', width: '260px' }}
+                      style={{ height: "260px", width: "260px" }}
                     />
                   </button>
                 </Link>
 
-                <Box display="flex" justifyContent="space-between" width="260px" mt={1} minHeight={50}>
-                  <Typography variant="subtitle1" fontWeight="bold" sx={{ width: '260px' }}>
-                    {product.productName || 'Tên sản phẩm không có'}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  width="260px"
+                  mt={1}
+                  minHeight={50}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    sx={{ width: "260px" }}
+                  >
+                    {product.productName || "Tên sản phẩm không có"}
                   </Typography>
                 </Box>
 
                 <Box display="flex" justifyContent="left" width="100%" mt={1}>
-                  <Rating
-                    value={product.rating || 5}
-                    readOnly
-                    precision={0.1}
-                    size="small"
-                    sx={{ marginRight: 1 }}
-                  />
+                    {ratings[product.id] === "chưa đánh giá" ? (
+                      
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "gray", marginRight: 1 }}
+
+                      >
+                        Chưa có đánh giá
+                      </Typography>
+
+                    ) : (
+
+                    <Rating
+                      value={ratings[product.id] || "chưa đánh giá"}
+                      readOnly
+                      precision={0.1}
+                      size="small"
+                      sx={{ marginRight: 1 }}
+                    />
+                    )}
                 </Box>
 
-                <Box display="flex" justifyContent="space-between" width="100%" mt={1}>
-                  <Typography variant="h6" sx={{ color: '#1a1a1a' }}>
-                    {formattedPrices || 'Không có giá trị hợp lệ.'}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  width="100%"
+                  mt={1}
+                >
+                  <Typography variant="h6" sx={{ color: "#1a1a1a" }}>
+                    {formattedPrices || "Không có giá trị hợp lệ."}
                   </Typography>
                 </Box>
 
-                <Box display="flex" alignItems="flex-start" sx={{ paddingY: '5px' }}>
+                <Box
+                  display="flex"
+                  alignItems="flex-start"
+                  sx={{ paddingY: "5px" }}
+                >
                   <Avatar
                     src={
                       product.logo ||
-                      'https://res.cloudinary.com/dgts7tmnb/image/upload/v1735478087/photo_2024-12-29_20-12-26_kjerh5.jpg'
+                      "https://res.cloudinary.com/dgts7tmnb/image/upload/v1735478087/photo_2024-12-29_20-12-26_kjerh5.jpg"
                     }
-                    alt={product.supplierName || 'Không có tên nhà cung cấp'}
+                    alt={product.supplierName || "Không có tên nhà cung cấp"}
                     sx={avatarStyles}
                   />
                   <Box>
                     <Typography variant="subtitle1" sx={nameStyles}>
-                      {product.supplierName || 'Không có tên nhà cung cấp'}
+                      {product.supplierName || "Không có tên nhà cung cấp"}
                     </Typography>
                     <Box display="flex" alignItems="center">
-                      <PeopleIcon sx={{ fontSize: 15, color: 'gray', mr: 1 }} />
+                      <PeopleIcon sx={{ fontSize: 15, color: "gray", mr: 1 }} />
                       <Typography variant="body2" sx={followerTextStyles}>
                         0 người theo dõi
                       </Typography>
@@ -136,17 +211,17 @@ function ProductList({ products, currentPage, onPageChange, onImageClick, filter
           variant="outlined"
           shape="rounded"
           sx={{
-            '& .MuiPaginationItem-root': {
-              borderRadius: '50%',
-              backgroundColor: '#F2F2F2',
-              color: 'gray',
-              '&:hover': {
-                backgroundColor: '#008D91',
-                color: 'white',
+            "& .MuiPaginationItem-root": {
+              borderRadius: "50%",
+              backgroundColor: "#F2F2F2",
+              color: "gray",
+              "&:hover": {
+                backgroundColor: "#008D91",
+                color: "white",
               },
-              '&.Mui-selected': {
-                backgroundColor: '#008D91',
-                color: 'white',
+              "&.Mui-selected": {
+                backgroundColor: "#008D91",
+                color: "white",
               },
             },
           }}
@@ -158,20 +233,20 @@ function ProductList({ products, currentPage, onPageChange, onImageClick, filter
 
 const useStyles = makeStyles(() => ({
   imageThumbnail: {
-    cursor: 'pointer',
-    width: '100%',
-    height: '151px',
-    objectFit: 'cover',
-    transition: 'transform 0.3s ease',
-    '&:hover': {
-      transform: 'scale(1.1)',
+    cursor: "pointer",
+    width: "100%",
+    height: "151px",
+    objectFit: "cover",
+    transition: "transform 0.3s ease",
+    "&:hover": {
+      transform: "scale(1.1)",
     },
   },
   loader: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
   },
 }));
 
@@ -182,16 +257,16 @@ const avatarStyles = {
 };
 
 const nameStyles = {
-  fontSize: { xs: '0.7rem', sm: '0.9rem', md: '0.9rem', lg: '0.9rem' },
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-  maxWidth: '100%',
+  fontSize: { xs: "0.7rem", sm: "0.9rem", md: "0.9rem", lg: "0.9rem" },
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  maxWidth: "100%",
 };
 
 const followerTextStyles = {
-  fontSize: { xs: '0.5rem', sm: '0.5rem', md: '0.6rem' },
-  color: 'gray',
+  fontSize: { xs: "0.5rem", sm: "0.5rem", md: "0.6rem" },
+  color: "gray",
 };
 
 export default ProductList;

@@ -154,9 +154,7 @@ export default function CategoryMenu({ selectedTab, handleTabChange }) {
                         }}
                     >
                         <SquaresFour style={{ height: '24px', width: '24px' }} />
-                        <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 'bold', color: '#333333' }}>
-                            Danh mục sản phẩm
-                        </Typography>
+                       
                     </Button>
 
                     {menuOpen ? (
