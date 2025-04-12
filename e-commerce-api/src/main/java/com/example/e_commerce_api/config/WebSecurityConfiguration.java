@@ -73,7 +73,10 @@ public class WebSecurityConfiguration {
                                 apiPrefix + "/product-types",
                                 apiPrefix + "/category",
                                 apiPrefix + "/supplier/**",
-                                apiPrefix + "/accounts/**")
+                                apiPrefix + "/accounts/**",
+                                apiPrefix + "/reviews/product/**"
+
+                        )
                         .permitAll()
                         .anyRequest().authenticated() // Các API còn lại yêu cầu xác thực
                 )

@@ -2,6 +2,7 @@
 
 import { logger } from "@/lib/default-logger";
 import { addToCart } from "@/services/cart";
+import { getReviews } from "@/services/review";
 import { fetchProductDetail } from "@/services/category-service";
 import "@/styles/global.css";
 import AddIcon from "@mui/icons-material/Add";
@@ -89,138 +90,7 @@ function ProductDetailPage() {
     },
   ];
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Kristin Watson",
-      avatar: "/avatars/1.png",
-      rating: 5,
-      comment: "Duis at ullamcorper nulla, eu dictum eros.",
-      time: "2 min ago",
-    },
-    {
-      id: 2,
-      name: "Jane Cooper",
-      avatar: "/avatars/defult.png",
-      rating: 5,
-      comment:
-        "Keep the soil evenly moist for the healthiest growth. If the sun gets too hot, Chinese cabbage tends to 'bolt' or go to seed; in long periods of heat, some kind of shade may be helpful. Watch out for snails, as they will harm the plants.",
-      time: "30 Apr, 2021",
-    },
-    {
-      id: 3,
-      name: "Jacob Jones",
-      avatar: "/avatars/2.png",
-      rating: 5,
-      comment:
-        "Vivamus eget euismod magna. Nam sed lacinia nibh, et lacinia lacus.",
-      time: "2 min ago",
-    },
-    {
-      id: 4,
-      name: "Ralph Edwards",
-      avatar: "/avatars/3.png",
-      rating: 5,
-      comment:
-        "200+ Canton Pak Choi Bok Choy Chinese Cabbage Seeds Heirloom Non-GMO Productive Brassica rapa VAR. chinensis, a.k.a. Canton’s Choice, Bok Choi, from USA.",
-      time: "2 min ago",
-    },
-    {
-      id: 5,
-      name: "Albert Flores",
-      avatar: "",
-      rating: 4.5,
-      comment:
-        "Proin sit amet nisl nec leo tincidunt vulputate. Integer ut quam id augue fermentum.",
-      time: "1 day ago",
-    },
-    {
-      id: 6,
-      name: "Darlene Robertson",
-      avatar: "",
-      rating: 4,
-      comment:
-        "Curabitur eget tortor sapien. Maecenas facilisis justo sit amet nunc tincidunt, ac iaculis.",
-      time: "5 hours ago",
-    },
-    {
-      id: 7,
-      name: "Eleanor Pena",
-      avatar: "",
-      rating: 3.5,
-      comment: "Donec id ligula id magna suscipit convallis sed et sapien.",
-      time: "3 days ago",
-    },
-    {
-      id: 8,
-      name: "Floyd Miles",
-      avatar: "",
-      rating: 5,
-      comment:
-        "Suspendisse nec purus volutpat, feugiat mi eget, tristique lorem.",
-      time: "6 days ago",
-    },
-    {
-      id: 9,
-      name: "Ronald Richards",
-      avatar: "",
-      rating: 4.5,
-      comment: "Praesent a est at nisl vestibulum blandit ut a erat.",
-      time: "8 days ago",
-    },
-    {
-      id: 10,
-      name: "Annette Black",
-      avatar: "",
-      rating: 4,
-      comment:
-        "Aliquam erat volutpat. Pellentesque habitant morbi tristique senectus et netus et malesuada.",
-      time: "10 days ago",
-    },
-    {
-      id: 11,
-      name: "Courtney Henry",
-      avatar: "",
-      rating: 3,
-      comment: "Integer nec risus ut elit hendrerit bibendum ut id arcu.",
-      time: "15 days ago",
-    },
-    {
-      id: 12,
-      name: "Devon Lane",
-      avatar: "",
-      rating: 5,
-      comment: "Nam non lacus scelerisque, tristique est vel, ultrices purus.",
-      time: "20 days ago",
-    },
-    {
-      id: 13,
-      name: "Jerome Bell",
-      avatar: "",
-      rating: 4.5,
-      comment:
-        "Vivamus gravida nulla sit amet enim ultricies, ac suscipit ligula bibendum.",
-      time: "1 month ago",
-    },
-    {
-      id: 14,
-      name: "Leslie Alexander",
-      avatar: "",
-      rating: 4,
-      comment:
-        "Suspendisse potenti. Curabitur in ligula et velit pharetra vehicula.",
-      time: "2 months ago",
-    },
-    {
-      id: 15,
-      name: "Kathryn Murphy",
-      avatar: "",
-      rating: 5,
-      comment: "Fusce id est sed odio vehicula aliquet.",
-      time: "2 months ago",
-    },
-    // Add more data here as needed
-  ];
+  const [reviews, setReviews] = useState([]);
 
   const [activeTab, setActiveTab] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -238,6 +108,21 @@ function ProductDetailPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const { data } = await getReviews(id);
+        setReviews(data);
+      } catch (error) {
+        logger.error("Error fetching reviews:", error);
+      }
+    };
+
+    if (id) {
+      fetchReviews();
+    }
+  }, [id]);
 
   const handlePageChange = (_event, value) => {
     setCurrentPage(value);
@@ -481,8 +366,14 @@ function ProductDetailPage() {
               </Box>
             </Box>
 
-
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                marginTop: "20px",
+              }}
+            >
               <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                   Danh mục:
@@ -588,27 +479,25 @@ function ProductDetailPage() {
                   <AddIcon />
                 </IconButton>
               </Box>
-
-              
             </Box>
             <Button
-                variant="contained"
-                sx={{
-                  padding: "10px 20px",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  borderRadius: "30px",
-                  background: quantity >= 0 ? "#00A6B7" : "#E0E0E0",
-                  color: quantity >= 0 ? "#fff" : "#000 !important",
-                  borderColor: "#00A6B7",
-                  cursor: quantity >= 0 ? "pointer" : "not-allowed !important",
-                }}
-                onClick={handleAddToCart}
-                disabled={isLoading || quantity < 0}
-              >
-                {isLoading ? "Đang thêm..." : "Thêm vào giỏ hàng"}
-                <ShoppingBag />
-              </Button>
+              variant="contained"
+              sx={{
+                padding: "10px 20px",
+                fontWeight: "bold",
+                fontSize: "16px",
+                borderRadius: "30px",
+                background: quantity >= 0 ? "#00A6B7" : "#E0E0E0",
+                color: quantity >= 0 ? "#fff" : "#000 !important",
+                borderColor: "#00A6B7",
+                cursor: quantity >= 0 ? "pointer" : "not-allowed !important",
+              }}
+              onClick={handleAddToCart}
+              disabled={isLoading || quantity < 0}
+            >
+              {isLoading ? "Đang thêm..." : "Thêm vào giỏ hàng"}
+              <ShoppingBag />
+            </Button>
 
             {/* Thông báo thành công hoặc lỗi */}
             {successMessage ? (
@@ -781,89 +670,112 @@ function ProductDetailPage() {
               </Box>
             )}
             {activeTab === 1 && (
-              <Box
-                sx={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}
-              >
-                {/* Danh sách đánh giá */}
-                {currentData.map((review, index) => (
-                  <Box key={review.id} sx={{ marginBottom: "20px" }}>
-                    {/* Dòng trên cùng */}
+              <>
+                {/* Nếu không có đánh giá nào */}
+                {reviews.length === 0 && (
+                  <Typography variant="body2" color="#555">
+                    Chưa có đánh giá nào cho sản phẩm này.
+                  </Typography>
+                )}
+
+                {reviews.length > 0 && (
+                  <Box
+                    sx={{
+                      padding: "20px",
+                      width: "80%",
+                      margin: "0 auto",
+                    }}
+                  >
+                    {/* Danh sách đánh giá */}
+                    {currentData.map((review, index) => (
+                      <Box key={review.id} sx={{ marginBottom: "20px" }}>
+                        {/* Dòng trên cùng */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <Avatar
+                            src="/avatars/defult.png"
+                            alt={review.fullName}
+                            sx={{
+                              width: "40px",
+                              height: "40px",
+                              backgroundColor: "#fff",
+                            }}
+                          >
+                            {!review.avatar && review.fullName.charAt(0)}
+                          </Avatar>
+
+                          <Box>
+                            <Typography variant="body1" fontWeight="bold">
+                              {review.fullName}
+                            </Typography>
+
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <span
+                                key={star}
+                                style={{
+                                  color:
+                                    review.rating >= star ? "gold" : "gray",
+                                }}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </Box>
+
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              marginLeft: "auto",
+                              color: "#848484",
+                              fontSize: "12px",
+                            }}
+                          >
+                            {review.time}
+                          </Typography>
+                        </Box>
+
+                        {/* Nội dung đánh giá */}
+                        <Typography
+                          variant="body2"
+                          color="#555"
+                          sx={{ marginBottom: "10px" }}
+                        >
+                          {review.comment}
+                        </Typography>
+
+                        {/* Đường kẻ ngăn cách */}
+                        {index < currentData.length - 1 && (
+                          <Divider sx={{ marginTop: "10px" }} />
+                        )}
+                      </Box>
+                    ))}
+
+                    {/* Phân trang */}
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        marginBottom: "10px",
+                        justifyContent: "center",
+                        marginTop: "20px",
                       }}
                     >
-                      <Avatar
-                        src={review.avatar}
-                        alt={review.name}
-                        sx={{
-                          width: "40px",
-                          height: "40px",
-                          backgroundColor: "#fff",
-                        }}
-                      >
-                        {!review.avatar && review.name.charAt(0)}{" "}
-                        {/* Hiển thị chữ cái đầu nếu không có avatar */}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="body1" fontWeight="bold">
-                          {review.name}
-                        </Typography>
-                        <Rating
-                          value={review.rating}
-                          readOnly={true}
-                          precision={0.5}
-                          size="small"
-                        />
-                      </Box>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          marginLeft: "auto",
-                          color: "#848484",
-                          fontSize: "12px",
-                        }}
-                      >
-                        {review.time}
-                      </Typography>
+                      <Pagination
+                        count={Math.ceil(reviews.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        color="primary"
+                      />
                     </Box>
-
-                    {/* Nội dung đánh giá */}
-                    <Typography
-                      variant="body2"
-                      color="#555"
-                      sx={{ marginBottom: "10px" }}
-                    >
-                      {review.comment}
-                    </Typography>
-
-                    {/* Đường kẻ ngăn cách */}
-                    {index < currentData.length - 1 && (
-                      <Divider sx={{ marginTop: "10px" }} />
-                    )}
                   </Box>
-                ))}
-
-                {/* Phân trang */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "20px",
-                  }}
-                >
-                  <Pagination
-                    count={Math.ceil(reviews.length / itemsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                  />
-                </Box>
-              </Box>
+                )}
+              </>
             )}
+
             {activeTab === 2 && (
               <Box sx={{ padding: "20px" }}>
                 <Typography variant="body1">
