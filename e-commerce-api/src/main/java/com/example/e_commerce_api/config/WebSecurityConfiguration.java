@@ -74,7 +74,8 @@ public class WebSecurityConfiguration {
                                 apiPrefix + "/category",
                                 apiPrefix + "/supplier/**",
                                 apiPrefix + "/accounts/**",
-                                apiPrefix + "/reviews/product/**"
+                                apiPrefix + "/reviews/product/**",
+                                "/ws/**"
 
                         )
                         .permitAll()

@@ -25,9 +25,30 @@ import * as React from "react";
 import { getUser } from "../../../services/auth";
 import CategoryMenu from "../Menu/CategoryMenu";
 
+import { useCart } from "@/contexts/cartContext";
+
 export default function Header() {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [user, setUser] = React.useState(null);
+
+  // const [cartQuantity, setCartQuantity] = React.useState(0);
+
+  const { cartQuantity, fetchCartQuantity } = useCart()
+  // const fetchCartQuantity = async () => {
+  //   try {
+  //     const response = await fetchCart();
+  //     if (response.success && response.data) {
+  //       const totalItems = response.data.cartSupplierDTOs
+  //         ?.flatMap((supplier) => supplier.cartDetailDTOs)
+  //         ?.reduce((sum, item) => sum + item.quantity, 0);
+  //       setCartQuantity(totalItems || 0);
+
+  //       console.log("Số lượng giỏ hàng:", totalItems);
+  //     }
+  //   } catch (error) {
+  //     logger.error("Lỗi khi lấy số lượng giỏ hàng:", error);
+  //   }
+  // };
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -55,6 +76,8 @@ export default function Header() {
       }
     };
     fetchUser();
+
+    fetchCartQuantity();
   }, []);
 
   const handleLogout = () => {
@@ -232,7 +255,7 @@ export default function Header() {
                 variant="text"
                 href="/user/cart"
                 startIcon={
-                  <Badge badgeContent={3} color="error" overlap="rectangular">
+                  <Badge badgeContent={cartQuantity} color="error" overlap="rectangular">
                     <ShoppingCartIcon sx={{ color: "#00A6B7" }} />
                   </Badge>
                 }

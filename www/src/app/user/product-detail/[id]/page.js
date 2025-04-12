@@ -29,6 +29,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CompanyShare } from "./components/social-share";
 import { SimilarProducts } from "./similar-products";
+import { useCart } from "@/contexts/cartContext";
 
 function ProductDetailPage() {
   const params = useParams();
@@ -91,13 +92,12 @@ function ProductDetailPage() {
   ];
 
   const [reviews, setReviews] = useState([]);
-
+  const { fetchCartQuantity } = useCart();
   const [activeTab, setActiveTab] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -176,6 +176,7 @@ function ProductDetailPage() {
 
       if (response.success === true) {
         setSuccessMessage("Thêm sản phẩm vào giỏ hàng thành công.");
+        await fetchCartQuantity();
         // window.location.href = '/user/cart';
       }
     } catch (error) {
@@ -338,17 +339,7 @@ function ProductDetailPage() {
               >
                 {productDetail?.price?.toLocaleString()} VND
               </Typography>
-              {minPrice !== null && maxPrice !== null && (
-                <Typography
-                  variant="h5"
-                  color="#00A6B7"
-                  fontWeight="bold"
-                  sx={{ marginRight: "10px" }}
-                >
-                  {minPrice.toLocaleString()} VNĐ - {maxPrice.toLocaleString()}{" "}
-                  VNĐ
-                </Typography>
-              )}
+              
             </Box>
 
             {/* Công ty và chia sẻ */}

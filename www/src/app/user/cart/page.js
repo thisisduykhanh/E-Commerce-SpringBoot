@@ -1,14 +1,29 @@
 "use client";
 
 import { logger } from "@/lib/default-logger";
-import { deleteProductInCart, fetchCart, updateCart } from "@/services/cart";
-import { Alert, Box, Card, Grid, Snackbar, Typography } from "@mui/material";
+import {
+  deleteProductInCart,
+  fetchCart,
+  updateCart,
+} from "@/services/cart";
+import {
+  Alert,
+  Box,
+  Card,
+  Grid,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import ConfirmationDialog from "../ConfirmationDialog/page";
 import CartItem from "./cart-item";
 import OrderSummary from "../orders/order_summary/page";
+import CartSocketListener from "@/components/CartSocketListener"; // ✅ Mới thêm
+import { useCart } from "@/contexts/cartContext";
 
 function CartPage() {
+      const { fetchCartQuantity } = useCart();
+    
   const [cartData, setCartData] = useState(null);
   const [confirmDialog, setConfirmDialog] = useState({
     open: false,
@@ -17,25 +32,26 @@ function CartPage() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const taxRate = 0.1; // Thuế 10%
-  const shippingFee = 30000; // Phí vận chuyển
+  const taxRate = 0.1;
+  const shippingFee = 30000;
+
+  const fetchCartData = async () => {
+    try {
+      const response = await fetchCart();
+      if (response.success) {
+        setCartData(response.data);
+
+      } else {
+        logger.error("Lỗi khi lấy giỏ hàng:", response.message);
+      }
+    } catch (error) {
+      logger.error("Lỗi khi lấy giỏ hàng:", error);
+    }
+  };
 
   useEffect(() => {
-    const getCart = async () => {
-      try {
-        const response = await fetchCart();
-        if (response.success) {
-          setCartData(response.data);
-        } else {
-          logger.error("Lỗi khi lấy giỏ hàng:", response.message);
-        }
-      } catch (error) {
-        logger.error("Lỗi khi lấy giỏ hàng:", error);
-      }
-    };
-
-    getCart();
-  }, [cartData]);
+    fetchCartData();
+  }, []);
 
   const handleQuantityChange = async (id, delta) => {
     const updatedCartData = { ...cartData };
@@ -52,6 +68,9 @@ function CartPage() {
       const response = await updateCart(id, item.quantity);
       if (response.success) {
         setCartData(updatedCartData);
+        await fetchCartQuantity();
+        setSnackbarMessage("Cập nhật số lượng sản phẩm thành công");
+        setOpenSnackbar(true);
       } else {
         logger.error("API trả về lỗi:", response.message);
         setSnackbarMessage("Không thể cập nhật số lượng sản phẩm.");
@@ -68,12 +87,10 @@ function CartPage() {
     try {
       const response = await deleteProductInCart(id);
       if (response.success) {
-        const updatedCartResponse = await fetchCart();
-        if (updatedCartResponse.success) {
-          setCartData(updatedCartResponse.data);
-          setSnackbarMessage("Sản phẩm đã được xóa thành công");
-          setOpenSnackbar(true);
-        }
+        await fetchCartData();
+        await fetchCartQuantity();
+        setSnackbarMessage("Sản phẩm đã được xóa thành công");
+        setOpenSnackbar(true);
       } else {
         logger.error("Lỗi khi xóa sản phẩm:", response.message);
       }
@@ -97,14 +114,7 @@ function CartPage() {
     <Box p={2} display="flex" justifyContent="center" paddingX={0}>
       <Grid container spacing={2} paddingX={0}>
         <Grid item xs={12} md={8} paddingX={0}>
-          <Card
-            sx={{
-              color: "black",
-              boxShadow: "none",
-              marginBottom: 2,
-              width: "100%",
-            }}
-          >
+          <Card sx={{ color: "black", boxShadow: "none", marginBottom: 2 }}>
             {cartData?.cartSupplierDTOs?.length === 0 ? (
               <Card
                 sx={{
@@ -117,13 +127,13 @@ function CartPage() {
                 }}
               >
                 <Typography
-                   variant="h6"
-                   sx={{
-                     fontSize: "1.5rem",
-                     fontWeight: 700,
-                     color: "#000",
-                     marginBottom: "1rem",
-                   }}
+                  variant="h6"
+                  sx={{
+                    fontSize: "1.5rem",
+                    fontWeight: 700,
+                    color: "#000",
+                    marginBottom: "1rem",
+                  }}
                 >
                   Giỏ hàng của bạn đang trống
                 </Typography>
@@ -183,6 +193,7 @@ function CartPage() {
           </Grid>
         )}
       </Grid>
+
       <ConfirmationDialog
         open={confirmDialog.open}
         onClose={() => setConfirmDialog({ open: false, itemId: null })}
@@ -190,6 +201,7 @@ function CartPage() {
         title="Xóa sản phẩm"
         message="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
       />
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -204,6 +216,14 @@ function CartPage() {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+
+      {/* ✅ WebSocket listener */}
+      {cartData && (
+        <CartSocketListener
+          accountId={cartData.id}
+          onCartUpdate={fetchCartData}
+        />
+      )}
     </Box>
   );
 }

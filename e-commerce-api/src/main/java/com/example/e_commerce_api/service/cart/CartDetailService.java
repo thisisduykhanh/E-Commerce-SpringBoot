@@ -93,7 +93,7 @@ public class CartDetailService {
             newCartDetail.setProduct(product);
             newCartDetail.setQuantity(quantity);
             CartDetail savedDetail = cartDetailRepository.save(newCartDetail);
-            cartUpdateSubject.notifyCartUpdated(cart.getAccount().getId()); // Thông báo sau khi thêm mới
+            cartUpdateSubject.notifyCartUpdated(cart.getId());
             return savedDetail;
         }
     }
@@ -125,7 +125,22 @@ public class CartDetailService {
                 .orElseThrow(()-> new CustomException(Error.CARTDETAIL_NOT_FOUND));
         cartDetail.setQuantity( quantity);
 
-        return cartDetailRepository.save(cartDetail);
+        // Cập nhật ngày sửa đổi
+        cartDetail.setDate(LocalDateTime.now());
+        // Lưu CartDetail đã cập nhật
+        try {
+           cartDetail = cartDetailRepository.save(cartDetail);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new CustomException(Error.CART_UNABLE_TO_SAVE);
+        }
+        // Thông báo cập nhật giỏ hàng
+        cartUpdateSubject.notifyCartUpdated(cartDetail.getCart().getId());
+
+        // Trả về CartDetail đã cập nhật
+
+        return cartDetail;
+
+
     }
 
 }

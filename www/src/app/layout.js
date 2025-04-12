@@ -12,6 +12,7 @@ import { SettingsProvider } from '@/contexts/settings';
 import { applyDefaultSettings } from '@/lib/settings/apply-default-settings';
 import { getSettings as getPersistedSettings } from '@/lib/settings/get-settings';
 import '@/styles/global.css';
+import { CartProvider } from "@/contexts/cartContext";
 
 export const metadata = { title: config.site.name };
 
@@ -33,11 +34,14 @@ export default async function Layout({ children }) {
                         <UserProvider>
                             <SettingsProvider settings={settings}>
                                 <I18nProvider lng={settings.language}>
-                                    <ThemeProvider>
-                                        {children}
-                                        <SettingsButton />
-                                        <Toaster position="bottom-right" />
-                                    </ThemeProvider>
+                                <CartProvider>
+                                        <ThemeProvider>
+                                            {children}
+                                            <SettingsButton />
+                                            <Toaster position="bottom-right" />
+                                        </ThemeProvider>
+                                    
+                                    </CartProvider>
                                 </I18nProvider>
                             </SettingsProvider>
                         </UserProvider>
