@@ -106,7 +106,7 @@ function Product() {
         } else {
             logger.error('No image available for this product');
         }
-    };
+    };  
 
     const handleCloseModal = () => {
         setOpenModal(false);

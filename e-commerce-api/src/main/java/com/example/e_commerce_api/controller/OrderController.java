@@ -114,5 +114,12 @@ public class OrderController {
     }
 
 
+    @PatchMapping("/viewed/{orderId}")
+    public ResponseEntity<ApiResponse<String>> updateOrderViewed(@PathVariable Integer orderId) {
+            orderService.updateOrderViewed(orderId);
+        ApiResponse<String> response = new ApiResponse<>(true, "Cập nhật đơn hàng thành công", "true", null);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

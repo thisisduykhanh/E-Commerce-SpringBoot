@@ -18,7 +18,7 @@ export const fetchCart = async () => {
 
 export const updateCart = async (cartDetailId, quantity) => {
     try {
-        const response = await apiClient.patch(`/users/cart?cartDetailId=${cartDetailId}&quantity=${quantity}`);
+        const response = await apiClient.patch(`cart/details?cartDetailId=${cartDetailId}&quantity=${quantity}`);
 
         return response; // Trả về dữ liệu từ API
     } catch (error) {
@@ -41,7 +41,7 @@ export const deleteCart = async () => {
 // xóa 1 sản phẩm trong giỏ hàng
 export const deleteProductInCart = async (productId) => {
     try {
-        const response = await apiClient.delete(`/users/cart?cartDetailId=${productId}`);
+        const response = await apiClient.delete(`/cart/details?cartDetailId=${productId}`);
 
         return response; // Trả về dữ liệu từ API
     } catch (error) {

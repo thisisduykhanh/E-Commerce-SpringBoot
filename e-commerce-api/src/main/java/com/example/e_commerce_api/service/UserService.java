@@ -48,7 +48,7 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Integer id, UserUpdateDTO userUpdateDTO) {
+    public User updateUser(Long id, UserUpdateDTO userUpdateDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -65,7 +65,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(Integer id) {
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -74,6 +74,12 @@ public class UserService {
     public Page<User> findAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public User findUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(Error.USER_NOT_FOUND));
     }
 
     @Transactional

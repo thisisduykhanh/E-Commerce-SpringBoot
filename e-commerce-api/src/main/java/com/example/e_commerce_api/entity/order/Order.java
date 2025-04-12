@@ -47,4 +47,6 @@ public class Order {
     private String phone;
 
     private String paymentMethod;
+
+    private boolean isReviewed = false;
 }

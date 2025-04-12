@@ -204,4 +204,11 @@ public class OrderService {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new CustomException(Error.ORDERS_NOT_FOUND));
     }
+
+    public void updateOrderViewed(Integer orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(Error.ORDERS_NOT_FOUND));
+        order.setReviewed(true);
+        orderRepository.save(order);
+    }
 }

@@ -45,14 +45,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> updateUser(@PathVariable Integer id, @RequestBody UserUpdateDTO userUpdateDTO) {
+    public ResponseEntity<ApiResponse<?>> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
         User user = userService.updateUser(id, userUpdateDTO);
         ApiResponse<User> response = new ApiResponse<>( true, "Update user successfully", user, null);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         ApiResponse<String> response = new ApiResponse<>(true, "Xóa người dùng thành công", "true", null);
         return ResponseEntity.ok(response);

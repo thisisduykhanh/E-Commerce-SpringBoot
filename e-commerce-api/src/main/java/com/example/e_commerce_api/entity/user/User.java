@@ -1,5 +1,6 @@
 package com.example.e_commerce_api.entity.user;
 
+import com.example.e_commerce_api.entity.product.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,4 +27,5 @@ public class User {
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
 }

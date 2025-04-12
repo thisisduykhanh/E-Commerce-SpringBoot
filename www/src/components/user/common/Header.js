@@ -18,6 +18,7 @@ import {
   TextField,
   Toolbar,
   Typography,
+  Badge
 } from "@mui/material";
 import Link from "next/link";
 import * as React from "react";
@@ -228,20 +229,13 @@ export default function Header() {
           {user ? (
             <>
               <Button
-                sx={{
-                  color: "#666666",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  marginRight: "10px",
-                }}
-                startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
-              >
-                {user?.fullname}
-              </Button>
-              <Button
                 variant="text"
                 href="/user/cart"
-                startIcon={<ShoppingCartIcon sx={{ color: "#00A6B7" }} />}
+                startIcon={
+                  <Badge badgeContent={3} color="error" overlap="rectangular">
+                    <ShoppingCartIcon sx={{ color: "#00A6B7" }} />
+                  </Badge>
+                }
                 sx={{
                   color: "#666666 !important",
                   textTransform: "none",
@@ -265,34 +259,19 @@ export default function Header() {
               </Button>
             </>
           ) : (
-            <>
-              <Button
-                variant="text"
-                href="/auth/custom/sign-in"
-                startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
-                sx={{
-                  color: "#666666 !important",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Đăng nhập
-              </Button>
-              <Button
-                variant="text"
-                href="/auth/custom/sign-in"
-                startIcon={<ShoppingCartIcon sx={{ color: "#00A6B7" }} />}
-                sx={{
-                  color: "#666666 !important",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Giỏ hàng
-              </Button>
-            </>
+            <Button
+              variant="text"
+              href="/auth/custom/sign-in"
+              startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
+              sx={{
+                color: "#666666 !important",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "16px",
+              }}
+            >
+              Đăng nhập
+            </Button>
           )}
         </Box>
       </Toolbar>

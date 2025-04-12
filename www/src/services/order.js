@@ -19,6 +19,16 @@ export const getCartDetail = async () => {
 };
 
 
+export const updateOrderViewed = async (id) => {
+    try {
+        const response = await apiClient.patch(`/orders/viewed/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 export const getOrderSupply = async (orderStatus, page = 0, size = 10) => {
     try {
         const response = await apiClient.get(
@@ -44,3 +54,18 @@ export const getMyOrder = async () => {
     }
 };
 // 1 accept 2 pending 3 completed
+
+/**
+ * 
+ * @param {Number} id  - The ID of the order to retrieve
+ * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API
+ * @throws {Error} - If the request fails
+ */
+export const getOrderDetail = async (id) => {
+    try {
+        const response = await apiClient.get(`/orders/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
