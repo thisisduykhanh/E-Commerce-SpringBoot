@@ -57,10 +57,9 @@ public class OrderController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<Page<Order>>> getOrders(@RequestParam("OrderStatusId") Integer orderStatusId, @RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Order> ordersPage = orderService.getOrdersByStatus(orderStatusId, pageable);
-        ApiResponse<Page<Order>> response = new ApiResponse<>(true, "Lấy danh sách đơn hàng thành công", ordersPage, null);
+    public ResponseEntity<ApiResponse<List<Order>>> getOrders() {
+        List<Order> ordersPage = orderService.getAllOrders();
+        ApiResponse<List<Order>> response = new ApiResponse<>(true, "Lấy danh sách đơn hàng thành công", ordersPage, null);
         return ResponseEntity.ok(response);
     }
 

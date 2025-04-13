@@ -1,12 +1,10 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CheckCircle as CheckCircleIcon } from '@phosphor-icons/react/dist/ssr/CheckCircle';
 import { Eye as EyeIcon } from '@phosphor-icons/react/dist/ssr/Eye';
 import { PencilSimple as PencilIcon } from '@phosphor-icons/react/dist/ssr/PencilSimple';
 import { Image as ImageIcon } from '@phosphor-icons/react/dist/ssr/Image';
@@ -15,9 +13,6 @@ import * as React from 'react';
 
 import { DataTable } from '@/components/core/data-table';
 import { paths } from '@/paths';
-
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 
 const columns = [
@@ -102,11 +97,8 @@ const columns = [
     {
         formatter: (row) => (
             <Stack direction="row" spacing={1} justifyContent="flex-end">
-                <IconButton component={RouterLink} href={paths.supplier.products.preview(row.id)} title="Xem chi tiết">
+                <IconButton component={RouterLink} href={paths.dashboard.products.preview(row.id)} title="Xem chi tiết">
                     <EyeIcon />
-                </IconButton>
-                <IconButton component={RouterLink} href={paths.supplier.products.update(row.id)} title="Chỉnh sửa">
-                    <PencilIcon />
                 </IconButton>
             </Stack>
         ),

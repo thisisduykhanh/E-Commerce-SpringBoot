@@ -81,29 +81,29 @@ export default function Page({ searchParams }) {
      searchParams.status = "Pending";
  
     } const currentStatus = searchParams.status;
-   const fetchSupplier = React.useCallback(async (page, size ,status) => {
-     const response = await getSupplier(status,page, size);
-     console.log("data: ", response.data.content);
-     setSupplier(response.data.content);
-     setTotalElements(response.data.totalElements); // Cập nhật tổng số phần tử
+   const fetchSupplier = React.useCallback(async () => {
+     const response = await getSupplier();
+     console.log("data: ", response.data);
+     setSupplier(response.data); // Cập nhật danh sách nhà cung cấp
+     setTotalElements(response.data.length); // Cập nhật tổng số phần tử
    }, []);
  
    React.useEffect(() => {
-    fetchSupplier(page, rowsPerPage, currentStatus);
-   }, [fetchSupplier, page, rowsPerPage, currentStatus]);
+    fetchSupplier();
+   }, [fetchSupplier]);
    
 
   const handlePageChange = (_event, newPage) => {
     console.log("1");
     setPage(newPage);
-    fetchSupplier(newPage, rowsPerPage); // Fetch lại dữ liệu khi thay đổi trang
+    fetchSupplier(); // Fetch lại dữ liệu khi thay đổi trang
   };
 
   const handleRowsPerPageChange = (event) => {
     const newSize = parseInt(event.target.value, 10);
     setRowsPerPage(newSize);
     setPage(0); // Reset về trang đầu tiên
-    fetchSupplier(0, newSize); // Fetch lại dữ liệu khi thay đổi số hàng mỗi trang
+    fetchSupplier(); // Fetch lại dữ liệu khi thay đổi số hàng mỗi trang
   };
     return (
         <Box
@@ -119,24 +119,10 @@ export default function Page({ searchParams }) {
                     <Box sx={{ flex: '1 1 auto' }}>
                         <Typography variant="h4">Nhà cung cấp</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button startIcon={<PlusIcon />} variant="contained">
-                            Thêm
-                        </Button>
-                    </Box>
+                    
                 </Stack>
-               {/*  <CustomersSelectionProvider customers={filteredCustomers}>
-                    <Card>
-                        <CustomersFilters filters={{ email, phone, status }} sortDir={sortDir} />
-                        <Divider />
-                        <Box sx={{ overflowX: 'auto' }}>
-                            <CustomersTable rows={filteredCustomers} />
-                        </Box>
-                        <Divider />
-                        <CustomersPagination count={filteredCustomers.length + 100} page={0} />
-                    </Card>
-                </CustomersSelectionProvider>
- */}
+              
+ 
                 <CustomersSelectionProvider customers={supplier}>
                     <Card>
                         <CustomersFilters filters={{ email, phone, status }} sortDir={sortDir} />

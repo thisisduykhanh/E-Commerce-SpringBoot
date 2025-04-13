@@ -47,10 +47,10 @@ export const updateOrderViewed = async (id) => {
 }
 
 
-export const getOrderSupply = async (orderStatus, page = 0, size = 10) => {
+export const getOrderSupply = async () => {
     try {
         const response = await apiClient.get(
-            `/supplier/orders?OrderStatus=${orderStatus}&page=${page}&size=${size}`
+            `/orders`
         );
 
         return response;

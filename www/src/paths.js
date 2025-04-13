@@ -124,7 +124,7 @@ export const paths = {
         orders: {
             list: '/dashboard/orders',
             create: '/dashboard/orders/create',
-            ưpreview: (orderId) => `/dashboard/orders?previewId=${orderId}`,
+            preview: (orderId) => `/dashboard/orders?previewId=${orderId}`,
             details: (orderId) => `/dashboard/orders/${orderId}`,
         },
         products: {
@@ -132,7 +132,7 @@ export const paths = {
             create: '/dashboard/products/create',
             preview: (productId) => `/dashboard/products?previewId=${productId}`,
             details: (productId) => `/dashboard/products/${productId}`,
-            update: (productId) => `/supplier/products/update?previewId=${productId}`,
+            update: (productId) => `/dashboard/products/update?previewId=${productId}`,
         },
         social: {
             profile: { timeline: '/dashboard/social/profile', connections: '/dashboard/social/profile/connections' },

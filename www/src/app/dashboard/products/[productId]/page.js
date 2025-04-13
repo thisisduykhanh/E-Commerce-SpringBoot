@@ -1,20 +1,61 @@
+'use client';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ArrowLeft as ArrowLeftIcon } from '@phosphor-icons/react/dist/ssr/ArrowLeft';
 import RouterLink from 'next/link';
-
+import React from 'react';
 import { ProductEditForm } from '@/components/dashboard/product/product-edit-form';
 import { config } from '@/config';
 import { paths } from '@/paths';
 
-export const metadata = { title: `Details | Products | Dashboard | ${config.site.name}` };
+import {getProduct} from '@/services/products';
+
+import { useSearchParams } from 'next/navigation';
+
 
 // The page should load the product from the API based on the productId param and pass it to the form component.
 // For the sake of simplicity, we are just using a static product object.
 
 export default function Page() {
+
+    const searchParams = useSearchParams();
+
+    const [product, setProduct] = React.useState(null);
+
+   
+
+    const fetchProduct = async (productId) => {
+        try {
+          const data = await getProduct(productId);
+          console.log("Fetched product from API:", data); // <- THÊM LOG
+          setProduct(data.data);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      }
+
+React.useEffect(() => {
+    const previewId = searchParams.get('previewId');
+    console.log('productId:', previewId);
+
+    if (previewId) {
+      console.log('Calling fetchProduct with productId:', previewId);
+      fetchProduct(previewId);
+    } else {
+      console.warn('previewId is null or undefined');
+    }
+  }, [searchParams]);
+
+  if (!product) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Typography>Loading product data...</Typography>
+      </Box>
+    );
+  }
     return (
         <Box
             sx={{
@@ -43,27 +84,7 @@ export default function Page() {
                     </div>
                 </Stack>
                 <ProductEditForm
-                    product={{
-                        id: 'PRD-001',
-                        name: 'Erbology Aloe Vera',
-                        handle: 'healthcare-erbology',
-                        category: 'Healthcare',
-                        type: 'physical',
-                        description:
-                            '<h2>Erbology Aloe Vera is a natural, eco-friendly, and vegan product.</h2><p>It is made from natural ingredients. It is a great product for healthcare.</p>',
-                        tags: 'Natural, Eco-Friendly, Vegan',
-                        currency: 'USD',
-                        price: 24,
-                        images: [{ id: 'IMG-001', url: '/assets/product-1.png', fileName: 'product-1.png' }],
-                        sku: '401_1BBXBK',
-                        barcode: '',
-                        quantity: 10,
-                        backorder: true,
-                        height: 25,
-                        width: 15,
-                        length: 5,
-                        weight: 0.25,
-                    }}
+                    product={product} // Ensure product is passed here
                 />
             </Stack>
         </Box>

@@ -6,8 +6,8 @@ export const getProduct = async (status, page, size) => {
     return response;
 };
 
-export const getSupplier = async (status,page , size) => {
-    const response = await apiClient.get(`admin/supplier?verifyStatus=${status}&page=${page}&size=${size}`);
+export const getSupplier = async () => {
+    const response = await apiClient.get(`/supplier`);
     return response;
 };
 export const getUser = async (page , size) => {

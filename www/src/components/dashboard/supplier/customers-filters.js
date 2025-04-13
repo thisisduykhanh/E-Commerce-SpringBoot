@@ -20,12 +20,7 @@ import { paths } from '@/paths';
 import { useCustomersSelection } from './customers-selection-context';
 
 // The tabs should be generated using API data.
-const tabs = [
-    { label: 'Chờ duyệt', value: 'Pending', count: 5 },
-    { label: 'Hoạt động', value: 'Active', count: 3 },
-    { label: 'Đã chặn', value: 'Blocked', count: 1 },
-   
-];
+
 
 export function CustomersFilters({ filters = {}, sortDir = 'desc' }) {
     const { email, phone, status } = filters;
@@ -46,8 +41,8 @@ export function CustomersFilters({ filters = {}, sortDir = 'desc' }) {
                 searchParams.set('status', newFilters.status);
             }
 
-            if (newFilters.email) {
-                searchParams.set('email', newFilters.email);
+            if (newFilters.name) {
+                searchParams.set('name', newFilters.name);
             }
 
             if (newFilters.phone) {
@@ -63,12 +58,7 @@ export function CustomersFilters({ filters = {}, sortDir = 'desc' }) {
         updateSearchParams({}, sortDir);
     }, [updateSearchParams, sortDir]);
 
-    const handleStatusChange = React.useCallback(
-        (_, value) => {
-            updateSearchParams({ ...filters, status: value }, sortDir);
-        },
-        [updateSearchParams, filters, sortDir]
-    );
+   
 
     const handleEmailChange = React.useCallback(
         (value) => {
@@ -95,20 +85,8 @@ export function CustomersFilters({ filters = {}, sortDir = 'desc' }) {
 
     return (
         <div>
-            <Tabs onChange={handleStatusChange} sx={{ px: 3 }} value={status ?? ''} variant="scrollable">
-                {tabs.map((tab) => (
-                    <Tab
-                        icon={<Chip label={tab.count} size="small" variant="soft" />}
-                        iconPosition="end"
-                        key={tab.value}
-                        label={tab.label}
-                        sx={{ minHeight: 'auto' }}
-                        tabIndex={0}
-                        value={tab.value}
-                    />
-                ))}
-            </Tabs>
-            <Divider />
+
+           
             <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flexWrap: 'wrap', px: 3, py: 2 }}>
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flex: '1 1 auto', flexWrap: 'wrap' }}>
                     <FilterButton

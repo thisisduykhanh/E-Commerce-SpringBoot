@@ -21,6 +21,10 @@ import { paths } from '@/paths';
 import { useCustomersSelection } from './customers-selection-context';
 
 const columns = [
+
+    {  formatter(row) {
+        return row.id ?  row.id: 'N/A';
+    }, name: '#', width: '50px' },
     {
         formatter: (row) => (
             <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
@@ -33,7 +37,8 @@ const columns = [
                         sx={{ whiteSpace: 'nowrap' }}
                         variant="subtitle2"
                     >
-                        {row.nameSupply}
+                        {row.supplyName
+                        }
                     </Link>
                     <Typography color="text.secondary" variant="body2">
                         {row.email}
@@ -57,14 +62,12 @@ const columns = [
     //     name: 'Quota',
     //     width: '250px',
     //   },
-    {  formatter(row) {
-        return row.phone ?  row.phone: 'N/A';
-    }, name: 'Số điện thoại', width: '150px' },
+
     {
         formatter(row) {
-            return row.createDate ? dayjs(row.createDate).format('MMM D, YYYY h:mm A') : 'N/A';
+            return row.address ? row.address : 'N/A';
         },
-        name: 'Ngày tạo',
+        name: 'Địa chỉ',
         width: '200px',
     },
     {
@@ -75,19 +78,20 @@ const columns = [
             //     pending: { label: 'Chờ duyệt', icon: <ClockIcon color="var(--mui-palette-warning-main)" weight="fill" /> },
             let label, icon;
 
-            switch (row.supplierStatus) {
-                case 'Active':
+            const status = row.status.toString();
+
+            console.log('status', status);
+
+            switch (status) {
+                case 'false':
+                    label = 'Ngừng hoạt động';
+                    icon = <MinusIcon color="var(--mui-palette-error-main)" weight="fill" />;
+                    break;
+                case 'true':
                     label = 'Hoạt động';
-                    icon = <CheckCircleIcon color="var(--mui-palette-success-main)" weight="fill" />;
+                    icon = <CheckCircleIcon color="var(--mui-palette-success-main)" />;
                     break;
-                case 'Blocked':
-                    label = 'Khoá';
-                    icon = <MinusIcon color="var(--mui-palette-error-main)" />;
-                    break;
-                case 'Pending':
-                    label = 'Chờ duyệt';
-                    icon = <ClockIcon color="var(--mui-palette-warning-main)" weight="fill" />;
-                    break;
+              
                 default:
                     label = 'Unknown';
                     icon = null;

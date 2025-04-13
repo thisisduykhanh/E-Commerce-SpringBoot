@@ -271,6 +271,7 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
                     />
                     <TextField
                         label="Số điện thoại"
+                        type='tel'
                         fullWidth={true}
                         variant="outlined"
                         value={phone}

@@ -26,8 +26,9 @@ export default function Page({ searchParams }) {
     React.useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await getOrderSupply(status, 0, 10); // Pass required parameters
-                setOrders(response.data.content);
+                const response = await getOrderSupply(); // Pass required parameters
+                setOrders(response.data);
+                console.log('Fetched orders:', response.data);  
             } catch (error) {
                 console.error('Error fetching orders:', error);
             } finally {
@@ -60,13 +61,7 @@ export default function Page({ searchParams }) {
                         <Box sx={{ flex: '1 1 auto' }}>
                             <Typography variant="h4">Đặt hàng</Typography>
                         </Box>
-                        <div>
-                            <Link href="/dashboard/orders/create" passHref={true}>
-                                <Button startIcon={<PlusIcon />} variant="contained" component="a">
-                                    Tạo đơn hàng
-                                </Button>
-                            </Link>
-                        </div>
+                       
                     </Stack>
                     <OrdersSelectionProvider orders={filteredOrders}>
                         <Card>
@@ -100,7 +95,7 @@ function applySort(row, sortDir) {
 function applyFilters(row, { customer, id, status }) {
     return row.filter((item) => {
         if (customer) {
-            if (!item.fullName.toLowerCase().includes(customer.toLowerCase())) {
+            if (!item.user.userName.toLowerCase().includes(customer.toLowerCase())) {
                 return false;
             }
         }

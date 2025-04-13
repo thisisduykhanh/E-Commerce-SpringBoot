@@ -21,11 +21,11 @@ import { useOrdersSelection } from './orders-selection-context';
 
 // The tabs should be generated using API data.
 const tabs = [
-    { label: 'All', value: '', count: 5 },
-    { label: 'Completed', value: 'completed', count: 2 },
+    { label: 'All', value: '', count: 0 },
+    { label: 'Completed', value: 'Paid', count: 2 },
     { label: 'Pending', value: 'pending', count: 1 },
-    { label: 'Canceled', value: 'canceled', count: 1 },
-    { label: 'Rejected', value: 'rejected', count: 1 },
+    { label: 'Canceled', value: 'cancelled', count: 1 },
+  
 ];
 
 export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
@@ -99,7 +99,7 @@ export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
             <Tabs onChange={handleStatusChange} sx={{ px: 3 }} value={status ?? ''} variant="scrollable">
                 {tabs.map((tab) => (
                     <Tab
-                        icon={<Chip label={tab.count} size="small" variant="soft" />}
+                        // icon={<Chip label={tab.count} size="small" variant="soft" />}
                         iconPosition="end"
                         key={tab.value}
                         label={tab.label}

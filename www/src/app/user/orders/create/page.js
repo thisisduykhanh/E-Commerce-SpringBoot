@@ -252,6 +252,7 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
                     <TextField
                         label="Số điện thoại"
                         fullWidth={true}
+                        type='tel'
                         variant="outlined"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}

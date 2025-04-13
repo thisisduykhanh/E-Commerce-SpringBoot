@@ -14,8 +14,7 @@ export function ProductsFilters({ filters = {}, sortDir = 'desc' }) {
 
     // The tabs should be generated using API data.
 const tabs = [
-    { label: 'Sản Phẩm Đã Duyệt', value: 'Access' , count: filters.totalElementsByStatus?.Access || 0 },
-    { label: 'Sản phẩm Đang được duyệt', value: 'Pending' , count: filters.totalElementsByStatus?.Pending || 0 },
+    { label: 'Sản Phẩm', value: 'Access' , count: filters.totalElementsByStatus?.Access || 0 },
 ];
 
     const router = useRouter();
@@ -58,7 +57,6 @@ const tabs = [
             <Tabs onChange={handleStatusChange} sx={{ px: 3 }} value={status ?? ''} variant="scrollable">
                 {tabs.map((tab) => (
                     <Tab
-                        icon={<Chip label={tab.count} size="small" variant="soft" />}
                         iconPosition="end"
                         key={tab.value}
                         label={tab.label}

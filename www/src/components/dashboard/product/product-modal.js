@@ -24,38 +24,6 @@ import { useSearchParams } from 'next/navigation';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-// const imageColumns = [
-//   {
-//     formatter: (row) => {
-//       return (
-//         <Box
-//           sx={{
-//             backgroundImage: `url(${row.url})`,
-//             backgroundPosition: 'center',
-//             backgroundSize: 'cover',
-//             bgcolor: 'var(--mui-palette-background-level2)',
-//             borderRadius: 1,
-//             flex: '0 0 auto',
-//             height: '40px',
-//             width: '40px',
-//           }}
-//         />
-//       );
-//     },
-//     name: 'Image',
-//     width: '100px',
-//   },
-//   { field: 'fileName', name: 'File name', width: '300px' },
-//   {
-//     formatter: (row) => {
-//       return row.primary ? <Chip color="secondary" label="Primary" size="small" variant="soft" /> : <span />;
-//     },
-//     name: 'Actions',
-//     hideName: true,
-//     width: '100px',
-//     align: 'right',
-//   },
-// ];
 
 export function ProductModal({ open }) {
     const router = useRouter();
@@ -76,7 +44,7 @@ export function ProductModal({ open }) {
     }, [id]);
 
     const imageRows =
-        productsDetail?.listImage?.map((image, index) => ({
+        productsDetail?.images?.map((image, index) => ({
             id: index,
             url: image.url,
             fileName: `Image ${index + 1}`,
@@ -88,7 +56,7 @@ export function ProductModal({ open }) {
     }, [fetchProductsDetail]);
 
     const handleClose = React.useCallback(() => {
-        router.push(paths.supplier.products.list);
+        router.push(paths.dashboard.products.list);
     }, [router]);
 
     // const productStatusMessage =
@@ -119,20 +87,13 @@ export function ProductModal({ open }) {
                             sx={{ alignItems: 'center', justifyContent: 'space-between' }}
                         >
                             <Typography variant="h6">Chi tiết</Typography>
-                            {/* <Button
-                                color="secondary"
-                                component={RouterLink}
-                                href={paths.supplier.products.update(id)}
-                                startIcon={<PencilSimpleIcon />}
-                            >
-                                Sửa
-                            </Button> */}
+                           
                         </Stack>
                         <Card sx={{ borderRadius: 1 }} variant="outlined">
                             <PropertyList divider={<Divider />} sx={{ '--PropertyItem-padding': '12px 24px' }}>
                                 {[
-                                    { key: 'Tên sản phẩm', value: productsDetail?.nameProduct || 'Không có' },
-                                    { key: 'Loại sản phẩm', value: productsDetail?.nameProductType || 'Không có' },
+                                    { key: 'Tên sản phẩm', value: productsDetail?.productName || 'Không có' },
+                                    { key: 'Loại sản phẩm', value: productsDetail?.productTypeName || 'Không có' },
                                     {
                                         key: 'Giá',
                                         value: new Intl.NumberFormat('vi-VN', {
@@ -141,29 +102,8 @@ export function ProductModal({ open }) {
                                         }).format(productsDetail?.price || 0),
                                     },
                                     { key: 'Mô tả', value: productsDetail?.description || 'Không có' },
-                                    { key: 'Nhà cung cấp', value: productsDetail?.nameSupplier || 'Không có' },
-                                    { key: 'Địa chỉ', value: productsDetail?.address || 'Không có' },
-                                    {
-                                        key: 'Trạng thái',
-                                        value: (() => {
-                                            const verifyMapping = {
-                                                Pending: { label: 'Đang chờ', icon: <HourglassBottomIcon color="warning" /> },
-                                                Access: { label: 'Đã duyệt', icon: <CheckCircleIcon color="success" /> },
-                                                Reject: { label: 'Từ chối', icon: <CancelIcon color="error" /> },
-                                            };
+                                    { key: 'Nhà cung cấp', value: productsDetail?.supplierName || 'Không có' },
                                     
-                                    
-                                            const { label: verifyLabel, icon: verifyIcon } =
-                                                verifyMapping[productsDetail?.productStatusVerify] ?? { label: 'Không xác định', icon: null };
-                                    
-                                            return (
-                                                <Stack direction="column" spacing={1}>
-                                                    <Chip icon={verifyIcon} label={verifyLabel} size="small" variant="outlined" sx={{ width: '50%' }} />
-                                                </Stack>
-                                            );
-                                        })(),
-                                    },
-                                    { key: 'Loại kho', value: productsDetail?.storageType || 'Không có' }, { key: 'Thời gian sử dụng', value: productsDetail?.shelfLife || 'Không có' }, { key: 'Hướng dẫn sử dụng', value: productsDetail?.instructionForUse || 'Không có' }, { key: 'Màu sắc', value: productsDetail?.color || 'Không có' }, { key: 'Kích thước', value: productsDetail?.size || 'Không có' }, { key: 'Khối lượng', value: productsDetail?.weight || 'Không có' }, { key: 'Chi tiết đóng gói', value: productsDetail?.packagingDetails || 'Không có' }, { key: 'Kích thước gói đơn', value: productsDetail?.singlePackageSize || 'Không có' },
                                     
                                 ].map((item) => (
                                     <PropertyItem key={item.key} name={item.key} value={item.value} />
@@ -222,40 +162,7 @@ export function ProductModal({ open }) {
                                 </Box>
                             </Card>
                         </Stack>
-                        <Stack spacing={3}>
-                            <Typography variant="h6">Giá theo kg</Typography>
-                            <Card sx={{ borderRadius: 1 }} variant="outlined">
-                                <Box sx={{ overflowX: 'auto' }}>
-                                    <DataTable
-                                        columns={[
-                                            {
-                                                field: 'minQuantity',
-                                                name: 'Số kg tối thiểu', // Modify the label to include (kg)
-                                                width: '150px',
-                                                formatter: (row) => `${row.minQuantity} kg`, // Format minQuantity as 'X kg'
-                                            },
-                                            {
-                                                field: 'maxQuantity',
-                                                name: 'Số kg tối đa', // Modify the label to include (kg)
-                                                width: '150px',
-                                                formatter: (row) => `${row.maxQuantity} kg`, // Format maxQuantity as 'X kg'
-                                            },
-                                            {
-                                                field: 'price',
-                                                name: 'Giá',
-                                                formatter: (row) =>
-                                                    new Intl.NumberFormat('vi-VN', {
-                                                        style: 'currency',
-                                                        currency: 'VND',
-                                                    }).format(row.price),
-                                                width: '150px',
-                                            },
-                                        ]}
-                                        rows={productsDetail?.officialPriceDTO || []}
-                                    />
-                                </Box>
-                            </Card>
-                        </Stack>
+                        
                     </Stack>
                 </Stack>
             </DialogContent>

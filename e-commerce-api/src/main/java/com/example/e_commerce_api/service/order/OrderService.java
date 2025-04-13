@@ -88,6 +88,11 @@ public class OrderService {
         return response;
     }
 
+    @Transactional
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
 
     @Transactional
     public List<OrderDTO> createOrdersFromCartDetails(OrderCreateDTO orderCreateDto){
