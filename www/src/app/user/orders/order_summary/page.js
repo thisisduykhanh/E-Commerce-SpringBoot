@@ -83,7 +83,7 @@ const OrderSummary = ({ totalPrice, taxRate, shippingFee, onPayment, address }) 
                 onClick={!isOrderDisabled ? onPayment : null}
                 disabled={isOrderDisabled}
             >
-                {window.location.pathname === '/orders' ? 'Đặt hàng' : 'Mua hàng'}
+                {window.location.pathname === '/user/orders' ? 'Đặt hàng' : 'Mua hàng'}
             </Button>
 
             {/* Phần bảo vệ */}

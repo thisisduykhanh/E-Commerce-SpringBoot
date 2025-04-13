@@ -92,6 +92,11 @@ public class OrderService {
     @Transactional
     public List<OrderDTO> createOrdersFromCartDetails(OrderCreateDTO orderCreateDto){
 
+        if (orderCreateDto.cartDetailIds() == null || orderCreateDto.cartDetailIds().isEmpty()) {
+            throw new CustomException(Error.CARTDETAIL_NOT_FOUND);
+        }
+
+
         List<CartDetail> cartDetails = orderCreateDto.cartDetailIds().stream()
                 .map(integer -> cartDetailRepository.findById(integer)
                         .orElseThrow(() -> new CustomException(Error.CARTDETAIL_NOT_FOUND)))
@@ -132,9 +137,17 @@ public class OrderService {
                             .map(cd -> BigDecimal.valueOf(cd.getQuantity()).multiply(cd.getProduct().getPrice()))
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
                     order.setQuantity(totalQuantity);
-                    order.setTotalPrice(totalPrice);
+                    order.setTotalPrice(totalPrice
+                            .add(orderCreateDto.shippingFee())
+                            .add(orderCreateDto.taxFee())
+                    );
+
+                    order.setShippingFee(orderCreateDto.shippingFee());
+                    order.setTaxFee(orderCreateDto.taxFee());
+
                     order.setCreateDate(LocalDateTime.now());
                     Order savedOrder = orderRepository.save(order);
+
                     details.forEach(cartDetail -> {
                         Product product = cartDetail.getProduct();
 

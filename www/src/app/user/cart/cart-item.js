@@ -90,72 +90,87 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                             </Box>
 
                             {/* Quantity adjustment and total price */}
-                            <Box display="flex" alignItems="center" sx={{ gap: 2, minWidth: '180px' }}>
-                                <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    sx={{
-                                        border: '1px solid #ccc',
-                                        borderRadius: '50px',
-                                        gap: 1,
-                                        bgcolor: '#f9f9f9',
-                                    }}
-                                >
-                                    <Button
-                                        size="small"
-                                        variant="outlined"
+                            {handleQuantityChange && handleRemoveItem && (
+                                
+                                <Box display="flex" alignItems="center" sx={{ gap: 2, minWidth: '180px' }}>
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
                                         sx={{
-                                            minWidth: 40,
-                                            height: 40,
-                                            borderRadius: '50%',
                                             border: '1px solid #ccc',
-                                            color: '#333',
-                                            padding: 0,
-                                            ':hover': {
-                                                bgcolor: '#f0f0f0',
-                                            },
-                                        }}
-                                        onClick={() => handleQuantityChange(item.id, -1)}
-                                    >
-                                        -
-                                    </Button>
-                                    <Typography
-                                        sx={{
-                                            width: 30,
-                                            textAlign: 'center',
-                                            fontSize: '1.2rem',
-                                            color: '#333',
+                                            borderRadius: '50px',
+                                            gap: 1,
+                                            bgcolor: '#f9f9f9',
                                         }}
                                     >
-                                        {item.quantity}
+                                        <Button
+                                            size="small"
+                                            variant="outlined"
+                                            sx={{
+                                                minWidth: 40,
+                                                height: 40,
+                                                borderRadius: '50%',
+                                                border: '1px solid #ccc',
+                                                color: '#333',
+                                                padding: 0,
+                                                ':hover': {
+                                                    bgcolor: '#f0f0f0',
+                                                },
+                                            }}
+                                            onClick={() => handleQuantityChange(item.id, -1)}
+                                        >
+                                            -
+                                        </Button>
+                                        <Typography
+                                            sx={{
+                                                width: 30,
+                                                textAlign: 'center',
+                                                fontSize: '1.2rem',
+                                                color: '#333',
+                                            }}
+                                        >
+                                            {item.quantity}
+                                        </Typography>
+                                        <Button
+                                            size="small"
+                                            variant="outlined"
+                                            sx={{
+                                                minWidth: 40,
+                                                height: 40,
+                                                borderRadius: '50%',
+                                                border: '1px solid #ccc',
+                                                color: '#333',
+                                                padding: 0,
+                                                ':hover': {
+                                                    bgcolor: '#f0f0f0',
+                                                },
+                                            }}
+                                            onClick={() => handleQuantityChange(item.id, 1)}
+                                        >
+                                            +
+                                        </Button>
+                                    </Box>
+                                    <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#00A6B7' }}>
+                                        {(item.totalPrice ?? 0).toLocaleString()}₫
                                     </Typography>
-                                    <Button
-                                        size="small"
-                                        variant="outlined"
-                                        sx={{
-                                            minWidth: 40,
-                                            height: 40,
-                                            borderRadius: '50%',
-                                            border: '1px solid #ccc',
-                                            color: '#333',
-                                            padding: 0,
-                                            ':hover': {
-                                                bgcolor: '#f0f0f0',
-                                            },
-                                        }}
-                                        onClick={() => handleQuantityChange(item.id, 1)}
-                                    >
-                                        +
-                                    </Button>
+                                    <IconButton color="error" sx={{ marginLeft: 3 }} onClick={() => handleRemoveItem(item.id)}>
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </Box>
-                                <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#00A6B7' }}>
-                                    {(item.totalPrice ?? 0).toLocaleString()}₫
-                                </Typography>
-                                <IconButton color="error" sx={{ marginLeft: 3 }} onClick={() => handleRemoveItem(item.id)}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Box>
+                            )}
+
+                            {/* Total price for the product */}
+                            {!handleQuantityChange && !handleRemoveItem && (
+                                <Box>
+                                    <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#00A6B7' }}>
+                                        x{item.quantity}
+                                    </Typography>
+                                </Box>
+                            )}
+
+
+
                         </Box>
                     ))}
                 </Box>

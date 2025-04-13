@@ -46,6 +46,10 @@ public class Order {
     private String address;
     private String phone;
 
+
+    private BigDecimal shippingFee;
+    private BigDecimal taxFee;
+
     private String paymentMethod;
 
     private boolean isReviewed = false;

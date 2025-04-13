@@ -10,6 +10,8 @@ import {
   Grid,
   Typography,
   Divider,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
@@ -23,11 +25,14 @@ const statusColorMap = {
   PAID: "#388E3C", // green
 };
 
-const OrderCard = ({ orders }) => {
+const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [open, setOpen] = useState(false);
   const [reviewOrderId, setReviewOrderId] = useState(null);
   const [orderIdViewed, setOrderIdViewed] = useState(null);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false); // State for payment modal
+  const [paymentOrderId, setPaymentOrderId] = useState(null); // State for selected order ID for payment
+  const [paymentMethod, setPaymentMethod] = useState(null); // State for payment method
 
   const handleViewDetail = async (id) => {
     try {
@@ -43,6 +48,22 @@ const OrderCard = ({ orders }) => {
   const handleClose = () => {
     setOpen(false);
     setSelectedOrder(null);
+  };
+
+  const handleOpenPaymentModal = (orderId) => {
+    setPaymentOrderId(orderId);
+    setPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setPaymentModalOpen(false);
+    setPaymentOrderId(null);
+  };
+
+  const handlePaymentMethod = (method) => {
+
+    onPayment(paymentOrderId, method);
+    handleClosePaymentModal();
   };
 
   const handleOpenReviewForm = async (orderId) => {
@@ -200,6 +221,31 @@ const OrderCard = ({ orders }) => {
                     </Typography>
                   ) : null}
 
+                  {/* Show Cancel button for PENDING orders */}
+                  {order.orderStatus.name === "PENDING" && (
+                    <>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="error"
+                        sx={{ mr: 3 }}
+                        onClick={() => handleOpenPaymentModal(order.id)}
+                      >
+                        Thanh toán
+                      </Button>
+
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="error"
+                        sx={{ mr: 3 }}
+                        onClick={() => onCancelOrder(order.id)}
+                      >
+                        Hủy đơn
+                      </Button>
+                    </>
+                  )}
+
                   <Button
                     variant="outlined"
                     size="small"
@@ -280,6 +326,152 @@ const OrderCard = ({ orders }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Payment Modal */}
+      <Dialog
+        open={paymentModalOpen}
+        onClose={handleClosePaymentModal}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Chọn phương thức thanh toán</DialogTitle>
+        <DialogContent>
+          <Box mb={4}>
+            <Box
+              p={2}
+              sx={{
+                backgroundColor: "#D4EDDA",
+                color: "#39615B",
+                borderRadius: 1,
+              }}
+            >
+              Mua sắm an toàn cùng{" "}
+              <span style={{ color: "#4B5D26", fontWeight: "bold" }}>
+                Asizon
+              </span>
+              .Số tiền bạn thanh toán sẽ được đảm bảo an toàn cho đến khi bạn
+              nhận được sản phẩm đúng như mô tả từ Nhà Cung Cấp{" "}
+              <a
+                href="https://example.com"
+                style={{
+                  color: "#4B5D26",
+                  textDecoration: "underline",
+                  fontWeight: "bold",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                Tìm hiểu thêm →
+              </a>
+            </Box>
+
+            <Box mt={2}>
+              <FormControlLabel
+                control={<Checkbox />}
+                value={"bankTransfer"}
+                onChange={(e) => {
+                  setPaymentMethod(e.target.value);
+                }}
+                label={
+                  <Box display="flex" alignItems="center">
+                    <img
+                      src="/payment/master-card.png"
+                      alt="ngân hàng"
+                      style={{
+                        width: 60,
+                        height: 40,
+                        marginRight: 8,
+                        objectFit: "contain",
+                      }}
+                    />
+                    <span style={{ fontSize: "1rem", fontWeight: 500 }}>
+                      Chuyển khoản ngân hàng
+                    </span>
+                  </Box>
+                }
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 1,
+                  marginLeft: 0,
+                }}
+              />
+              <FormControlLabel
+                control={<Checkbox sx={{ padding: 0, marginRight: 1 }} />}
+                value={"eWallet"}
+                onChange={(e) => {
+                  setPaymentMethod(e.target.value);
+                }}
+                label={
+                  <Box display="flex" alignItems="center">
+                    <img
+                      src="/payment/zalo.png"
+                      alt="ZaloPay"
+                      style={{
+                        width: 60,
+                        height: 40,
+                        marginRight: 8,
+                        objectFit: "contain",
+                      }}
+                    />
+                    <span style={{ fontSize: "1rem", fontWeight: 500 }}>
+                      Thanh toán qua ví ZaloPay (Miễn phí thanh toán)
+                    </span>
+                  </Box>
+                }
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 1,
+                  marginLeft: 0,
+                }}
+              />
+
+              <FormControlLabel
+                control={<Checkbox />}
+                value={"creditCard"}
+                onChange={(e) => {
+                  setPaymentMethod(e.target.value);
+                }}
+                label={
+                  <Box display="flex" alignItems="center">
+                    <img
+                      src="/payment/visa.png"
+                      alt="ngân hàng"
+                      style={{
+                        width: 60,
+                        height: 40,
+                        marginRight: 8,
+                        objectFit: "contain",
+                      }}
+                    />{" "}
+                    <span style={{ fontSize: "1rem", fontWeight: 500 }}>
+                      Thẻ tín dụng
+                    </span>
+                  </Box>
+                }
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 1,
+                }}
+              />
+            </Box>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            color="success"
+            onClick={() => handlePaymentMethod(paymentMethod)}
+            disabled={!paymentMethod}
+          >
+            Thanh toán
+          </Button>
+
+          <Button onClick={handleClosePaymentModal}>Đóng</Button>
         </DialogActions>
       </Dialog>
 

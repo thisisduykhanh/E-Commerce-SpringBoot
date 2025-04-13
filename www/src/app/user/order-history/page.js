@@ -4,7 +4,7 @@ import { useState } from 'react';
 import OrderCard from './OrderCard';
 import Pagination from './Pagination';
 import Sidebar from './Sidebar';
-import { getMyOrder } from '@/services/order';
+import { getMyOrder, updateOrderStatus, paymentOrder } from '@/services/order'; // Import cancelOrder service
 import { useEffect } from 'react';
 
 const styles = {
@@ -13,7 +13,7 @@ const styles = {
     tabStyle: {
         textTransform: 'none',
         fontWeight: 500,
-        minWidth: 290,
+        minWidth: 240,
         color: '#000',
         '&.Mui-selected': { color: '#00A6B7' },
         '&:hover': { color: '#1976d2' },
@@ -66,10 +66,45 @@ const OrderHistory = () => {
         getOrders();
     }, []);
 
+    const handleCancelOrder = async (orderId) => {
+        try {
+            console.log("Cancelling order with ID:", orderId);
+            await updateOrderStatus(orderId, 3); // Call updateOrderStatus API with CANCELLED status
+            setOrders((prevOrders) =>
+                prevOrders.map((order) =>
+                    order.id === orderId
+                        ? { ...order, orderStatus: { ...order.orderStatus, name: "CANCELLED" } }
+                        : order
+                )
+            );
+        } catch (error) {
+            console.error("Error cancelling order:", error);
+        }
+    };
+
+    const handlePayment = async (orderId, method) => {
+        try {
+            console.log("Processing payment for order ID:", orderId);
+            await paymentOrder(orderId, method); // Call updateOrderStatus API with PAID status
+            setOrders((prevOrders) =>
+                prevOrders.map((order) =>
+                    order.id === orderId
+                        ? { ...order, orderStatus: { ...order.orderStatus, name: "PAID" } }
+                        : order
+                )
+            );
+        } catch (error) {
+            console.error("Error processing payment:", error);
+        }
+    };
+
     const filteredOrders = () => {
         if (tabIndex === 1) {
-            return orders.filter(order => order.orderStatus.name === 'PAID');
+            return orders.filter(order => order.orderStatus.name === 'PENDING');
         } else if (tabIndex === 2) {
+            return orders.filter(order => order.orderStatus.name === 'PAID');
+        }
+        else if (tabIndex === 3) {
             return orders.filter(order => order.orderStatus.name === 'CANCELLED');
         }
         return orders; // Default to all orders
@@ -104,6 +139,7 @@ const OrderHistory = () => {
                                 TabIndicatorProps={{ style: styles.underlineStyle }}
                             >
                                 <Tab label="Tất cả" sx={styles.tabStyle} />
+                                <Tab label="Chờ thanh toán" sx={styles.tabStyle} />
                                 <Tab label="Đã giao" sx={styles.tabStyle} />
                                 <Tab label="Đã hủy" sx={styles.tabStyle} />
                             </Tabs>
@@ -112,7 +148,8 @@ const OrderHistory = () => {
                         {selectedMenu === 'Đơn hàng của tôi' && (
                             <OrderCard 
                                 orders={filteredOrders()} 
-                                
+                                onCancelOrder={handleCancelOrder}
+                                onPayment={handlePayment}
                             />
                         )}
                         

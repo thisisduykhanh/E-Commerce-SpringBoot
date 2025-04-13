@@ -1,8 +1,8 @@
 import apiClient from './ApiClient';
 
-export const addOrder = async (fullName, address, phone, idCartDetail,shippingFee,taxFee,city,district) => {
+export const addOrder = async (fullName, address, phone, shippingFee, taxFee, cartDetailIds) => {
     try {
-        const response = await apiClient.post('/orders', { fullName, address, phone, idCartDetail,shippingFee,taxFee,city,district});
+        const response = await apiClient.post('/orders', { fullName, address, phone, shippingFee, taxFee, cartDetailIds });
         return response;
     } catch (error) {
         throw error;
@@ -18,6 +18,24 @@ export const getCartDetail = async () => {
     }
 };
 
+export const updateOrderStatus = async (idOrder, idStatus) => {
+    try {
+        const response = await apiClient.put(`/orders?idOrder=${idOrder}&idStatus=${idStatus}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+export const paymentOrder = async (orderId, paymentMethod) => {
+    try {
+        const response = await apiClient.post(`/orders/${orderId}/pay?method=${paymentMethod}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export const updateOrderViewed = async (id) => {
     try {
