@@ -64,7 +64,7 @@ export function QuickStats1() {
                     </NoSsr>
                 </Box>
                 <Divider />
-                <Stack direction="row" divider={<Divider flexItem={true} orientation="vertical" />}>
+                <Stack direction="row" divider={<Divider flexItem orientation="vertical" />}>
                     {data.map((entry) => (
                         <Box
                             key={entry.name}

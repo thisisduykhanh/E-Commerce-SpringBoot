@@ -9,7 +9,6 @@ export const layoutConfig = {
                 { key: 'overview', title: 'Tổng quan', href: paths.dashboard.overview, icon: 'house' },
                 { key: 'analytics', title: 'Phân tích', href: paths.dashboard.analytics, icon: 'chart-pie' },
                 { key: 'ecommerce', title: 'Thương mại điện tử', href: paths.dashboard.eCommerce, icon: 'cube' },
-                { key: 'crypto', title: 'Tiền điện tử', href: paths.dashboard.crypto, icon: 'currency-eth' },
             ],
         },
         {
@@ -23,36 +22,7 @@ export const layoutConfig = {
                     icon: 'gear',
                     matcher: { type: 'startsWith', href: '/dashboard/settings' },
                 },
-              /*   {
-                    key: 'customers',
-                    title: 'Khách hàng',
-                    icon: 'users',
-                    items: [
-                        { key: 'customers', title: 'Danh sách khách hàng', href: paths.dashboard.customers.list },
-                        { key: 'customers:create', title: 'Tạo khách hàng', href: paths.dashboard.customers.create },
-                        {
-                            key: 'customers:details',
-                            title: 'Chi tiết khách hàng',
-                            href: paths.dashboard.customers.details('1'),
-                        },
-                    ],
-                },
-                // { key: 'suppliers', title: 'Nhà cung cấp', href: paths.dashboard.suppliers.list, icon: 'suppliers' },
-                {
-                    key: 'suppliers',
-                    title: 'Nhà cung cấp',
-                    icon: 'suppliers',
-                    items: [
-                        { key: 'suppliers', title: 'Danh sách nhà cung cấp', href: paths.dashboard.suppliers.list },
-                        { key: 'suppliers:create', title: 'Tạo nhà cung cấp', href: paths.dashboard.suppliers.create },
-                        {
-                            key: 'suppliers:details',
-                            title: 'Chi tiết nhà cung cấp',
-                            href: paths.dashboard.suppliers.details('1'),
-                        },
-                    ],
-                }, */
-                // { key: 'products', title: 'Sản phẩm', href: paths.supplier.products.list, icon: 'shopping-bag-open' },
+              
                 {
                     key: 'products',
                     title: 'Sản phẩm',
@@ -120,30 +90,7 @@ export const layoutConfig = {
                         { key: 'logistics:fleet', title: 'Đội xe', href: paths.dashboard.logistics.fleet },
                     ],
                 },
-                {
-                    key: 'blog',
-                    title: 'Blog',
-                    icon: 'text-align-left',
-                    items: [
-                        { key: 'blog', title: 'Danh sách bài viết', href: paths.dashboard.blog.list },
-                        { key: 'blog:create', title: 'Tạo bài viết', href: paths.dashboard.blog.create },
-                        { key: 'blog:details', title: 'Chi tiết bài viết', href: paths.dashboard.blog.details('1') },
-                    ],
-                },
-                {
-                    key: 'social',
-                    title: 'Mạng xã hội',
-                    icon: 'share-network',
-                    items: [
-                        {
-                            key: 'social:profile',
-                            title: 'Hồ sơ',
-                            href: paths.dashboard.social.profile.timeline,
-                            matcher: { type: 'startsWith', href: '/dashboard/social/profile' },
-                        },
-                        { key: 'social:feed', title: 'Bảng tin', href: paths.dashboard.social.feed },
-                    ],
-                },
+                
                 {
                     key: 'academy',
                     title: 'Học viện',
@@ -165,13 +112,7 @@ export const layoutConfig = {
                     icon: 'envelope-simple',
                     matcher: { type: 'startsWith', href: '/dashboard/mail' },
                 },
-                {
-                    key: 'chat',
-                    title: 'Trò chuyện',
-                    href: paths.dashboard.chat.base,
-                    icon: 'chats-circle',
-                    matcher: { type: 'startsWith', href: '/dashboard/chat' },
-                },
+               
                 // { key: 'calendar', title: 'Lịch', href: paths.dashboard.calendar, icon: 'calendar-check' },
                 // { key: 'tasks', title: 'Nhiệm vụ', href: paths.dashboard.tasks, icon: 'kanban' },
             ],

@@ -4,7 +4,7 @@ import { logger } from "@/lib/default-logger";
 import { addToCart } from "@/services/cart";
 import { getReviews } from "@/services/review";
 import { fetchProductDetail } from "@/services/category-service";
-import "@/styles/global.css";
+
 import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -18,7 +18,6 @@ import {
   Divider,
   IconButton,
   Pagination,
-  Rating,
   Tab,
   Tabs,
   TextField,
@@ -27,9 +26,8 @@ import {
 import { ShoppingBag } from "@phosphor-icons/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { CompanyShare } from "./components/social-share";
 import { SimilarProducts } from "./similar-products";
-import { useCart } from "@/contexts/cartContext";
+import { useCart } from "@/contexts/CartContext";
 
 function ProductDetailPage() {
   const params = useParams();
@@ -418,8 +416,8 @@ function ProductDetailPage() {
                 </IconButton>
                 <TextField
                   value={`${quantity}`}
-                  disabled={true}
-                  aria-readonly={true}
+                  disabled
+                  aria-readonly
                   slotProps={{
                     input: {
                       readOnly: true,
@@ -601,14 +599,14 @@ function ProductDetailPage() {
 
                   {/* Grid layout for details */}
                   <Grid
-                    container={true}
+                    container
                     spacing={3}
                     sx={{
                       marginBottom: "16px",
                     }}
                   >
                     {/* Left side details */}
-                    <Grid item={true} xs={12} sm={6}>
+                    <Grid item xs={12} sm={6}>
                       <Typography variant="body1" sx={{ marginBottom: "8px" }}>
                         <strong>Trạng thái:</strong>{" "}
                         {productDetail?.status || "Không có"}
@@ -628,7 +626,7 @@ function ProductDetailPage() {
                     </Grid>
 
                     {/* Right side details */}
-                    <Grid item={true} xs={12} sm={6}>
+                    <Grid item xs={12} sm={6}>
                       <Typography variant="body1" sx={{ marginBottom: "8px" }}>
                         <strong>Màu sắc:</strong>{" "}
                         {productDetail?.color || "Không có"}

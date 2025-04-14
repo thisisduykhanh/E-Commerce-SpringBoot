@@ -78,7 +78,7 @@ export function NotificationsPopover({ anchorEl, onClose, onMarkAllAsRead, onRem
                 </Box>
             ) : (
                 <Box sx={{ maxHeight: '270px', overflowY: 'auto' }}>
-                    <List disablePadding={true}>
+                    <List disablePadding>
                         {notifications.map((notification, index) => (
                             <NotificationItem
                                 divider={index < notifications.length - 1}

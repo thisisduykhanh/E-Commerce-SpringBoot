@@ -21,7 +21,7 @@ export function CommentAdd() {
         <Stack direction="row" spacing={2} sx={{ alignItems: 'flex-start', backgroundColor: '#fff', color: '#1a1a1a' }}>
             <Avatar src={user.avatar} />
             <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
-                <OutlinedInput multiline={true} placeholder="Type your reply" rows={3} sx={{ borderColor: 'rgba(0, 0, 0, 0.1)', width: '100%' }} />
+                <OutlinedInput multiline placeholder="Type your reply" rows={3} sx={{ borderColor: 'rgba(0, 0, 0, 0.1)', width: '100%' }} />
                 <Stack direction="row" spacing={3} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                         <IconButton

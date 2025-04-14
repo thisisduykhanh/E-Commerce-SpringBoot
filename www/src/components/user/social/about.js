@@ -33,15 +33,15 @@ export function About({ supplier }) {
                     <Typography color="#1a1a1a" variant="subtitle2">
                         &quot; Chúng tôi luôn cung cấp dịch vụ và chất lượng tốt nhất về nông sản đến khách hàng &quot;
                     </Typography>
-                    <List disablePadding={true} sx={{ '& .MuiListItem-root': { px: 0, py: 2 } }}>
-                        <ListItem divider={true} sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
+                    <List disablePadding sx={{ '& .MuiListItem-root': { px: 0, py: 2 } }}>
+                        <ListItem divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
                             <ListItemIcon>
                                 <BriefcaseIcon  />
                             </ListItemIcon>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         Sản phẩm{' '}
                                         <Link color="#1a1a1a" variant="subtitle2">
                                             của chúng tôi
@@ -49,7 +49,7 @@ export function About({ supplier }) {
                                     </Typography>
                                 }
                                 secondary={
-                                    <Typography color="text.secondary" noWrap={true} variant="body2">
+                                    <Typography color="text.secondary" noWrap variant="body2">
                                         Đa phần là{' '}
                                         <Link color="text.secondary" variant="body2">
                                             Nông sản
@@ -58,16 +58,16 @@ export function About({ supplier }) {
                                 }
                             />
                         </ListItem>
-                        <ListItem divider={true} sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
+                        <ListItem divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
                             <ListItemIcon>
                                 <PhoneCall />
                             </ListItemIcon>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
                                     <Link
                                         color="#1a1a1a"
-                                        noWrap={true}
+                                        noWrap
                                         sx={{ cursor: 'pointer' }}
                                         underline="always"
                                         variant="body2"
@@ -77,14 +77,14 @@ export function About({ supplier }) {
                                 }
                             />
                         </ListItem>
-                        <ListItem divider={true} sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
+                        <ListItem divider sx={{ borderColor: 'rgba(0, 0, 0, 0.1)' }}>
                             <ListItemIcon>
                                 <HouseIcon />
                             </ListItemIcon>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         {supplier.address || 'Chưa có địa chỉ'}
                                     </Typography>
                                 }
@@ -95,9 +95,9 @@ export function About({ supplier }) {
                                 <EnvelopeSimpleIcon />
                             </ListItemIcon>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         {supplier.email || 'Chưa có email'}
                                     </Typography>
                                 }

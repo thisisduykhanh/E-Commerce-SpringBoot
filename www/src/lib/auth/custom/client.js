@@ -76,7 +76,7 @@ class AuthClient {
         }
         const user = {
             id: token,
-            role: role,
+            role,
         };
 
         return { data: user };

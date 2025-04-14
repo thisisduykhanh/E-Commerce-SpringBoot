@@ -1,11 +1,11 @@
 'use client';
-import { Box, Grid2 as Grid, Tab, Tabs, TextField, Typography, Button } from '@mui/material';
+import { Box, Grid2 as Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import OrderCard from './OrderCard';
 import Pagination from './Pagination';
-import Sidebar from './Sidebar';
 import { getMyOrder, updateOrderStatus, paymentOrder } from '@/services/order'; // Import cancelOrder service
 import { useEffect } from 'react';
+import { Payment } from '@mui/icons-material';
 
 const styles = {
     primaryColor: '#00A6B7',
@@ -46,7 +46,7 @@ const styles = {
     },
 };
 
-const OrderHistory = () => {
+function OrderHistory() {
     const [selectedMenu, setSelectedMenu] = useState('Đơn hàng của tôi');
     const [orders, setOrders] = useState([]);
     const [tabIndex, setTabIndex] = useState(0); // Add state for tab index
@@ -89,7 +89,7 @@ const OrderHistory = () => {
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
                     order.id === orderId
-                        ? { ...order, orderStatus: { ...order.orderStatus, name: "PAID" } }
+                        ? { ...order, orderStatus: { ...order.orderStatus, name: "PAID" }, paymentMethod: method }
                         : order
                 )
             );
@@ -113,10 +113,9 @@ const OrderHistory = () => {
 
     return (
         <Box justifyContent="center" bgcolor="#fff">
-            <Grid container={true} spacing={28}>
-                <Grid item={true} xs={12} sm={2} md={2}>
-                </Grid>
-                <Grid item={true} xs={12} sm={10} md={10}>
+            <Grid container spacing={28}>
+                <Grid item xs={12} sm={2} md={2} />
+                <Grid item xs={12} sm={10} md={10}>
                     <Box sx={{ color: '#000', p: '0 !important', mt: 4 }}>
                         <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, textAlign: 'left', color: '#000' }}>
                             Danh sách đơn hàng
@@ -135,7 +134,7 @@ const OrderHistory = () => {
                                 aria-label="order tabs"
                                 sx={{ borderBottom: '1px solid #ddd', justifyContent: 'space-between' }}
                                 variant="scrollable"
-                                allowScrollButtonsMobile={true}
+                                allowScrollButtonsMobile
                                 TabIndicatorProps={{ style: styles.underlineStyle }}
                             >
                                 <Tab label="Tất cả" sx={styles.tabStyle} />
@@ -159,6 +158,6 @@ const OrderHistory = () => {
             </Grid>
         </Box>
     );
-};
+}
 
 export default OrderHistory;

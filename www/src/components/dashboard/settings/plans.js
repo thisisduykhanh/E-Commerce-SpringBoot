@@ -40,7 +40,7 @@ export function Plans() {
             <CardContent>
                 <Stack divider={<Divider />} spacing={3}>
                     <Stack spacing={3}>
-                        <Grid container={true} spacing={3}>
+                        <Grid container spacing={3}>
                             {plans.map((plan) => (
                                 <Grid
                                     key={plan.id}

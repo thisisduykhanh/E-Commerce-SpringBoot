@@ -38,7 +38,7 @@ export function QuickStats8() {
                             <ArrowCounterClockwiseIcon fontSize="var(--Icon-fontSize)" />
                         </Avatar>
                         <Box sx={{ flex: '1 1 auto' }}>
-                            <Typography color="text.secondary" noWrap={true} variant="body1">
+                            <Typography color="text.secondary" noWrap variant="body1">
                                 Conversions
                             </Typography>
                             <Typography variant="h4">{new Intl.NumberFormat('vi-VN').format(361)}</Typography>
@@ -50,8 +50,8 @@ export function QuickStats8() {
                                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                                 width={chartWidth}
                             >
-                                <XAxis axisLine={false} dataKey="name" hide={true} type="category" />
-                                <YAxis axisLine={false} hide={true} type="number" />
+                                <XAxis axisLine={false} dataKey="name" hide type="category" />
+                                <YAxis axisLine={false} hide type="number" />
                                 <Line
                                     animationDuration={300}
                                     dataKey="value"

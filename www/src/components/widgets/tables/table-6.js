@@ -139,7 +139,7 @@ export function Table6() {
                 </Stack>
                 <Divider />
                 <Box sx={{ overflowX: 'auto' }}>
-                    <DataTable columns={columns} rows={invoices} selectable={true} />
+                    <DataTable columns={columns} rows={invoices} selectable />
                 </Box>
             </Card>
         </Box>

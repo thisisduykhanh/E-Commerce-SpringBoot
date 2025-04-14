@@ -17,7 +17,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Controller, useForm } from "react-hook-form";
-import { z as zod } from "zod";
 
 import { paths } from "@/paths";
 import { TextEditor } from "@/components/core/text-editor/text-editor";
@@ -30,7 +29,6 @@ import { createProduct } from "@/services/products";
 import { useEffect, useState, useCallback } from "react";
 import { getGroups } from "@/services/product-group";
 import {logger} from "@/lib/default-logger";
-import { getSupplier } from "@/services/admin";
 
 
 
@@ -40,11 +38,31 @@ import { getSupplier } from "@/services/admin";
 // ];
 
 const groupAttributes = {
-  headphone: ["is Wireless", "Battery Life", "Noise Cancellation"],
-  laptop: ["CPU", "RAM", "Storage"],
-  smartwatch: ["GPS", "Water Resistance", "Battery Life"],
-  phone: ["Battery Capacity", "Camera", "Screen Size"],
-  tablet: ["Screen Size", "Battery Life", "Pen Support"],
+  headphone: [
+    { name: "isWireless", type: "checkbox" },
+    { name: "batteryLife", type: "number" },
+    { name: "noiseCancellation", type: "text" },
+  ],
+  laptop: [
+    { name: "cpu", type: "text" },
+    { name: "ram", type: "number" },
+    { name: "storage", type: "number" },
+  ],
+  smartwatch: [
+    { name: "hasGPS", type: "checkbox" },
+    { name: "waterResistant", type: "checkbox" },
+    { name: "batteryLife", type: "number" },
+  ],
+  phone: [
+    { name: "batteryLife", type: "number" },
+    { name: "cameraMP", type: "number" },
+    { name: "screenSize", type: "text" },
+  ],
+  tablet: [
+    { name: "screenSize", type: "text" },
+    { name: "batteryLife", type: "number" },
+    { name: "hasPenSupport", type: "checkbox" },
+  ],
 };
 
 export function ProductCreateForm() {
@@ -122,69 +140,88 @@ export function ProductCreateForm() {
   } = useForm();
 
   const onSubmit = useCallback(async (event) => {
+    // Ensure all checkbox attributes are set to false if not explicitly checked
+    const updatedAttributesSelections = { ...attributesSelections };
+    groupAttributesList.forEach((attribute) => {
+      if (attribute.type === "checkbox" && updatedAttributesSelections[attribute.name] === undefined) {
+        updatedAttributesSelections[attribute.name] = false;
+      }
+    });
 
+    // Validate attributes
+    const missingAttributes = groupAttributesList.some(
+      (attribute) =>
+        updatedAttributesSelections[attribute.name] === undefined ||
+        updatedAttributesSelections[attribute.name] === ""
+    );
 
-    // Include attributesSelections in the form data
+    if (missingAttributes) {
+      alert("Vui lòng nhập đầy đủ các thuộc tính của sản phẩm.");
+      return;
+    }
+
+    // Include attributesSelections in the form data in the correct order
     const formData = new FormData();
     formData.append("productName", event.name);
     formData.append("supplierId", event.supplierId);
-    // formData.append("attributes", JSON.stringify(Object.values(attributesSelections)));
     formData.append("price", event.price);
     formData.append("productTypeId", event.productTypeId);
     formData.append("description", event.description);
     formData.append("quantity", event.quantity);
 
-
-    Object.values(attributesSelections).forEach((value) => {
-      formData.append("attributes", value);
+    groupAttributesList.forEach((attribute) => {
+      formData.append("attributes", updatedAttributesSelections[attribute.name]);
     });
 
-    event.images.forEach((imgFile) => {
-      formData.append("images", imgFile[0]);
+    event.images?.forEach((imgFile) => {
+      if (imgFile && imgFile[0] && imgFile[0].size > 0) {
+        formData.append("images", imgFile[0]);
+      } 
     });
 
+    if(formData.getAll("images").length === 0) {
+      alert(`Vui lòng cung cấp ít nhất 1 hình ảnh.`);
+      return;
+    }
 
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
 
-    logger.debug(formData)
+    logger.debug(formData);
 
     // Gửi dữ liệu qua fetch
     try {
       const response = await createProduct(formData);
 
       if (response.success) {
-
         _router.push(paths.dashboard.products.list);
       }
-
-
     } catch (error) {
+      alert("Có lỗi xảy ra khi tạo sản phẩm. Vui lòng kiểm tra lại đầy đủ thông tin.");
       console.error("Error submitting form:", error);
     }
-  }, []);
+  }, [attributesSelections, groupAttributesList]);
 
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardContent>
             <Stack divider={<Divider />} spacing={4}>
               <Stack spacing={3}>
                 <Typography variant="h6">Thông tin cơ bản</Typography>
-                <Grid container={true} rowSpacing={2} columnSpacing={10}>
-                  <Grid item={true} md={6} xs={12}>
+                <Grid container rowSpacing={2} columnSpacing={10}>
+                  <Grid item md={6} xs={12}>
                     <Controller
                       control={control}
                       name="name"
                       render={({ field }) => (
                         <FormControl
                           error={Boolean(errors.name)}
-                          fullWidth={true}
+                          fullWidth
                         >
-                          <InputLabel required={true}>Tên sản phẩm</InputLabel>
+                          <InputLabel required>Tên sản phẩm</InputLabel>
                           <OutlinedInput {...field} value={field.value ?? ""} />
                           {errors.name ? (
                             <FormHelperText>
@@ -195,16 +232,16 @@ export function ProductCreateForm() {
                       )}
                     />
                   </Grid>
-                  <Grid item={true} md={6} xs={12}>
+                  <Grid item md={6} xs={12}>
                     <Controller
                       control={control}
                       name="price"
                       render={({ field }) => (
                         <FormControl
                           error={Boolean(errors.price)}
-                          fullWidth={true}
+                          fullWidth
                         >
-                          <InputLabel required={true}>Giá sản phẩm</InputLabel>
+                          <InputLabel required>Giá sản phẩm</InputLabel>
                           <OutlinedInput {...field} type="number" value={field.value ?? ""} />
                           {errors.price ? (
                             <FormHelperText>
@@ -215,14 +252,14 @@ export function ProductCreateForm() {
                       )}
                     />
                   </Grid>
-                  <Grid item={true} md={6} xs={12}>
+                  <Grid item md={6} xs={12}>
                     <Controller
                       control={control}
                       name="productTypeId"
                       render={({ field }) => (
                         <FormControl
                           error={Boolean(errors.selectedProductType)}
-                          fullWidth={true}
+                          fullWidth
                         >
                           <InputLabel>Loại sản phẩm</InputLabel>
                           <Select
@@ -233,7 +270,7 @@ export function ProductCreateForm() {
                             }}
                             value={field.value ?? ""}
                           >
-                            <MenuItem value="" disabled={true}>
+                            <MenuItem value="" disabled>
                               Chọn loại sản phẩm
                             </MenuItem>
                             {productTypes.map((type) => (
@@ -252,55 +289,68 @@ export function ProductCreateForm() {
                     />
                   </Grid>
 
-                  {selectedProductType && groupAttributesList.length > 0 && (
-                    <Grid item={true} xs={12}>
+                  {selectedProductType && groupAttributesList.length > 0 ? <Grid item xs={12}>
                       <Typography variant="h6">Thuộc tính nhóm sản phẩm</Typography>
-                      <Grid container={true} spacing={2}>
+                      <Grid container spacing={2}>
                         {groupAttributesList.map((attribute) => (
-                          <Grid item={true} xs={12} sm={4} key={attribute}>
+                          <Grid item xs={12} sm={4} key={attribute.name}>
                             <Controller
                               control={control}
-                              name={`attributes.${attribute}`}
+                              name={`attributes.${attribute.name}`}
                               render={({ field }) => (
-                                <FormControl fullWidth={true}>
-                                  <InputLabel>{attribute}</InputLabel>
-                                  <OutlinedInput
-                                    {...field}
-                                    placeholder={`Nhập ${attribute}`}
-                                    value={attributesSelections[attribute] || ""}
-                                    onChange={(e) => {
-                                      const value = e.target.value;
-                                      field.onChange(value);
-                                      setAttributesSelections((prev) => ({
-                                        ...prev,
-                                        [attribute]: value, // dynamically set the correct key
-                                      }));
-                                    }}
-
-                                  />
+                                <FormControl fullWidth>
+                                  <InputLabel>{attribute.name}</InputLabel>
+                                  {attribute.type === "checkbox" ? (
+                                    <input
+                                      type="checkbox"
+                                      checked={attributesSelections[attribute.name] || false}
+                                      onChange={(e) => {
+                                        const value = e.target.checked;
+                                        field.onChange(value);
+                                        setAttributesSelections((prev) => ({
+                                          ...prev,
+                                          [attribute.name]: value,
+                                        }));
+                                      }}
+                                    />
+                                  ) : (
+                                    <OutlinedInput
+                                      {...field}
+                                      type={attribute.type}
+                                      placeholder={`Nhập ${attribute.name}`}
+                                      value={attributesSelections[attribute.name] || ""}
+                                      onChange={(e) => {
+                                        const value = e.target.value;
+                                        field.onChange(value);
+                                        setAttributesSelections((prev) => ({
+                                          ...prev,
+                                          [attribute.name]: value,
+                                        }));
+                                      }}
+                                    />
+                                  )}
                                 </FormControl>
                               )}
                             />
                           </Grid>
                         ))}
                       </Grid>
-                    </Grid>
-                  )}
-                  <Grid item={true} md={6} xs={12}>
+                    </Grid> : null}
+                  <Grid item md={6} xs={12}>
                     <Controller
                       control={control}
                       name="supplierId"
                       render={({ field }) => (
                         <FormControl
                           error={Boolean(errors.supplierId)}
-                          fullWidth={true}
+                          fullWidth
                         >
                           <InputLabel>Nhà cung cấp</InputLabel>
                           <Select
                             {...field}
                             value={field.value ?? ""}
                           >
-                            <MenuItem value="" disabled={true}>
+                            <MenuItem value="" disabled>
                               Chọn nhà cung cấp
                             </MenuItem>
                             {suppliers.map((supplier) => (
@@ -319,14 +369,14 @@ export function ProductCreateForm() {
                     />
                   </Grid>
 
-                  <Grid item={true} xs={12} width="100%">
+                  <Grid item xs={12} width="100%">
                     <Controller
                       control={control}
                       name="description"
                       render={({ field }) => (
                         <FormControl
                           error={Boolean(errors.description)}
-                          fullWidth={true}
+                          fullWidth
                         >
                           <InputLabel>Mô tả</InputLabel>
                           <Box
@@ -355,29 +405,27 @@ export function ProductCreateForm() {
 
 
 
-                  <Grid container={true} flexDirection="column" spacing={4}>
+                  <Grid container flexDirection="column" spacing={4}>
                     {/* Phần số lượng */}
-                    <Grid item={true} xs={12}>
+                    <Grid item xs={12}>
                       <Controller
                         control={control}
-                        name={`quantity`}
+                        name="quantity"
                         render={({ field }) => (
                           <FormControl
                             error={Boolean(errors?.quantity)}
-                            fullWidth={true}
+                            fullWidth
                           >
-                            <InputLabel required={true}>Số Lượng</InputLabel>
+                            <InputLabel required>Số Lượng</InputLabel>
 
                             <OutlinedInput
                               {...field}
                               type="number"
                               placeholder="Nhập số lượng"
                             />
-                            {errors?.quantity && (
-                              <FormHelperText>
+                            {errors?.quantity ? <FormHelperText>
                                 {errors?.quantity.message}
-                              </FormHelperText>
-                            )}
+                              </FormHelperText> : null}
                           </FormControl>
                         )}
                       />
@@ -385,25 +433,25 @@ export function ProductCreateForm() {
                   </Grid>
                 </Grid>
 
-                <Grid container={true} spacing={2}>
-                    <Grid item={true} xs={12}>
-                    <InputLabel required={true}>Hình Ảnh</InputLabel>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                    <InputLabel required>Hình Ảnh</InputLabel>
 
-                        <Grid container={true} rowSpacing={2} columnSpacing={18}>
+                        <Grid container rowSpacing={2} columnSpacing={18}>
                         {imageInputs.map((index) => (
-                            <Grid item={true} xs={12} sm={6} md={3} key={index}>
+                            <Grid item xs={12} sm={6} md={3} key={index}>
                             <Controller
                                 control={control}
                                 name={`images[${index}]`}
                                 render={({ field }) => (
-                                <FormControl fullWidth={true}>
+                                <FormControl fullWidth>
                                     <Box
                                     display="flex"
                                     flexDirection="column"
                                     alignItems="center"
                                     >
                                     <InputLabel
-                                        shrink={true}
+                                        shrink
                                         style={{ marginBottom: "8px" }}
                                     >
                                         Hình {index + 1}
@@ -431,8 +479,7 @@ export function ProductCreateForm() {
                                         }}
                                     />
                                     </Box>
-                                    {preview[index] && (
-                                    <Box
+                                    {preview[index] ? <Box
                                         mt={2}
                                         width="100%"
                                         height="150px"
@@ -454,8 +501,7 @@ export function ProductCreateForm() {
                                             objectFit: "contain",
                                         }}
                                         />
-                                    </Box>
-                                    )}
+                                    </Box> : null}
                                 </FormControl>
                                 )}
                             />
@@ -519,6 +565,5 @@ export function ProductCreateForm() {
           </CardActions>
         </Card>
       </form>
-    </>
   );
 }

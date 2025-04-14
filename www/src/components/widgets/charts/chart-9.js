@@ -54,9 +54,9 @@ export function Chart9() {
                                     </PieChart>
                                 </NoSsr>
                             </Box>
-                            <List disablePadding={true}>
+                            <List disablePadding>
                                 {data.map((entry) => (
-                                    <ListItem disableGutters={true} key={entry.name}>
+                                    <ListItem disableGutters key={entry.name}>
                                         <Stack
                                             direction="row"
                                             spacing={1}

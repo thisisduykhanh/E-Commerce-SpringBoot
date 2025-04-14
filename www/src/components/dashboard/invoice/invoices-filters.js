@@ -130,8 +130,8 @@ export function InvoicesFilters({ filters = {}, onFiltersApplied, onFiltersClear
                     control={control}
                     name="status"
                     render={({ field }) => (
-                        <FormControl error={Boolean(errors.status)} fullWidth={true}>
-                            <InputLabel required={true}>Status</InputLabel>
+                        <FormControl error={Boolean(errors.status)} fullWidth>
+                            <InputLabel required>Status</InputLabel>
                             <Select {...field}>
                                 <Option value="">All</Option>
                                 <Option value="pending">Pending</Option>

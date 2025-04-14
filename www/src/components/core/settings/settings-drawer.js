@@ -31,7 +31,7 @@ export function SettingsDrawer({ canReset = true, onClose, onUpdate, onReset, op
                 sx: { display: 'flex', flexDirection: 'column', maxWidth: '100%', width: '440px' },
             }}
             anchor="right"
-            disableScrollLock={true}
+            disableScrollLock
             onClose={onClose}
             open={open}
         >

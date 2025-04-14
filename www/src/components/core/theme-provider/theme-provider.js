@@ -19,7 +19,7 @@ function CustomThemeProvider({ children }) {
     return (
         <EmotionCacheProvider options={{ key: 'mui' }}>
             <Rtl direction={settings.direction}>
-                <ThemeProvider disableTransitionOnChange={true} theme={theme}>
+                <ThemeProvider disableTransitionOnChange theme={theme}>
                     <CssBaseline />
                     {children}
                 </ThemeProvider>

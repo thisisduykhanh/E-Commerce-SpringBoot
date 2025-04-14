@@ -21,7 +21,7 @@ export function EventsTimeline({ events }) {
     return (
         <Stack spacing={3}>
             <Stack spacing={1}>
-                <OutlinedInput minRows={3} multiline={true} placeholder="Add a note" />
+                <OutlinedInput minRows={3} multiline placeholder="Add a note" />
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button variant="contained">Add note</Button>
                 </Box>

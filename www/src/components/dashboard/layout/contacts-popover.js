@@ -107,17 +107,17 @@ export function ContactsPopover({ anchorEl, onClose, open = false }) {
                 <Typography variant="h6">Contacts</Typography>
             </Box>
             <Box sx={{ maxHeight: '400px', overflowY: 'auto', px: 1, pb: 2 }}>
-                <List disablePadding={true} sx={{ '& .MuiListItemButton-root': { borderRadius: 1 } }}>
+                <List disablePadding sx={{ '& .MuiListItemButton-root': { borderRadius: 1 } }}>
                     {contacts.map((contact) => (
-                        <ListItem disablePadding={true} key={contact.id}>
+                        <ListItem disablePadding key={contact.id}>
                             <ListItemButton>
                                 <ListItemAvatar>
                                     <Avatar src={contact.avatar} />
                                 </ListItemAvatar>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Link color="text.primary" noWrap={true} underline="none" variant="subtitle2">
+                                        <Link color="text.primary" noWrap underline="none" variant="subtitle2">
                                             {contact.name}
                                         </Link>
                                     }

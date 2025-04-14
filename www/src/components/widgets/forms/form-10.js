@@ -11,8 +11,8 @@ export function Form10() {
     return (
         <Box sx={{ p: 3 }}>
             <Stack spacing={3}>
-                <FormControl fullWidth={true}>
-                    <InputLabel required={true}>Project name</InputLabel>
+                <FormControl fullWidth>
+                    <InputLabel required>Project name</InputLabel>
                     <OutlinedInput name="name" />
                 </FormControl>
                 <FormControl>

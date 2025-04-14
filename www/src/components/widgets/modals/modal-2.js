@@ -23,7 +23,7 @@ export function Modal2() {
                     width: '240px',
                 }}
             >
-                <List disablePadding={true}>
+                <List disablePadding>
                     {Object.keys(languageOptions).map((language) => {
                         const option = languageOptions[language];
 

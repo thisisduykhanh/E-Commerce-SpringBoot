@@ -32,7 +32,7 @@ export function EmailNotifications() {
                                 News, announcements, and product updates.
                             </Typography>
                         </Stack>
-                        <Switch defaultChecked={true} />
+                        <Switch defaultChecked />
                     </Stack>
                     <Stack
                         direction="row"

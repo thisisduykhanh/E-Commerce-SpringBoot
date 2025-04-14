@@ -137,7 +137,7 @@ export function InvoicesTable({ rows = [], view = 'group' }) {
                             </Typography>
                             {group.length ? (
                                 <Card sx={{ overflowX: 'auto' }}>
-                                    <DataTable columns={columns} hideHead={true} rows={group} />
+                                    <DataTable columns={columns} hideHead rows={group} />
                                 </Card>
                             ) : (
                                 <div>
@@ -155,7 +155,7 @@ export function InvoicesTable({ rows = [], view = 'group' }) {
 
     return (
         <Card sx={{ overflowX: 'auto' }}>
-            <DataTable columns={columns} hideHead={true} rows={rows} />
+            <DataTable columns={columns} hideHead rows={rows} />
             {!rows.length ? (
                 <Box sx={{ p: 3 }}>
                     <Typography color="text.secondary" sx={{ textAlign: 'center' }} variant="body2">

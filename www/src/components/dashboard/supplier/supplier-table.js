@@ -8,14 +8,12 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { CheckCircle as CheckCircleIcon } from '@phosphor-icons/react/dist/ssr/CheckCircle';
-import { Clock as ClockIcon } from '@phosphor-icons/react/dist/ssr/Clock';
 import { Minus as MinusIcon } from '@phosphor-icons/react/dist/ssr/Minus';
 import { PencilSimple as PencilSimpleIcon } from '@phosphor-icons/react/dist/ssr/PencilSimple';
 import RouterLink from 'next/link';
 import * as React from 'react';
 
 import { DataTable } from '@/components/core/data-table';
-import { dayjs } from '@/lib/dayjs';
 import { paths } from '@/paths';
 
 import { useCustomersSelection } from './customers-selection-context';
@@ -131,7 +129,7 @@ export function CustomersTable({ rows }) {
                     selectOne(row.id);
                 }}
                 rows={rows}
-                selectable={true}
+                selectable
                 selected={selected}
             />
             {!rows.length ? (

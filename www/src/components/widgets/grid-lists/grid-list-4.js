@@ -39,7 +39,7 @@ const applicants = [
 export function GridList4() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 {applicants.map((applicant) => (
                     <Grid
                         key={applicant.id}

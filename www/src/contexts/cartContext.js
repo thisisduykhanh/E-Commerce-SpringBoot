@@ -6,7 +6,7 @@ import { logger } from "@/lib/default-logger";
 
 const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+export function CartProvider({ children }) {
   const [cartQuantity, setCartQuantity] = useState(0);
 
   const fetchCartQuantity = async () => {
@@ -33,6 +33,6 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
-};
+}
 
 export const useCart = () => useContext(CartContext);

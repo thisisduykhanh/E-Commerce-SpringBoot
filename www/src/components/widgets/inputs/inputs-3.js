@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 export function Inputs3() {
     return (
         <Box sx={{ p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 <Grid
                     size={{
                         md: 6,
@@ -19,7 +19,7 @@ export function Inputs3() {
                         <Typography color="text.secondary" variant="body2">
                             Disabling this will automatically send the user a verification email.
                         </Typography>
-                        <Switch defaultChecked={true} />
+                        <Switch defaultChecked />
                     </Stack>
                 </Grid>
                 <Grid

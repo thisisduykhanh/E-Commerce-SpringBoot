@@ -18,11 +18,11 @@ export function CoursesFilters() {
             <Stack direction="row" spacing={3} sx={{ alignItems: 'flex-end', flexWrap: 'wrap', p: 3 }}>
                 <FormControl sx={{ maxWidth: '100%', width: '240px' }}>
                     <InputLabel>Search</InputLabel>
-                    <OutlinedInput fullWidth={true} name="query" placeholder="Keywords" />
+                    <OutlinedInput fullWidth name="query" placeholder="Keywords" />
                 </FormControl>
                 <FormControl sx={{ maxWidth: '100%', width: '240px' }}>
                     <InputLabel>Platform</InputLabel>
-                    <Select defaultValue="" fullWidth={true} name="category">
+                    <Select defaultValue="" fullWidth name="category">
                         <Option value="">All categories</Option>
                         <Option value="fullstack">Fullstack</Option>
                         <Option value="devops">DevOps</Option>

@@ -25,12 +25,12 @@ export function Form8() {
                     </Typography>
                 </Stack>
                 <Stack spacing={3}>
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Project name</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Project name</InputLabel>
                         <OutlinedInput name="name" />
                     </FormControl>
                     <Stack spacing={2}>
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>Tags</InputLabel>
                             <OutlinedInput
                                 endAdornment={

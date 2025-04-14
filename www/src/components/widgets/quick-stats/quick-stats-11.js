@@ -11,7 +11,7 @@ import { ArrowRight as ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/Arr
 export function QuickStats11() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 <Grid
                     size={{
                         lg: 4,

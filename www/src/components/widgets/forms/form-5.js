@@ -31,8 +31,8 @@ export function Form5() {
                     </Select>
                 </FormControl>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Published globally" />
-                    <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Enable contents" />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Published globally" />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Enable contents" />
                 </FormGroup>
             </Stack>
         </Box>

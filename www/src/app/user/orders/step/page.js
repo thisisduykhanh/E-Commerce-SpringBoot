@@ -1,16 +1,19 @@
-
+'use client';
 import { Box, Typography } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const ProgressBar = () => {
+import { useRouter } from 'next/navigation';
+
+function ProgressBar() {
   const steps = [
     'XÁC NHẬN ĐƠN HÀNG',
-    'BẮT ĐẦU SẢN XUẤT',
+    'CHỜ THANH TOÁN',
     'KIỂM TRA CHẤT LƯỢNG',
     'XUẤT KHO',
     'GIAO HÀNG',
   ];
 
+  const router = useRouter();
   const currentStep = 0;
 
   return (
@@ -100,7 +103,13 @@ const ProgressBar = () => {
               wordWrap: 'break-word',
               textAlign: 'center',
               maxWidth: '100px',
+
+              color: index === 1 ? '#62BD91' : '#000', // Change color for the first step
+             
+              cursor: index === 1 ? 'pointer' : 'default', // Change cursor for the first step
             }}
+
+            onClick={() => {index === 1 && router.push('/user/order-history')}} // Optional: Add click event if needed
           >
             {step}
           </Typography>
@@ -124,6 +133,6 @@ const ProgressBar = () => {
       ))}
     </Box>
   );
-};
+}
 
 export default ProgressBar;

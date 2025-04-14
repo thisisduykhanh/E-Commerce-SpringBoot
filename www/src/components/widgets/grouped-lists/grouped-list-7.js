@@ -1,3 +1,5 @@
+
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -54,7 +56,7 @@ export function GroupedList7() {
                 <CardHeader title="Inbox" />
                 <Box sx={{ overflowX: 'auto' }}>
                     <List
-                        disablePadding={true}
+                        disablePadding
                         sx={{
                             p: 1,
                             '& .MuiListItemButton-root': { borderRadius: 1 },
@@ -69,7 +71,7 @@ export function GroupedList7() {
                         }}
                     >
                         {messages.map((message) => (
-                            <ListItem disablePadding={true} key={message.id}>
+                            <ListItem disablePadding key={message.id}>
                                 <ListItemButton>
                                     <ListItemAvatar>
                                         {message.author.status === 'online' ? (
@@ -85,14 +87,14 @@ export function GroupedList7() {
                                         )}
                                     </ListItemAvatar>
                                     <ListItemText
-                                        disableTypography={true}
+                                        disableTypography
                                         primary={
-                                            <Typography noWrap={true} variant="subtitle2">
+                                            <Typography noWrap variant="subtitle2">
                                                 {message.author.name}
                                             </Typography>
                                         }
                                         secondary={
-                                            <Typography color="text.secondary" noWrap={true} variant="body2">
+                                            <Typography color="text.secondary" noWrap variant="body2">
                                                 {message.content}
                                             </Typography>
                                         }

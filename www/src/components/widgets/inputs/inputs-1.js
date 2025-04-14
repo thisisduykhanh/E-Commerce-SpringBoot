@@ -1,3 +1,4 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,9 +15,9 @@ export function Inputs1() {
                     You will receive emails in your business email address
                 </Typography>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Email alerts" />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Email alerts" />
                     <FormControlLabel control={<Checkbox />} label="Push notifications" />
-                    <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Text message" />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Text message" />
                 </FormGroup>
             </Stack>
         </Box>

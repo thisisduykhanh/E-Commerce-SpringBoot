@@ -26,7 +26,7 @@ export function Attachments({ attachments = [] }) {
                             </Avatar>
                         ) : null}
                         <div>
-                            <Typography noWrap={true} variant="subtitle2">
+                            <Typography noWrap variant="subtitle2">
                                 {attachment.name}
                             </Typography>
                             <Typography color="text.secondary" variant="body2">

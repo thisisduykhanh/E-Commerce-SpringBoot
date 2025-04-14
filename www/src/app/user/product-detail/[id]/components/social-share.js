@@ -5,7 +5,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
-export const CompanyShare = ({ productDetail }) => {
+export function CompanyShare({ productDetail }) {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -31,4 +31,4 @@ export const CompanyShare = ({ productDetail }) => {
             </Box>
         </Box>
     );
-};
+}

@@ -31,13 +31,13 @@ export function DetailList6() {
                         </div>
                     </Stack>
                     <List sx={{ '& .MuiListItem-root': { justifyContent: 'space-between', px: 0, py: 2 } }}>
-                        <ListItem divider={true}>
+                        <ListItem divider>
                             <Typography variant="subtitle2">Deadline</Typography>
                             <Typography color="text.secondary" variant="body2">
                                 {dayjs().add(14, 'day').format('DD MMM YYYY')}
                             </Typography>
                         </ListItem>
-                        <ListItem divider={true}>
+                        <ListItem divider>
                             <Typography variant="subtitle2">Budget</Typography>
                             <Typography color="text.secondary" variant="body2">
                                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(12500)}

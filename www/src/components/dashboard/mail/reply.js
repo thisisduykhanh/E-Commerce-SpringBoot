@@ -21,7 +21,7 @@ export function Reply() {
         <Stack direction="row" spacing={2} sx={{ alignItems: 'flex-start', flex: '0 0 auto', p: 3 }}>
             <Avatar src={user.avatar} />
             <Stack spacing={2} sx={{ flex: '1 1 auto' }}>
-                <OutlinedInput maxRows={7} minRows={3} multiline={true} placeholder="Leave a message" />
+                <OutlinedInput maxRows={7} minRows={3} multiline placeholder="Leave a message" />
                 <Stack direction="row" spacing={3} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                         <Tooltip title="Attach image">

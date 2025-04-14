@@ -1,3 +1,5 @@
+
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -25,14 +27,14 @@ export function GroupedList8() {
                 <Card>
                     <CardContent>
                         <Typography variant="overline">Project members</Typography>
-                        <List disablePadding={true}>
+                        <List disablePadding>
                             {members.map((member) => (
-                                <ListItem disableGutters={true} key={member.id}>
+                                <ListItem disableGutters key={member.id}>
                                     <ListItemAvatar>
                                         <Avatar src={member.avatar} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        disableTypography={true}
+                                        disableTypography
                                         primary={<Typography variant="subtitle2">{member.name}</Typography>}
                                         secondary={
                                             <Typography color="text.secondary" variant="body2">

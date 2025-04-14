@@ -543,7 +543,7 @@ function AboutMe() {
                                         {item.company}
                                     </Typography>
                                 </Box>
-                                <Rating value={item.rating} readOnly={true} size="small" />
+                                <Rating value={item.rating} readOnly size="small" />
                             </Box>
                         </Box>
                     ))}

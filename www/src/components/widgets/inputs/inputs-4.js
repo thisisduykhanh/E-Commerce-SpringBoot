@@ -11,15 +11,15 @@ export function Inputs4() {
     return (
         <Box sx={{ p: 3 }}>
             <Box maxWidth="sm">
-                <Grid container={true} spacing={3}>
+                <Grid container spacing={3}>
                     <Grid
                         size={{
                             sm: 6,
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
-                            <InputLabel required={true}>Name</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel required>Name</InputLabel>
                             <OutlinedInput name="name" />
                         </FormControl>
                     </Grid>
@@ -29,8 +29,8 @@ export function Inputs4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
-                            <InputLabel required={true}>Email address</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel required>Email address</InputLabel>
                             <OutlinedInput name="email" type="email" />
                         </FormControl>
                     </Grid>
@@ -40,7 +40,7 @@ export function Inputs4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>Phone number</InputLabel>
                             <OutlinedInput name="phone" />
                         </FormControl>
@@ -51,8 +51,8 @@ export function Inputs4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
-                            <InputLabel required={true}>Country</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel required>Country</InputLabel>
                             <Select value="">
                                 <Option value="">Choose a country</Option>
                                 <Option value="us">United States</Option>
@@ -67,7 +67,7 @@ export function Inputs4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>State</InputLabel>
                             <OutlinedInput name="state" />
                         </FormControl>
@@ -78,7 +78,7 @@ export function Inputs4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>City</InputLabel>
                             <OutlinedInput name="city" />
                         </FormControl>

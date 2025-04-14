@@ -98,13 +98,7 @@ export const layoutConfig = {
                     icon: 'envelope-simple',
                     matcher: { type: 'startsWith', href: '/dashboard/mail' },
                 },
-                {
-                    key: 'chat',
-                    title: 'Trò chuyện',
-                    href: paths.dashboard.chat.base,
-                    icon: 'chats-circle',
-                    matcher: { type: 'startsWith', href: '/dashboard/chat' },
-                },
+              
                 // { key: 'calendar', title: 'Lịch', href: paths.dashboard.calendar, icon: 'calendar-check' },
                 // { key: 'tasks', title: 'Nhiệm vụ', href: paths.dashboard.tasks, icon: 'kanban' },
             ],

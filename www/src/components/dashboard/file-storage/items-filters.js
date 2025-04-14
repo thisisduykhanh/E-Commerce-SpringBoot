@@ -101,7 +101,7 @@ export function ItemsFilters({ filters = {}, sortDir = 'desc', view = 'grid' }) 
                 </Select>
                 <ToggleButtonGroup
                     color="primary"
-                    exclusive={true}
+                    exclusive
                     onChange={(_, value) => {
                         handleViewChange(value);
                     }}

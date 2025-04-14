@@ -46,7 +46,7 @@ export function Privacy() {
                                 projects.
                             </Typography>
                         </Stack>
-                        <Switch defaultChecked={true} />
+                        <Switch defaultChecked />
                     </Stack>
                 </Stack>
             </CardContent>

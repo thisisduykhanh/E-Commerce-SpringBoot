@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -99,7 +99,7 @@ export function GroupedList6() {
                 <CardHeader title="Latest transactions" />
                 <Divider />
                 <Box sx={{ overflowX: 'auto' }}>
-                    <DataTable columns={columns} hideHead={true} rows={transactions} />
+                    <DataTable columns={columns} hideHead rows={transactions} />
                 </Box>
             </Card>
         </Box>

@@ -106,14 +106,14 @@ function ContactUs() {
                     </Typography>
                     <Box
                         component="form"
-                        noValidate={true}
+                        noValidate
                         autoComplete="off"
                         sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
                     >
                         {/* Họ tên và Email */}
                         <Box sx={{ display: 'flex', gap: '20px' }}>
                             <TextField
-                                fullWidth={true}
+                                fullWidth
                                 label="Họ tên của bạn"
                                 variant="outlined"
                                 sx={{
@@ -131,7 +131,7 @@ function ContactUs() {
                                 }}
                             />
                             <TextField
-                                fullWidth={true}
+                                fullWidth
                                 label="Email của bạn"
                                 variant="outlined"
                                 sx={{
@@ -152,7 +152,7 @@ function ContactUs() {
 
                         {/* Tiêu đề */}
                         <TextField
-                            fullWidth={true}
+                            fullWidth
                             label="Tiêu đề"
                             variant="outlined"
                             sx={{
@@ -171,10 +171,10 @@ function ContactUs() {
 
                         {/* Nội dung */}
                         <TextField
-                            fullWidth={true}
+                            fullWidth
                             label="Nội dung"
                             variant="outlined"
-                            multiline={true}
+                            multiline
                             rows={4}
                             sx={{
                                 '& .MuiInputLabel-root': {
@@ -190,7 +190,7 @@ function ContactUs() {
                             }}
                         />
                         <Button
-                            fullWidth={true}
+                            fullWidth
                             variant="contained"
                             sx={{
                                 backgroundColor: '#00A6B7',

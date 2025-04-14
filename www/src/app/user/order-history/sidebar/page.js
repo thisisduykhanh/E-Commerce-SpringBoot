@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 
-const Sidebar = () => {
+function Sidebar() {
     const menuItems = [
         'Thông tin tài khoản',
         'Đơn hàng của tôi',
@@ -20,13 +20,13 @@ const Sidebar = () => {
             </Typography>
             <List>
                 {menuItems.map((item, index) => (
-                    <ListItem button={true} key={index}>
+                    <ListItem button key={index}>
                         <ListItemText primary={item} />
                     </ListItem>
                 ))}
             </List>
         </Box>
     );
-};
+}
 
 export default Sidebar;

@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-export const ProductTabs = ({ productDetail, productDescription, reviews }) => {
+export function ProductTabs({ productDetail, productDescription, reviews }) {
     const [activeTab, setActiveTab] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
@@ -93,7 +93,7 @@ export const ProductTabs = ({ productDetail, productDescription, reviews }) => {
                                     <Avatar src={review.avatar} sx={{ marginRight: '10px' }} />
                                     <Box>
                                         <Typography variant="subtitle1">{review.name}</Typography>
-                                        <Rating value={review.rating} readOnly={true} />
+                                        <Rating value={review.rating} readOnly />
                                     </Box>
                                 </Box>
                                 <Typography variant="body2">{review.comment}</Typography>
@@ -129,4 +129,4 @@ export const ProductTabs = ({ productDetail, productDescription, reviews }) => {
             )}
         </Box>
     );
-};
+}

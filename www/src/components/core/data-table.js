@@ -30,8 +30,7 @@ export function DataTable({
         <Table {...props} sx={sx}>
             <TableHead sx={{ ...(hideHead && { visibility: 'collapse', '--TableCell-borderWidth': 0 }) }}>
                 <TableRow>
-                    {selectable && (
-                        <TableCell padding="checkbox" sx={{ width: '40px', minWidth: '40px', maxWidth: '40px' }}>
+                    {selectable ? <TableCell padding="checkbox" sx={{ width: '40px', minWidth: '40px', maxWidth: '40px' }}>
                             <Checkbox
                                 checked={selectedAll}
                                 indeterminate={selectedSome}
@@ -43,8 +42,7 @@ export function DataTable({
                                     }
                                 }}
                             />
-                        </TableCell>
-                    )}
+                        </TableCell> : null}
                     {columns.map((column) => (
                         <TableCell
                             key={column.name}
@@ -77,8 +75,7 @@ export function DataTable({
                             })}
                             sx={{ ...(onClick && { cursor: 'pointer' }) }}
                         >
-                            {selectable && (
-                                <TableCell padding="checkbox">
+                            {selectable ? <TableCell padding="checkbox">
                                     <Checkbox
                                         checked={rowId ? rowSelected : false}
                                         onChange={(event) => {
@@ -94,8 +91,7 @@ export function DataTable({
                                             }
                                         }}
                                     />
-                                </TableCell>
-                            )}
+                                </TableCell> : null}
                             {columns.map((column) => (
                                 <TableCell key={column.name} sx={{ ...(column.align && { textAlign: column.align }) }}>
                                     {column.formatter

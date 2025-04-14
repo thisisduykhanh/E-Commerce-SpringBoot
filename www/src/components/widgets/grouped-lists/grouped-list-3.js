@@ -1,3 +1,5 @@
+
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
@@ -99,11 +101,11 @@ export function GroupedList3() {
                         {tasks.map((task, index) => (
                             <ListItem divider={index < tasks.length - 1} key={task.id}>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
                                         <Link
                                             color="text.primary"
-                                            noWrap={true}
+                                            noWrap
                                             sx={{ cursor: 'pointer' }}
                                             variant="subtitle2"
                                         >

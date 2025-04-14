@@ -8,7 +8,6 @@ import { ArrowLeft as ArrowLeftIcon } from '@phosphor-icons/react/dist/ssr/Arrow
 import RouterLink from 'next/link';
 import React from 'react';
 import { ProductEditForm } from '@/components/dashboard/product/product-edit-form';
-import { config } from '@/config';
 import { paths } from '@/paths';
 
 import {getProduct} from '@/services/products';

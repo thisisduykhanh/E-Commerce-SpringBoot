@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import { Select, MenuItem } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
@@ -141,7 +140,7 @@ export function ProductEditForm({ product }) {
         item.maxQuantity
       );
     });
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
 
@@ -201,17 +200,17 @@ export function ProductEditForm({ product }) {
           <Stack divider={<Divider />} spacing={4}>
             <Stack spacing={3}>
               <Typography variant="h6">Thông tin cơ bản</Typography>
-              <Grid container={true} spacing={3}>
-                <Grid item={true} md={6} xs={12}>
+              <Grid container spacing={3}>
+                <Grid item md={6} xs={12}>
                   <Controller
                     control={control}
                     name="name"
                     render={({ field }) => (
                       <FormControl
                         error={Boolean(errors.name)}
-                        fullWidth={true}
+                        fullWidth
                       >
-                        <InputLabel required={true}>Tên sản phẩm</InputLabel>
+                        <InputLabel required>Tên sản phẩm</InputLabel>
                         <OutlinedInput {...field} value={product.productName ?? field.value ?? ""} />
                         {errors.name ? (
                           <FormHelperText>{errors.name.message}</FormHelperText>
@@ -220,16 +219,16 @@ export function ProductEditForm({ product }) {
                     )}
                   />
                 </Grid>
-                <Grid item={true} md={6} xs={12}>
+                <Grid item md={6} xs={12}>
                   <Controller
                     control={control}
                     name="price"
                     render={({ field }) => (
                       <FormControl
                         error={Boolean(errors.price)}
-                        fullWidth={true}
+                        fullWidth
                       >
-                        <InputLabel required={true}>Giá sản phẩm</InputLabel>
+                        <InputLabel required>Giá sản phẩm</InputLabel>
                           <OutlinedInput {...field} type="number" value={product.price ?? field.value ?? ""} />
 
                         {errors.price ? (
@@ -243,18 +242,18 @@ export function ProductEditForm({ product }) {
                 </Grid>
 
 
-                <Grid container={true} flexDirection="column" spacing={4}>
+                <Grid container flexDirection="column" spacing={4}>
                                       {/* Phần số lượng */}
-                                      <Grid item={true} xs={12}>
+                                      <Grid item xs={12}>
                                         <Controller
                                           control={control}
-                                          name={`quantity`}
+                                          name="quantity"
                                           render={({ field }) => (
                                             <FormControl
                                               error={Boolean(errors?.quantity)}
-                                              fullWidth={true}
+                                              fullWidth
                                             >
-                                              <InputLabel required={true}>Số Lượng</InputLabel>
+                                              <InputLabel required>Số Lượng</InputLabel>
                   
                                               <OutlinedInput
                                                 {...field}
@@ -262,11 +261,9 @@ export function ProductEditForm({ product }) {
                                                 value={product.quantity ?? field.value ?? ""}
                                                 placeholder="Nhập số lượng"
                                               />
-                                              {errors?.quantity && (
-                                                <FormHelperText>
+                                              {errors?.quantity ? <FormHelperText>
                                                   {errors?.quantity.message}
-                                                </FormHelperText>
-                                              )}
+                                                </FormHelperText> : null}
                                             </FormControl>
                                           )}
                                         />
@@ -274,7 +271,7 @@ export function ProductEditForm({ product }) {
                                     </Grid>
 
 
-                <Grid item={true} xs={12} width="100%">
+                <Grid item xs={12} width="100%">
                   <Controller
                     control={control}
                     name="description"
@@ -282,7 +279,7 @@ export function ProductEditForm({ product }) {
                     render={({ field }) => (
                       <FormControl
                         error={Boolean(errors.description)}
-                        fullWidth={true}
+                        fullWidth
                       >
                         <InputLabel>Mô tả</InputLabel>
                         <Box
@@ -375,25 +372,25 @@ export function ProductEditForm({ product }) {
                   </Grid>
                 </Grid> */}
 
-                <Grid container={true} spacing={2}>
-                                    <Grid item={true} xs={12}>
-                                    <InputLabel required={true}>Hình Ảnh</InputLabel>
+                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                    <InputLabel required>Hình Ảnh</InputLabel>
                 
-                                        <Grid container={true} rowSpacing={2} columnSpacing={18}>
+                                        <Grid container rowSpacing={2} columnSpacing={18}>
                                         {imageInputs.map((index) => (
-                                            <Grid item={true} xs={12} sm={6} md={3} key={index}>
+                                            <Grid item xs={12} sm={6} md={3} key={index}>
                                             <Controller
                                                 control={control}
                                                 name={`images[${index}]`}
                                                 render={({ field }) => (
-                                                <FormControl fullWidth={true}>
+                                                <FormControl fullWidth>
                                                     <Box
                                                     display="flex"
                                                     flexDirection="column"
                                                     alignItems="center"
                                                     >
                                                     <InputLabel
-                                                        shrink={true}
+                                                        shrink
                                                         style={{ marginBottom: "8px" }}
                                                     >
                                                         Hình {index + 1}
@@ -421,8 +418,7 @@ export function ProductEditForm({ product }) {
                                                         }}
                                                     />
                                                     </Box>
-                                                    {preview[index] && (
-                                                    <Box
+                                                    {preview[index] ? <Box
                                                         mt={2}
                                                         width="100%"
                                                         height="150px"
@@ -444,8 +440,7 @@ export function ProductEditForm({ product }) {
                                                             objectFit: "contain",
                                                         }}
                                                         />
-                                                    </Box>
-                                                    )}
+                                                    </Box> : null}
                                                 </FormControl>
                                                 )}
                                             />

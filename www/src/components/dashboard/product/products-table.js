@@ -6,7 +6,6 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Eye as EyeIcon } from '@phosphor-icons/react/dist/ssr/Eye';
-import { PencilSimple as PencilIcon } from '@phosphor-icons/react/dist/ssr/PencilSimple';
 import { Image as ImageIcon } from '@phosphor-icons/react/dist/ssr/Image';
 import RouterLink from 'next/link';
 import * as React from 'react';

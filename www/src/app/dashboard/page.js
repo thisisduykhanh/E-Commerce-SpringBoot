@@ -1,3 +1,5 @@
+'use client';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid2';
@@ -45,7 +47,7 @@ export default function Page() {
                         </Button>
                     </div>
                 </Stack>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid
                         size={{
                             md: 4,

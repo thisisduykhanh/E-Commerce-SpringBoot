@@ -56,7 +56,7 @@ const columns = [
     },
     {
         formatter: (row) => (
-            <Typography suppressHydrationWarning={true} sx={{ whiteSpace: 'nowrap' }} variant="inherit">
+            <Typography suppressHydrationWarning sx={{ whiteSpace: 'nowrap' }} variant="inherit">
                 {dayjs(row.createdAt).format('MMM D, YYYY hh:mm A')}
             </Typography>
         ),

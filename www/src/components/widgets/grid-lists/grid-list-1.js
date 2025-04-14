@@ -49,7 +49,7 @@ const posts = [
 export function GridList1() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 {posts.map((post) => (
                     <Grid
                         key={post.id}

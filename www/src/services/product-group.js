@@ -1,4 +1,3 @@
-import { logger } from "@/lib/default-logger";
 import apiClient from "./ApiClient";
 
 export const addProduct = async (

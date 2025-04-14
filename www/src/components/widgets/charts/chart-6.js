@@ -40,7 +40,7 @@ export function Chart6() {
                                 <BarChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                                     <CartesianGrid strokeDasharray="2 4" vertical={false} />
                                     <XAxis axisLine={false} dataKey="name" tickLine={false} type="category" />
-                                    <YAxis axisLine={false} hide={true} type="number" />
+                                    <YAxis axisLine={false} hide type="number" />
                                     {bars.map((bar) => (
                                         <Bar
                                             animationDuration={300}

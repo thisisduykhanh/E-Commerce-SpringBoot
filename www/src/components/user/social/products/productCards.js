@@ -1,8 +1,8 @@
 import { Box, Button, Grid2 as Grid, Paper, Typography } from '@mui/material';
 
-const ProductCards = ({ product }) => {
+function ProductCards({ product }) {
     return (
-        <Grid item={true}>
+        <Grid item>
             <Paper sx={{ borderRadius: 2, boxShadow: 3, backgroundColor: 'white', color: 'black' }}>
                 {/* Hình ảnh sản phẩm */}
                 <Box sx={{ position: 'relative' }} size={{ xs: 8, sm: 4, md: 3 }}>
@@ -49,7 +49,7 @@ const ProductCards = ({ product }) => {
                 <Box sx={{ marginTop: 2 }}>
                     <Button
                         variant="contained"
-                        fullWidth={true}
+                        fullWidth
                         sx={{ background: 'linear-gradient(180deg, #00A6B7 0%, #00A6B7 100%)' }}
                     >
                         Mua ngay
@@ -58,6 +58,6 @@ const ProductCards = ({ product }) => {
             </Paper>
         </Grid>
     );
-};
+}
 
 export default ProductCards;

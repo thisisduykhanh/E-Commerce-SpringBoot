@@ -11,14 +11,14 @@ export function Form4() {
     return (
         <Box sx={{ p: 3 }}>
             <Stack divider={<Divider />} spacing={2}>
-                <Grid container={true} spacing={3}>
+                <Grid container spacing={3}>
                     <Grid
                         size={{
                             sm: 6,
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>Password</InputLabel>
                             <OutlinedInput name="password" type="password" />
                         </FormControl>
@@ -29,7 +29,7 @@ export function Form4() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>Confirm password</InputLabel>
                             <OutlinedInput name="passwordConfirm" type="password" />
                         </FormControl>

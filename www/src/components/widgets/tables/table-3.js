@@ -164,7 +164,7 @@ export function Table3() {
                 </Stack>
                 <Divider />
                 <Box sx={{ overflowX: 'auto' }}>
-                    <DataTable columns={columns} rows={customers} selectable={true} />
+                    <DataTable columns={columns} rows={customers} selectable />
                 </Box>
             </Card>
         </Box>

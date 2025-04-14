@@ -12,65 +12,10 @@ import { CustomersPagination } from '@/components/dashboard/customer/customers-p
 import { CustomersSelectionProvider } from '@/components/dashboard/customer/customers-selection-context';
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import * as React from 'react';
-import{getUser} from '@/services/admin'
 import {getUsers} from "@/services/users";
 import {logger} from "@/lib/default-logger";
 
 
-
-/* const customers = [
-    {
-        id: 'USR-005',
-        name: 'Fran Perez',
-        avatar: '/assets/avatar-5.png',
-        email: 'fran.perez@domain.com',
-        phone: '(815) 704-0045',
-        quota: 50,
-        status: 'active',
-        createdAt: dayjs().subtract(1, 'hour').toDate(),
-    },
-    {
-        id: 'USR-004',
-        name: 'Penjani Inyene',
-        avatar: '/assets/avatar-4.png',
-        email: 'penjani.inyene@domain.com',
-        phone: '(803) 937-8925',
-        quota: 100,
-        status: 'active',
-        createdAt: dayjs().subtract(3, 'hour').toDate(),
-    },
-    {
-        id: 'USR-003',
-        name: 'Carson Darrin',
-        avatar: '/assets/avatar-3.png',
-        email: 'carson.darrin@domain.com',
-        phone: '(715) 278-5041',
-        quota: 10,
-        status: 'blocked',
-        createdAt: dayjs().subtract(1, 'hour').subtract(1, 'day').toDate(),
-    },
-    {
-        id: 'USR-002',
-        name: 'Siegbert Gottfried',
-        avatar: '/assets/avatar-2.png',
-        email: 'siegbert.gottfried@domain.com',
-        phone: '(603) 766-0431',
-        quota: 0,
-        status: 'pending',
-        createdAt: dayjs().subtract(7, 'hour').subtract(1, 'day').toDate(),
-    },
-    {
-        id: 'USR-001',
-        name: 'Miron Vitold',
-        avatar: '/assets/avatar-1.png',
-        email: 'miron.vitold@domain.com',
-        phone: '(425) 434-5535',
-        quota: 50,
-        status: 'active',
-        createdAt: dayjs().subtract(2, 'hour').subtract(2, 'day').toDate(),
-    },
-];
- */
 export default function Page({ searchParams }) {
      const { email, phone, sortDir, status } = searchParams;
         //   const [customers, setCustomers] = React.useState([]);
@@ -80,7 +25,7 @@ export default function Page({ searchParams }) {
           const [totalElements, setTotalElements] = React.useState(0);
 
 
-       if (searchParams.status == null) {
+       if (searchParams.status === null) {
          searchParams.status = "Pending";
 
         } const currentStatus = searchParams.status;
@@ -149,36 +94,4 @@ export default function Page({ searchParams }) {
 
 // Sorting and filtering has to be done on the server.
 
-function applySort(row, sortDir) {
-    return row.sort((a, b) => {
-        if (sortDir === 'asc') {
-            return a.createdAt.getTime() - b.createdAt.getTime();
-        }
 
-        return b.createdAt.getTime() - a.createdAt.getTime();
-    });
-}
-
-function applyFilters(row, { email, phone, status }) {
-    return row.filter((item) => {
-        if (email) {
-            if (!item.email?.toLowerCase().includes(email.toLowerCase())) {
-                return false;
-            }
-        }
-
-        if (phone) {
-            if (!item.phone?.toLowerCase().includes(phone.toLowerCase())) {
-                return false;
-            }
-        }
-
-        if (status) {
-            if (item.status !== status) {
-                return false;
-            }
-        }
-
-        return true;
-    });
-}

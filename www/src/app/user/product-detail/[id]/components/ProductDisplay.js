@@ -7,7 +7,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { ShoppingBag } from '@phosphor-icons/react';
 import { CompanyShare } from './social-share';
 
-export const ProductDisplay = ({
+export function ProductDisplay({
     productDetail,
     minPrice,
     maxPrice,
@@ -17,7 +17,7 @@ export const ProductDisplay = ({
     successMessage,
     error,
     handleAddToCart,
-}) => {
+}) {
     const [activeImageIndex, setActiveImageIndex] = useState(1);
 
     const handleScrollUp = () => {
@@ -137,7 +137,7 @@ export const ProductDisplay = ({
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
-                        <Rating value={5} readOnly={true} precision={0.5} size="small" />
+                        <Rating value={5} readOnly precision={0.5} size="small" />
                         <Typography variant="body2" sx={{ marginLeft: '10px', color: 'gray' }}>
                             4 đánh giá
                         </Typography>
@@ -235,8 +235,8 @@ export const ProductDisplay = ({
                                 </IconButton>
                                 <TextField
                                     value={`${quantity} kg`}
-                                    disabled={true}
-                                    aria-readonly={true}
+                                    disabled
+                                    aria-readonly
                                     slotProps={{
                                         input: {
                                             readOnly: true,
@@ -310,16 +310,12 @@ export const ProductDisplay = ({
                                 <ShoppingBag />
                             </Button>
                         </Box>
-                        {successMessage && (
-                            <Typography variant="body2" color="primary" sx={{ marginTop: '10px' }}>
+                        {successMessage ? <Typography variant="body2" color="primary" sx={{ marginTop: '10px' }}>
                                 {successMessage}
-                            </Typography>
-                        )}
-                        {error && (
-                            <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
+                            </Typography> : null}
+                        {error ? <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
                                 {error}
-                            </Typography>
-                        )}
+                            </Typography> : null}
                     </Box>
                     <Divider sx={{ margin: '20px 0', backgroundColor: '#fff', width: '80%' }} />
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -336,4 +332,4 @@ export const ProductDisplay = ({
             </Box>
         </Box>
     );
-};
+}

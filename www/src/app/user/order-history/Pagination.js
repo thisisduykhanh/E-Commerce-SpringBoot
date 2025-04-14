@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 
-const Pagination = () => {
+function Pagination() {
     return (
         <Box
             sx={{
@@ -49,6 +49,6 @@ const Pagination = () => {
             </Button>
         </Box>
     );
-};
+}
 
 export default Pagination;

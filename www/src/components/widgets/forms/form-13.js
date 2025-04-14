@@ -45,14 +45,14 @@ export function Form13() {
                         <StepIcon number={1} />
                         <Typography variant="h6">Billing address</Typography>
                     </Stack>
-                    <Grid container={true} spacing={3}>
+                    <Grid container spacing={3}>
                         <Grid
                             size={{
                                 sm: 6,
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>First name</InputLabel>
                                 <OutlinedInput name="firstName" />
                             </FormControl>
@@ -63,7 +63,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>Last name</InputLabel>
                                 <OutlinedInput name="lastName" />
                             </FormControl>
@@ -74,7 +74,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>State</InputLabel>
                                 <OutlinedInput name="state" />
                             </FormControl>
@@ -85,7 +85,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>City</InputLabel>
                                 <OutlinedInput name="city" />
                             </FormControl>
@@ -96,7 +96,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>Street line 1</InputLabel>
                                 <OutlinedInput name="line1" />
                             </FormControl>
@@ -107,7 +107,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>Street line 2 (optional)</InputLabel>
                                 <OutlinedInput name="line2" />
                             </FormControl>
@@ -118,7 +118,7 @@ export function Form13() {
                                 xs: 12,
                             }}
                         >
-                            <FormControl fullWidth={true}>
+                            <FormControl fullWidth>
                                 <InputLabel>Zip code</InputLabel>
                                 <OutlinedInput name="zipCode" />
                             </FormControl>
@@ -132,7 +132,7 @@ export function Form13() {
                     </Stack>
                     <div>
                         <FormControlLabel
-                            control={<Checkbox defaultChecked={true} />}
+                            control={<Checkbox defaultChecked />}
                             label="Same as billing address"
                         />
                     </div>
@@ -143,7 +143,7 @@ export function Form13() {
                         <Typography variant="h6">Payment method</Typography>
                     </Stack>
                     <Stack spacing={3}>
-                        <RadioGroup defaultValue="credit_card" name="paymentMethod" row={true}>
+                        <RadioGroup defaultValue="credit_card" name="paymentMethod" row>
                             {paymentMethods.map((paymentMethod) => (
                                 <FormControlLabel
                                     control={<Radio />}
@@ -153,9 +153,9 @@ export function Form13() {
                                 />
                             ))}
                         </RadioGroup>
-                        <Grid container={true}>
+                        <Grid container>
                             <Grid
-                                container={true}
+                                container
                                 spacing={3}
                                 size={{
                                     sm: 6,
@@ -163,13 +163,13 @@ export function Form13() {
                                 }}
                             >
                                 <Grid size={12}>
-                                    <FormControl fullWidth={true}>
+                                    <FormControl fullWidth>
                                         <InputLabel>Name on card</InputLabel>
                                         <OutlinedInput name="cardHolder" />
                                     </FormControl>
                                 </Grid>
                                 <Grid size={12}>
-                                    <FormControl fullWidth={true}>
+                                    <FormControl fullWidth>
                                         <InputLabel>Card number</InputLabel>
                                         <OutlinedInput name="cardNumber" />
                                     </FormControl>
@@ -180,7 +180,7 @@ export function Form13() {
                                         xs: 12,
                                     }}
                                 >
-                                    <FormControl fullWidth={true}>
+                                    <FormControl fullWidth>
                                         <InputLabel>Expire date</InputLabel>
                                         <OutlinedInput name="cardExp" placeholder="MM/YY" />
                                     </FormControl>
@@ -191,7 +191,7 @@ export function Form13() {
                                         xs: 12,
                                     }}
                                 >
-                                    <FormControl fullWidth={true}>
+                                    <FormControl fullWidth>
                                         <InputLabel>Security code</InputLabel>
                                         <OutlinedInput name="cardCvv" />
                                     </FormControl>

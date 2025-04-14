@@ -24,15 +24,15 @@ export function DetailList7() {
                         <Typography color="text.secondary" variant="subtitle2">
                             &quot; Everyone thinks of changing the world, but no one thinks of changing himself. &quot;
                         </Typography>
-                        <List disablePadding={true} sx={{ '& .MuiListItem-root': { px: 0, py: 2 } }}>
-                            <ListItem divider={true}>
+                        <List disablePadding sx={{ '& .MuiListItem-root': { px: 0, py: 2 } }}>
+                            <ListItem divider>
                                 <ListItemIcon>
                                     <BriefcaseIcon />
                                 </ListItemIcon>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             Product Designer at{' '}
                                             <Link color="text.primary" variant="subtitle2">
                                                 Devias IO
@@ -40,7 +40,7 @@ export function DetailList7() {
                                         </Typography>
                                     }
                                     secondary={
-                                        <Typography color="text.secondary" noWrap={true} variant="body2">
+                                        <Typography color="text.secondary" noWrap variant="body2">
                                             Past: UX Designer{' '}
                                             <Link color="text.secondary" variant="body2">
                                                 Focus Aesthetic Dynamics
@@ -49,16 +49,16 @@ export function DetailList7() {
                                     }
                                 />
                             </ListItem>
-                            <ListItem divider={true}>
+                            <ListItem divider>
                                 <ListItemIcon>
                                     <BookOpenIcon />
                                 </ListItemIcon>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
                                         <Link
                                             color="text.secondary"
-                                            noWrap={true}
+                                            noWrap
                                             sx={{ cursor: 'pointer' }}
                                             underline="always"
                                             variant="body2"
@@ -68,14 +68,14 @@ export function DetailList7() {
                                     }
                                 />
                             </ListItem>
-                            <ListItem divider={true}>
+                            <ListItem divider>
                                 <ListItemIcon>
                                     <HouseIcon />
                                 </ListItemIcon>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             Lives in{' '}
                                             <Link color="text.primary" variant="subtitle2">
                                                 Bucharest
@@ -83,7 +83,7 @@ export function DetailList7() {
                                         </Typography>
                                     }
                                     secondary={
-                                        <Typography color="text.secondary" noWrap={true} variant="body2">
+                                        <Typography color="text.secondary" noWrap variant="body2">
                                             Originally from{' '}
                                             <Link color="text.secondary" variant="body2">
                                                 Rm. Valcea
@@ -97,9 +97,9 @@ export function DetailList7() {
                                     <EnvelopeSimpleIcon />
                                 </ListItemIcon>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             sofia@devias.io
                                         </Typography>
                                     }

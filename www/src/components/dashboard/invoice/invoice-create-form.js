@@ -156,7 +156,7 @@ export function InvoiceCreateForm() {
                     <Stack divider={<Divider />} spacing={4}>
                         <Stack spacing={3}>
                             <Typography variant="h6">Basic information</Typography>
-                            <Grid container={true} spacing={3}>
+                            <Grid container spacing={3}>
                                 <Grid
                                     size={{
                                         md: 6,
@@ -167,7 +167,7 @@ export function InvoiceCreateForm() {
                                         control={control}
                                         name="customer"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.customer)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.customer)} fullWidth>
                                                 <InputLabel>Customer</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.customer ? (
@@ -187,7 +187,7 @@ export function InvoiceCreateForm() {
                                         control={control}
                                         name="number"
                                         render={({ field }) => (
-                                            <FormControl disabled={true} fullWidth={true}>
+                                            <FormControl disabled fullWidth>
                                                 <InputLabel>Number</InputLabel>
                                                 <OutlinedInput {...field} />
                                             </FormControl>
@@ -262,7 +262,7 @@ export function InvoiceCreateForm() {
                                         control={control}
                                         name="taxId"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.taxId)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.taxId)} fullWidth>
                                                 <InputLabel>Tax ID</InputLabel>
                                                 <OutlinedInput {...field} placeholder="e.g EU372054390" />
                                                 {errors.taxId ? (
@@ -417,7 +417,7 @@ export function InvoiceCreateForm() {
                                 </div>
                             </Stack>
                         </Stack>
-                        <Grid container={true} spacing={3}>
+                        <Grid container spacing={3}>
                             <Grid
                                 size={{
                                     md: 4,
@@ -428,7 +428,7 @@ export function InvoiceCreateForm() {
                                     control={control}
                                     name="discount"
                                     render={({ field }) => (
-                                        <FormControl error={Boolean(errors.discount)} fullWidth={true}>
+                                        <FormControl error={Boolean(errors.discount)} fullWidth>
                                             <InputLabel>Discount</InputLabel>
                                             <OutlinedInput
                                                 {...field}
@@ -463,7 +463,7 @@ export function InvoiceCreateForm() {
                                     control={control}
                                     name="shippingRate"
                                     render={({ field }) => (
-                                        <FormControl error={Boolean(errors.shippingRate)} fullWidth={true}>
+                                        <FormControl error={Boolean(errors.shippingRate)} fullWidth>
                                             <InputLabel>Shipping rate</InputLabel>
                                             <OutlinedInput
                                                 {...field}
@@ -498,7 +498,7 @@ export function InvoiceCreateForm() {
                                     control={control}
                                     name="taxRate"
                                     render={({ field }) => (
-                                        <FormControl error={Boolean(errors.taxRate)} fullWidth={true}>
+                                        <FormControl error={Boolean(errors.taxRate)} fullWidth>
                                             <InputLabel>Tax rate (%)</InputLabel>
                                             <OutlinedInput
                                                 {...field}

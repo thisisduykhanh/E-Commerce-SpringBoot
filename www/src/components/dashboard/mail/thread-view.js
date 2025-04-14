@@ -119,7 +119,7 @@ export function ThreadView({ threadId }) {
                                     ))}
                                 </Typography>
                                 {thread.createdAt ? (
-                                    <Typography color="text.secondary" noWrap={true} variant="caption">
+                                    <Typography color="text.secondary" noWrap variant="caption">
                                         {dayjs(thread.createdAt).format('MMM D, YYYY hh:mm:ss A')}
                                     </Typography>
                                 ) : null}

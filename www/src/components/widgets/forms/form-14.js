@@ -40,9 +40,9 @@ export function Form14() {
                     <div>
                         <Typography variant="h6">Order summary</Typography>
                     </div>
-                    <List disablePadding={true}>
+                    <List disablePadding>
                         {lineItems.map((lineItem) => (
-                            <ListItem disableGutters={true} key={lineItem.id}>
+                            <ListItem disableGutters key={lineItem.id}>
                                 <ListItemAvatar>
                                     <Box
                                         sx={{
@@ -64,9 +64,9 @@ export function Form14() {
                                     </Box>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             {lineItem.product}
                                         </Typography>
                                     }

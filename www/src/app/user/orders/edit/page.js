@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 import {
     TextField,
@@ -42,7 +43,7 @@ const validateForm = (formData) => {
     }
 };
 
-const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
+function OrdersFormEdit({ onCancel, address, onAddNewAddress }) {
     const [name, setName] = useState(address[0]?.name || '');
     const [phone, setPhone] = useState(address[0]?.phone || '');
 
@@ -221,7 +222,7 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
     };
 
     return (
-        <Dialog open={true} onClose={onCancel}>
+        <Dialog open onClose={onCancel}>
             <DialogTitle
                 sx={{
                     display: 'flex',
@@ -261,26 +262,26 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
                 <Box p={2} sx={{ backgroundColor: '#fff', width: '100%', padding: 0 }}>
                     <TextField
                         label="Họ tên"
-                        fullWidth={true}
+                        fullWidth
                         variant="outlined"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         sx={{ mb: 2, ...commonStyles, width: '100%' }}
-                        error={!!formErrors.name}
+                        error={Boolean(formErrors.name)}
                         helperText={formErrors.name}
                     />
                     <TextField
                         label="Số điện thoại"
                         type='tel'
-                        fullWidth={true}
+                        fullWidth
                         variant="outlined"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         sx={{ mb: 2, ...commonStyles }}
-                        error={!!formErrors.phone}
+                        error={Boolean(formErrors.phone)}
                         helperText={formErrors.phone}
                     />
-                    <FormControl fullWidth={true} sx={{ mb: 2, ...commonStyles }}>
+                    <FormControl fullWidth sx={{ mb: 2, ...commonStyles }}>
                         <InputLabel>Thành phố</InputLabel>
                         <Select
                             value={city || ''}
@@ -296,8 +297,7 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
                         </Select>
                     </FormControl>
 
-                    {city && (
-                        <FormControl fullWidth={true} sx={{ mb: 2, ...commonStyles }}>
+                    {city ? <FormControl fullWidth sx={{ mb: 2, ...commonStyles }}>
                             <InputLabel>Quận/Huyện</InputLabel>
                             <Select
                                 value={
@@ -321,19 +321,18 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
                                         </MenuItem>
                                     ))}
                             </Select>
-                        </FormControl>
-                    )}
+                        </FormControl> : null}
                     <TextField
                         label="Số nhà và tên đường"
-                        fullWidth={true}
+                        fullWidth
                         value={streetDetail}
                         onChange={handleStreetChange}
                         onBlur={handleStreetBlur}
-                        error={!!formErrors.addressDetail}
+                        error={Boolean(formErrors.addressDetail)}
                         helperText={formErrors.addressDetail}
                         sx={{ mb: 2, ...commonStyles }}
                     />
-                    {formErrors.global && <Box sx={{ color: 'red', mb: 2 }}>{formErrors.global}</Box>}
+                    {formErrors.global ? <Box sx={{ color: 'red', mb: 2 }}>{formErrors.global}</Box> : null}
                     <Backdrop sx={{ color: '#fff', zIndex: 1300 }} open={loading}>
                         <CircularProgress color="inherit" />
                     </Backdrop>
@@ -361,6 +360,6 @@ const OrdersFormEdit = ({ onCancel, address, onAddNewAddress }) => {
             </DialogContent>
         </Dialog>
     );
-};
+}
 
 export default OrdersFormEdit;

@@ -35,7 +35,7 @@ export default function Page() {
                         </Button>
                     </div>
                 </Stack>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid size={12}>
                         <Stats
                             data={[

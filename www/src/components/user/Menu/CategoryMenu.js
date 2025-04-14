@@ -1,6 +1,6 @@
 import { logger } from '@/lib/default-logger';
 import { fetchCategories } from '@/services/category-service';
-import '@/styles/global.css';
+
 import {
     Box,
     Button,
@@ -25,13 +25,12 @@ export default function CategoryMenu({ selectedTab, handleTabChange }) {
         () => [
             { label: 'Trang chủ', value: 0 },
             { label: 'Sản phẩm', value: 1 },
-            { label: 'Nhà cung cấp', value: 2 },
         ],
         []
     );
 
     const filteredTabs = React.useMemo(
-        () => availableTabs.filter((tab) => tab.value >= 0 && tab.value <= 2),
+        () => availableTabs.filter((tab) => tab.value >= 0 && tab.value <= 1),
         [availableTabs]
     );
     const [categories] = React.useState(() => {
@@ -103,8 +102,7 @@ export default function CategoryMenu({ selectedTab, handleTabChange }) {
 
         const routes = {
             0: '/user',
-            1: '/user/product',
-            2: '/user/SupplierList',
+            1: '/user/product'
         };
 
         if (routes[newValue]) {
@@ -188,7 +186,7 @@ export default function CategoryMenu({ selectedTab, handleTabChange }) {
                                     <CircularProgress />
                                 </Box>
                             ) : (
-                                <List disablePadding={true}>
+                                <List disablePadding>
                                     {categories.length > 0 &&
                                         categories.map((category, index) => (
                                             <ListItem

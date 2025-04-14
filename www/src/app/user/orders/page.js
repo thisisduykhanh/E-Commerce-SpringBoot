@@ -7,10 +7,8 @@ import {
   Button,
   Card,
   CardContent,
-  Checkbox,
   Dialog,
   DialogContent,
-  FormControlLabel,
   Grid,
   Typography,
   Snackbar,
@@ -22,6 +20,10 @@ import OrdersForm from "./create/page";
 import OrdersFormEdit from "./edit/page";
 import OrderSummary from "./order_summary/page";
 import { addOrder } from "@/services/order";
+
+import { useRouter } from "next/navigation";
+
+import { useCart } from "@/contexts/CartContext";
 
 import CartItem from "../cart/cart-item";
 
@@ -35,8 +37,8 @@ function Orders() {
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-    const [cartDetailIds, setCartDetailIds] = useState([]);
-
+  const [cartDetailIds, setCartDetailIds] = useState([]);
+  const { fetchCartQuantity } = useCart();
 
   const handleOpenShippingModal = () => {
     setShippingModalOpen(true);
@@ -58,6 +60,9 @@ function Orders() {
     discountedFee: 0, // Giá đã giảm
     discountAmount: 0, // Số tiền giảm
   });
+
+  const router = useRouter();
+
   useEffect(() => {
     const discountedFee =
       shippingData.shippingFee * (1 - shippingData.discountPercent / 100);
@@ -94,7 +99,6 @@ function Orders() {
   }, []);
 
   const handleAddNewAddress = (updatedAddress) => {
-
     setAddresses((prev) => {
       // Kiểm tra xem địa chỉ đã tồn tại trong danh sách hay chưa
       return prev.some((address) => address.id === updatedAddress.id)
@@ -111,16 +115,17 @@ function Orders() {
         const response = await fetchCart();
         if (response?.data) {
           const cartData = response.data;
-        
+
           setCartItems(cartData);
           setTotalPrice(cartData.totalPrice);
 
           logger.debug("cartData:", cartData);
 
-
-          const cartDetailIds = cartData.cartSupplierDTOs?.flatMap(
-            (supplier) => supplier.cartDetailDTOs?.map((item) => item.id) || []
-          ) || [];
+          const cartDetailIds =
+            cartData.cartSupplierDTOs?.flatMap(
+              (supplier) =>
+                supplier.cartDetailDTOs?.map((item) => item.id) || []
+            ) || [];
 
           setCartDetailIds(cartDetailIds);
         }
@@ -146,23 +151,22 @@ function Orders() {
     setOpen(false);
   };
 
-
-
   const handlePayment = async () => {
     const addressDetail = addresses[0]?.addressDetail || ""; // Lấy địa chỉ từ mảng addresses
     const fullName = addresses[0]?.name || "";
     const phone = addresses[0]?.phone || "";
-  
-    const shippingFee = shippingData.discountedFee || shippingData.shippingFee || 0;
+
+    const shippingFee =
+      shippingData.discountedFee || shippingData.shippingFee || 0;
     const taxFee = totalPrice * taxRate;
-  
+
     logger.debug("Selected address:", addressDetail);
     logger.debug("fullName:", fullName);
     logger.debug("phone:", phone);
     logger.debug("shippingData:", shippingFee);
     logger.debug("cartDetailIds:", cartDetailIds);
     logger.debug("taxRate:", taxFee);
-  
+
     try {
       // Gọi API để tạo đơn hàng
       const response = await addOrder(
@@ -171,9 +175,19 @@ function Orders() {
         phone,
         shippingFee,
         taxFee,
-        cartDetailIds,
+        cartDetailIds
       );
-      window.location.href = "/user/orders/notification";
+
+      if (response?.data) {
+        logger.debug("Đơn hàng đã được tạo thành công:", response.data);
+        setErrorMessage("Đơn hàng đã được tạo thành công!");
+        setErrorSnackbarOpen(true);
+        fetchCartQuantity(); // Cập nhật số lượng giỏ hàng
+        router.push("/user/orders/notification");
+      } else {
+        logger.error("Không có dữ liệu trong phản hồi:", response);
+        setErrorMessage("Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại!");
+      }
     } catch (error) {
       logger.error("Lỗi khi tạo đơn hàng:", error);
       setErrorMessage("Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại!");
@@ -186,8 +200,8 @@ function Orders() {
   return (
     <>
       <Box p={2} display="flex" justifyContent="center">
-        <Grid maxWidth={1000}  paddingX={0} marginRight={12}>
-          <Grid item={true} xs={12} md={8} sx={{ paddingX: "0 !important" }}>
+        <Grid width={1000} paddingX={0} marginRight={12}>
+          <Grid item xs={12} md={8} sx={{ paddingX: "0 !important" }}>
             <Card
               variant="outlined"
               sx={{
@@ -202,7 +216,7 @@ function Orders() {
               <CardContent sx={{ paddingX: "0 !important" }}>
                 <Typography
                   variant="h6"
-                  gutterBottom={true}
+                  gutterBottom
                   sx={{ color: "#000", marginBottom: "1rem" }}
                 >
                   VẬN CHUYỂN & THANH TOÁN
@@ -225,7 +239,8 @@ function Orders() {
                       style={{
                         color: addresses.length > 0 ? "#ccc" : orange[500],
                         fontWeight: 700,
-                        cursor: addresses.length > 0 ? "not-allowed" : "pointer",
+                        cursor:
+                          addresses.length > 0 ? "not-allowed" : "pointer",
                         opacity: addresses.length > 0 ? 0.5 : 1,
                       }}
                       tabIndex={0}
@@ -272,7 +287,6 @@ function Orders() {
                           {address.addressDetail} - {address.phone}
                         </Typography>
                         <Box display="flex" gap={1} mt={1}>
-                          
                           <Button
                             variant="outlined"
                             sx={{
@@ -479,7 +493,7 @@ function Orders() {
                 <Box mb={4}>
                   <Typography
                     variant="h6"
-                    gutterBottom={true}
+                    gutterBottom
                     sx={{ fontWeight: 600, color: "#212121", marginBottom: 2 }}
                   >
                     DANH SÁCH SẢN PHẨM
@@ -496,26 +510,24 @@ function Orders() {
                     <CartItem cartData={cartItems?.cartSupplierDTOs || []} />
                   </Card>
                 </Box>
-
               </CardContent>
             </Card>
           </Grid>
-          
         </Grid>
 
         {/* Tóm tắt đơn hàng */}
 
         {cartItems?.cartSupplierDTOs?.length > 0 && (
-            <Grid item={true} sx={{ paddingX: "0 !important" }} minWidth={400}>
-              <OrderSummary
-                totalPrice={totalPrice}
-                taxRate={taxRate}
-                shippingFee={shippingData.discountedFee}
-                onPayment={handlePayment}
-                address={addresses}
-              />
-            </Grid>
-          )}
+          <Grid item sx={{ paddingX: "0 !important" }} minWidth={400}>
+            <OrderSummary
+              totalPrice={totalPrice}
+              taxRate={taxRate}
+              shippingFee={shippingData.discountedFee}
+              onPayment={handlePayment}
+              address={addresses}
+            />
+          </Grid>
+        )}
 
         <Dialog open={open} onCancel={handleClose}>
           <DialogContent>
@@ -541,7 +553,11 @@ function Orders() {
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
           {errorMessage}
         </Alert>
       </Snackbar>

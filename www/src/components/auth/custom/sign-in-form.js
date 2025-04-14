@@ -86,7 +86,7 @@ export function SignInForm() {
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('role', roleLogin);
             setUser ( {
-                token: token,
+                token,
                 role: roleLogin,
             });
 
@@ -111,7 +111,7 @@ export function SignInForm() {
                     router.push('/dashboard/products');
                     break;
                 case 'user':
-                    router.push('/');
+                    router.push('/user');
                     break;
                 case 'supplier':
                     router.push('/supplier/products');
@@ -141,7 +141,7 @@ export function SignInForm() {
                         width: '100%',
                     }}
                 >
-                    <Link href={paths.user} passHref={true}>
+                    <Link href={paths.user} passHref>
                         <DynamicLogo colorDark="light" colorLight="dark" height={35} width={122} />
                     </Link>
                 </Box>

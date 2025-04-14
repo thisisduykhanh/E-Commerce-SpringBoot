@@ -10,15 +10,15 @@ import Typography from '@mui/material/Typography';
 export function Form7() {
     return (
         <Stack spacing={3} sx={{ p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 <Grid
                     size={{
                         lg: 6,
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Name</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Name</InputLabel>
                         <OutlinedInput name="name" />
                     </FormControl>
                 </Grid>
@@ -28,8 +28,8 @@ export function Form7() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Company</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Company</InputLabel>
                         <OutlinedInput name="companyName" />
                     </FormControl>
                 </Grid>
@@ -39,8 +39,8 @@ export function Form7() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Email address</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Email address</InputLabel>
                         <OutlinedInput name="email" type="email" />
                     </FormControl>
                 </Grid>
@@ -50,15 +50,15 @@ export function Form7() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
+                    <FormControl fullWidth>
                         <InputLabel>Phone number</InputLabel>
                         <OutlinedInput name="phone" />
                     </FormControl>
                 </Grid>
                 <Grid size={12}>
-                    <FormControl fullWidth={true}>
+                    <FormControl fullWidth>
                         <InputLabel>Message</InputLabel>
-                        <OutlinedInput minRows={3} multiline={true} name="message" />
+                        <OutlinedInput minRows={3} multiline name="message" />
                     </FormControl>
                 </Grid>
             </Grid>

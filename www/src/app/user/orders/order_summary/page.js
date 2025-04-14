@@ -3,7 +3,7 @@ import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import ShieldCheckIcon from '@mui/icons-material/VerifiedUser';
 import { Box, Button, Card, Typography } from '@mui/material';
 
-const OrderSummary = ({ totalPrice, taxRate, shippingFee, onPayment, address }) => {
+function OrderSummary({ totalPrice, taxRate, shippingFee, onPayment, address }) {
     const tax = totalPrice * taxRate;
     const total = totalPrice + tax + shippingFee;
 
@@ -66,7 +66,7 @@ const OrderSummary = ({ totalPrice, taxRate, shippingFee, onPayment, address }) 
             {/* Nút Mua hàng */}
             <Button
                 variant="contained"
-                fullWidth={true}
+                fullWidth
                 sx={{
                     marginTop: 3,
                     background: '#00A6B7',
@@ -118,6 +118,6 @@ const OrderSummary = ({ totalPrice, taxRate, shippingFee, onPayment, address }) 
             </Box>
         </Card>
     );
-};
+}
 
 export default OrderSummary;

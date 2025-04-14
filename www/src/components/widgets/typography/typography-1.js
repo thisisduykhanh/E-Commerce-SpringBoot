@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 export function Typography1() {
     return (
         <Box sx={{ p: 3 }}>
-            <Grid container={true}>
+            <Grid container>
                 <Grid
                     size={{
                         md: 6,

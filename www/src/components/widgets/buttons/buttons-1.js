@@ -8,19 +8,19 @@ export function Buttons1() {
                 <Stack spacing={3}>
                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
                         <Button variant="contained">Default</Button>
-                        <Button disabled={true} variant="contained">
+                        <Button disabled variant="contained">
                             Disabled
                         </Button>
                     </Stack>
                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
                         <Button variant="outlined">Default</Button>
-                        <Button disabled={true} variant="outlined">
+                        <Button disabled variant="outlined">
                             Disabled
                         </Button>
                     </Stack>
                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
                         <Button>Default</Button>
-                        <Button disabled={true}>Disabled</Button>
+                        <Button disabled>Disabled</Button>
                     </Stack>
                 </Stack>
                 <Stack spacing={3}>
@@ -28,7 +28,7 @@ export function Buttons1() {
                         <Button color="secondary" variant="contained">
                             Default
                         </Button>
-                        <Button color="secondary" disabled={true} variant="contained">
+                        <Button color="secondary" disabled variant="contained">
                             Disabled
                         </Button>
                     </Stack>
@@ -36,13 +36,13 @@ export function Buttons1() {
                         <Button color="secondary" variant="outlined">
                             Default
                         </Button>
-                        <Button color="secondary" disabled={true} variant="outlined">
+                        <Button color="secondary" disabled variant="outlined">
                             Disabled
                         </Button>
                     </Stack>
                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
                         <Button color="secondary">Default</Button>
-                        <Button color="secondary" disabled={true}>
+                        <Button color="secondary" disabled>
                             Disabled
                         </Button>
                     </Stack>

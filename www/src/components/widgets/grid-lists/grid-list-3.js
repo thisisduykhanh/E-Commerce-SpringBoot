@@ -33,7 +33,7 @@ const assets = [
 export function GridList3() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 {assets.map((asset) => {
                     const isImage = asset.mimeType.includes('image/');
 
@@ -64,7 +64,7 @@ export function GridList3() {
                                 )}
                                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Box sx={{ minWidth: 0 }}>
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             {asset.name}
                                         </Typography>
                                         <Typography

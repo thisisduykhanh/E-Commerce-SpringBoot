@@ -1,12 +1,9 @@
 'use client';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
-import RouterLink from 'next/link';
 import * as React from 'react';
 
 import { ProductModal } from '@/components/dashboard/product/product-modal';
@@ -25,7 +22,7 @@ export default function Page({ searchParams }) {
     const [totalElements, setTotalElements] = React.useState(0);
 
     const { category, previewId, sortDir, sku, status } = searchParams;
-    if (searchParams.status == null) {
+    if (searchParams.status === null) {
         searchParams.status = 'Access';
     }
     const currentStatus = searchParams.status;

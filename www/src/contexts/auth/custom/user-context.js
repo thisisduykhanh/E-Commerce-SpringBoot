@@ -25,11 +25,11 @@ export function UserProvider({ children }) {
             if(token){
                 const user = {
                     id: token,
-                    role: role,
+                    role,
                 };
         
                 setState({
-                    user: user,
+                    user,
                     error: null,
                     isLoading: false,
                 });

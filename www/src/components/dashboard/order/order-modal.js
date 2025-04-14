@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { useRouter } from "next/navigation";
+import { useRouter , useSearchParams } from "next/navigation";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 
 import { paths } from "@/paths";
 
-import { useSearchParams } from "next/navigation";
 
 import { getOrderDetail } from "@/services/order";
 

@@ -14,7 +14,6 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
 import { getOrderDetail } from "@/services/order";
 import { logger } from "@/lib/default-logger";
 import ReviewForm from "@/components/review/ReviewForm";
@@ -25,7 +24,7 @@ const statusColorMap = {
   PAID: "#388E3C", // green
 };
 
-const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
+function OrderCard({ orders, onCancelOrder, onPayment }) {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [open, setOpen] = useState(false);
   const [reviewOrderId, setReviewOrderId] = useState(null);
@@ -33,6 +32,7 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false); // State for payment modal
   const [paymentOrderId, setPaymentOrderId] = useState(null); // State for selected order ID for payment
   const [paymentMethod, setPaymentMethod] = useState(null); // State for payment method
+
 
   const handleViewDetail = async (id) => {
     try {
@@ -179,6 +179,16 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
                   <Typography variant="body1">Order No #{order.id}</Typography>
                 </Grid>
               </Grid>
+
+               {order.orderStatus.name === "PAID" && (
+                
+              <Grid item xs={12} container spacing={2} alignItems="center" >
+                <Grid item xs={12}>
+                  <Typography variant="body1">Đã thanh toán bằng: {order.paymentMethod}</Typography>
+                </Grid>
+              </Grid>
+               )
+              }       
 
               <Grid
                 item
@@ -371,7 +381,7 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
             <Box mt={2}>
               <FormControlLabel
                 control={<Checkbox />}
-                value={"bankTransfer"}
+                value="bankTransfer"
                 onChange={(e) => {
                   setPaymentMethod(e.target.value);
                 }}
@@ -401,7 +411,7 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
               />
               <FormControlLabel
                 control={<Checkbox sx={{ padding: 0, marginRight: 1 }} />}
-                value={"eWallet"}
+                value="eWallet"
                 onChange={(e) => {
                   setPaymentMethod(e.target.value);
                 }}
@@ -432,7 +442,7 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
 
               <FormControlLabel
                 control={<Checkbox />}
-                value={"creditCard"}
+                value="creditCard"
                 onChange={(e) => {
                   setPaymentMethod(e.target.value);
                 }}
@@ -476,8 +486,7 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
       </Dialog>
 
       {/* Review Form Modal */}
-      {reviewOrderId && (
-        <Dialog
+      {reviewOrderId ? <Dialog
           open={Boolean(reviewOrderId)}
           onClose={handleCloseReviewForm}
           fullWidth
@@ -490,10 +499,9 @@ const OrderCard = ({ orders, onCancelOrder, onPayment }) => {
           <DialogActions>
             <Button onClick={handleCloseReviewForm}>Close</Button>
           </DialogActions>
-        </Dialog>
-      )}
+        </Dialog> : null}
     </>
   );
-};
+}
 
 export default OrderCard;

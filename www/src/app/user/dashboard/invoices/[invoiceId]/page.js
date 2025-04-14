@@ -74,7 +74,7 @@ export default function Page() {
                                 <Typography variant="h4">Invoice</Typography>
                             </Box>
                             <Box sx={{ flex: '0 0 auto' }}>
-                                <DynamicLogo colorDark="light" colorLight="dark" emblem={true} height={60} width={60} />
+                                <DynamicLogo colorDark="light" colorLight="dark" emblem height={60} width={60} />
                             </Box>
                         </Stack>
                         <Stack spacing={1}>
@@ -113,7 +113,7 @@ export default function Page() {
                                 <Typography variant="body2">RO4675933</Typography>
                             </Stack>
                         </Stack>
-                        <Grid container={true} spacing={3}>
+                        <Grid container spacing={3}>
                             <Grid
                                 size={{
                                     md: 6,

@@ -130,7 +130,7 @@ export function CustomerCreateForm() {
                     <Stack divider={<Divider />} spacing={4}>
                         <Stack spacing={3}>
                             <Typography variant="h6">Account information</Typography>
-                            <Grid container={true} spacing={3}>
+                            <Grid container spacing={3}>
                                 <Grid size={12}>
                                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
                                         <Box
@@ -169,7 +169,7 @@ export function CustomerCreateForm() {
                                                 Select
                                             </Button>
                                             <input
-                                                hidden={true}
+                                                hidden
                                                 onChange={handleAvatarChange}
                                                 ref={avatarInputRef}
                                                 type="file"
@@ -187,8 +187,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="name"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.name)} fullWidth={true}>
-                                                <InputLabel required={true}>Name</InputLabel>
+                                            <FormControl error={Boolean(errors.name)} fullWidth>
+                                                <InputLabel required>Name</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.name ? (
                                                     <FormHelperText>{errors.name.message}</FormHelperText>
@@ -207,8 +207,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="email"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.email)} fullWidth={true}>
-                                                <InputLabel required={true}>Email address</InputLabel>
+                                            <FormControl error={Boolean(errors.email)} fullWidth>
+                                                <InputLabel required>Email address</InputLabel>
                                                 <OutlinedInput {...field} type="email" />
                                                 {errors.email ? (
                                                     <FormHelperText>{errors.email.message}</FormHelperText>
@@ -227,8 +227,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="phone"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.phone)} fullWidth={true}>
-                                                <InputLabel required={true}>Phone number</InputLabel>
+                                            <FormControl error={Boolean(errors.phone)} fullWidth>
+                                                <InputLabel required>Phone number</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.phone ? (
                                                     <FormHelperText>{errors.phone.message}</FormHelperText>
@@ -247,7 +247,7 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="company"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.company)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.company)} fullWidth>
                                                 <InputLabel>Company</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.company ? (
@@ -261,7 +261,7 @@ export function CustomerCreateForm() {
                         </Stack>
                         <Stack spacing={3}>
                             <Typography variant="h6">Billing information</Typography>
-                            <Grid container={true} spacing={3}>
+                            <Grid container spacing={3}>
                                 <Grid
                                     size={{
                                         md: 6,
@@ -284,9 +284,9 @@ export function CustomerCreateForm() {
                                                 renderInput={(params) => (
                                                     <FormControl
                                                         error={Boolean(errors.billingAddress?.country)}
-                                                        fullWidth={true}
+                                                        fullWidth
                                                     >
-                                                        <InputLabel required={true}>Country</InputLabel>
+                                                        <InputLabel required>Country</InputLabel>
                                                         <OutlinedInput
                                                             inputProps={params.inputProps}
                                                             ref={params.InputProps.ref}
@@ -318,8 +318,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="billingAddress.state"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.billingAddress?.state)} fullWidth={true}>
-                                                <InputLabel required={true}>State</InputLabel>
+                                            <FormControl error={Boolean(errors.billingAddress?.state)} fullWidth>
+                                                <InputLabel required>State</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.state ? (
                                                     <FormHelperText>
@@ -340,8 +340,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="billingAddress.city"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.billingAddress?.city)} fullWidth={true}>
-                                                <InputLabel required={true}>City</InputLabel>
+                                            <FormControl error={Boolean(errors.billingAddress?.city)} fullWidth>
+                                                <InputLabel required>City</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.city ? (
                                                     <FormHelperText>
@@ -364,9 +364,9 @@ export function CustomerCreateForm() {
                                         render={({ field }) => (
                                             <FormControl
                                                 error={Boolean(errors.billingAddress?.zipCode)}
-                                                fullWidth={true}
+                                                fullWidth
                                             >
-                                                <InputLabel required={true}>Zip code</InputLabel>
+                                                <InputLabel required>Zip code</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.zipCode ? (
                                                     <FormHelperText>
@@ -387,8 +387,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="billingAddress.line1"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.billingAddress?.line1)} fullWidth={true}>
-                                                <InputLabel required={true}>Address</InputLabel>
+                                            <FormControl error={Boolean(errors.billingAddress?.line1)} fullWidth>
+                                                <InputLabel required>Address</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.line1 ? (
                                                     <FormHelperText>
@@ -409,7 +409,7 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="taxId"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.taxId)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.taxId)} fullWidth>
                                                 <InputLabel>Tax ID</InputLabel>
                                                 <OutlinedInput {...field} placeholder="e.g EU372054390" />
                                                 {errors.taxId ? (
@@ -424,13 +424,13 @@ export function CustomerCreateForm() {
                         <Stack spacing={3}>
                             <Typography variant="h6">Shipping information</Typography>
                             <FormControlLabel
-                                control={<Checkbox defaultChecked={true} />}
+                                control={<Checkbox defaultChecked />}
                                 label="Same as billing address"
                             />
                         </Stack>
                         <Stack spacing={3}>
                             <Typography variant="h6">Additional information</Typography>
-                            <Grid container={true} spacing={3}>
+                            <Grid container spacing={3}>
                                 <Grid
                                     size={{
                                         md: 6,
@@ -441,8 +441,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="timezone"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.timezone)} fullWidth={true}>
-                                                <InputLabel required={true}>Timezone</InputLabel>
+                                            <FormControl error={Boolean(errors.timezone)} fullWidth>
+                                                <InputLabel required>Timezone</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a timezone</Option>
                                                     <Option value="new_york">US - New York</Option>
@@ -466,8 +466,8 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="language"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.language)} fullWidth={true}>
-                                                <InputLabel required={true}>Language</InputLabel>
+                                            <FormControl error={Boolean(errors.language)} fullWidth>
+                                                <InputLabel required>Language</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a language</Option>
                                                     <Option value="en">English</Option>
@@ -491,7 +491,7 @@ export function CustomerCreateForm() {
                                         control={control}
                                         name="currency"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.currency)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.currency)} fullWidth>
                                                 <InputLabel>Currency</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a currency</Option>

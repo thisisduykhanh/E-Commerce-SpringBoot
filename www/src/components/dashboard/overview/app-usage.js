@@ -58,8 +58,8 @@ export function AppUsage({ data }) {
                                         type="category"
                                         xAxisId={0}
                                     />
-                                    <XAxis axisLine={false} dataKey="name" hide={true} type="category" xAxisId={1} />
-                                    <YAxis axisLine={false} domain={[0, 50]} hide={true} tickCount={6} type="number" />
+                                    <XAxis axisLine={false} dataKey="name" hide type="category" xAxisId={1} />
+                                    <YAxis axisLine={false} domain={[0, 50]} hide tickCount={6} type="number" />
                                     {bars.map((bar, index) => (
                                         <Bar
                                             animationDuration={300}

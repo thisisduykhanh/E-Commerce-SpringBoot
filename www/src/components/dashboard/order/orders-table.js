@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import { CheckCircle as CheckCircleIcon } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { Clock as ClockIcon } from "@phosphor-icons/react/dist/ssr/Clock";
 import { Eye as EyeIcon } from "@phosphor-icons/react/dist/ssr/Eye";
-import { Minus as MinusIcon } from "@phosphor-icons/react/dist/ssr/Minus";
 import { XCircle as XCircleIcon } from "@phosphor-icons/react/dist/ssr/XCircle";
 import RouterLink from "next/link";
 import * as React from "react";
@@ -71,10 +70,11 @@ const columns = [
       const mapping = {
         "Bank Transfer": {
           name: "bank transfer",
-          logo: "/assets/payment-method-1.png",
+          logo: "/assets/payment-method-2.png",
           color: "success",
         },
-        "Credit Card": { name: "Credit", logo: "/assets/payment-method-2.png", color: "success" },
+        "Credit Card": { name: "Credit", logo: "/assets/payment-method-3.png", color: "success" },
+        "E-Wallet": { name: 'EWallet', logo: '/assets/payment-method-1.png' },
         // amex: { name: 'American Express', logo: '/assets/payment-method-3.png' },
         // applepay: { name: 'Apple Pay', logo: '/assets/payment-method-4.png' },
         // googlepay: { name: 'Google Pay', logo: '/assets/payment-method-5.png' },
@@ -197,7 +197,7 @@ export function OrdersTable({ rows }) {
           selectOne(row.id);
         }}
         rows={rows}
-        selectable={true}
+        selectable
         selected={selected}
       />
       {!rows.length ? (

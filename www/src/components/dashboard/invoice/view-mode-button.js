@@ -27,7 +27,7 @@ export function ViewModeButton({ view }) {
     return (
         <ToggleButtonGroup
             color="primary"
-            exclusive={true}
+            exclusive
             onChange={(_, value) => {
                 handleViewChange(value);
             }}

@@ -80,7 +80,7 @@ export function Payments({ ordersValue, payments = [], refundsValue, totalOrders
                     <Card sx={{ borderRadius: 1 }} variant="outlined">
                         <Stack
                             direction="row"
-                            divider={<Divider flexItem={true} orientation="vertical" />}
+                            divider={<Divider flexItem orientation="vertical" />}
                             spacing={3}
                             sx={{ justifyContent: 'space-between', p: 2 }}
                         >

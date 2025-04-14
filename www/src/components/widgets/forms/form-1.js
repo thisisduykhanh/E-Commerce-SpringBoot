@@ -13,15 +13,15 @@ import { Option } from '@/components/core/option';
 export function Form1() {
     return (
         <Stack spacing={2} sx={{ p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 <Grid
                     size={{
                         md: 6,
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Full name</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Full name</InputLabel>
                         <OutlinedInput defaultValue="Miron Vitold" name="name" />
                     </FormControl>
                 </Grid>
@@ -31,8 +31,8 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Email address</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Email address</InputLabel>
                         <OutlinedInput defaultValue="miron.vitold@domain.com" name="email" type="email" />
                     </FormControl>
                 </Grid>
@@ -42,7 +42,7 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
+                    <FormControl fullWidth>
                         <InputLabel>Phone number</InputLabel>
                         <OutlinedInput defaultValue="(425) 434-5535" name="phone" />
                     </FormControl>
@@ -53,7 +53,7 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
+                    <FormControl fullWidth>
                         <InputLabel>Country</InputLabel>
                         <Select defaultValue="us" name="country">
                             <Option value="us">United States</Option>
@@ -68,8 +68,8 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>State</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>State</InputLabel>
                         <OutlinedInput defaultValue="Michigan" name="state" />
                     </FormControl>
                 </Grid>
@@ -79,8 +79,8 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>City</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>City</InputLabel>
                         <OutlinedInput defaultValue="Southfield" name="city" />
                     </FormControl>
                 </Grid>
@@ -90,8 +90,8 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
-                        <InputLabel required={true}>Street line 1</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel required>Street line 1</InputLabel>
                         <OutlinedInput defaultValue="1721 Bartlett Avenue" name="line1" />
                     </FormControl>
                 </Grid>
@@ -101,7 +101,7 @@ export function Form1() {
                         xs: 12,
                     }}
                 >
-                    <FormControl fullWidth={true}>
+                    <FormControl fullWidth>
                         <InputLabel>Street line 2</InputLabel>
                         <OutlinedInput defaultValue="" name="line2" />
                     </FormControl>
@@ -117,7 +117,7 @@ export function Form1() {
                         <Typography color="text.secondary" variant="body2">
                             Disabling this will automatically send the user a verification email
                         </Typography>
-                        <Switch defaultChecked={true} name="isVerified" />
+                        <Switch defaultChecked name="isVerified" />
                     </Stack>
                 </Grid>
                 <Grid

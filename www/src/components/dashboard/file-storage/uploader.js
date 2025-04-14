@@ -52,7 +52,7 @@ export function Uploader({ onClose, open = false }) {
     }, []);
 
     return (
-        <Dialog fullWidth={true} maxWidth="sm" onClose={onClose} open={open}>
+        <Dialog fullWidth maxWidth="sm" onClose={onClose} open={open}>
             <Stack
                 direction="row"
                 spacing={3}

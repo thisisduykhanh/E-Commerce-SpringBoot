@@ -1,6 +1,6 @@
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 
-const Sidebar = ({ menuItems, selectedMenu, setSelectedMenu }) => {
+function Sidebar({ menuItems, selectedMenu, setSelectedMenu }) {
     return (
         <Box
             sx={{
@@ -37,7 +37,7 @@ const Sidebar = ({ menuItems, selectedMenu, setSelectedMenu }) => {
             <List>
                 {menuItems.map((item, index) => (
                     <ListItem
-                        button={true}
+                        button
                         key={index}
                         selected={selectedMenu === item}
                         onClick={() => setSelectedMenu(item)}
@@ -59,6 +59,6 @@ const Sidebar = ({ menuItems, selectedMenu, setSelectedMenu }) => {
             </List>
         </Box>
     );
-};
+}
 
 export default Sidebar;

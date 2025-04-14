@@ -1,5 +1,5 @@
 import { fetchCategories } from '@/services/category-service';
-import '@/styles/global.css';
+
 import { Facebook, Instagram, LinkedIn, Twitter, YouTube } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { Headset, Package, ShoppingBag, Truck } from '@phosphor-icons/react';
@@ -89,7 +89,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/CompensationPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Kiểm Tra Đơn Hàng
@@ -97,7 +97,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/CompensationPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Kiểm Tra Vận Chuyển
@@ -105,7 +105,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/A&Q"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     A & Q
@@ -113,7 +113,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/CompensationPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Hoàn Tiền
@@ -126,7 +126,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/ShippingPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách vận chuyển
@@ -134,7 +134,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/PaymentPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách thanh toán
@@ -142,7 +142,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/PrivacyPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách bảo mật
@@ -150,7 +150,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/CompensationPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách đổi - trả - yêu cầu bồi thường
@@ -158,7 +158,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/CompensationPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách khiếu nại và xử lí khiếu nại
@@ -166,7 +166,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/generalPolicy"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chính sách chung và điều kiện mua bán sản phẩm
@@ -174,7 +174,7 @@ function Footer() {
                  <Link
                     key="introduction-link"
                     href="/user/policy/clause"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Điều khoản dịch vụ
@@ -187,7 +187,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/AboutMe"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Giới thiệu
@@ -201,7 +201,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/sanctionsBuyers"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chế Tài Và Hướng Xử Lý Bên Mua
@@ -209,7 +209,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/sanctionsSeller"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Chế Tài Và Hướng Xử Lý Bên Nhà Cung Cấp
@@ -217,7 +217,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/agreement"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Thoả Thuận Về Điều Kiện Làm Việc Và Chính Sách Chống Lao Động Cưỡng Bức
@@ -232,7 +232,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/commodityBan"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Quy Định Về Hàng Hoá Cấm Bán
@@ -240,7 +240,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/asimoney"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Điều khoản và điều kiện ASIMONEY - Vay doanh nghiệp
@@ -253,7 +253,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/climateChangeCommit"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Cam kết chống biến đổi khí hậu
@@ -261,7 +261,7 @@ function Footer() {
                 <Link
                     key="introduction-link"
                     href="/user/policy/communityStandards"
-                    passHref={true}
+                    passHref
                     style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                     Tiêu chuẩn cộng đồng của hệ sinh thái ASIZON

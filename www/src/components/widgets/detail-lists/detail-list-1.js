@@ -39,9 +39,9 @@ export function DetailList1() {
                                 <Typography color="text.secondary" variant="overline">
                                     Available currency
                                 </Typography>
-                                <List disablePadding={true}>
+                                <List disablePadding>
                                     {assets.map((asset) => (
-                                        <ListItem disableGutters={true} key={asset.name} sx={{ py: 1.5 }}>
+                                        <ListItem disableGutters key={asset.name} sx={{ py: 1.5 }}>
                                             <Stack
                                                 direction="row"
                                                 spacing={1}

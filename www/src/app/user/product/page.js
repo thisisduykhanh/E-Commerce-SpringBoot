@@ -3,7 +3,6 @@
 import ProductList from '@/components/Product/ProductList';
 import FilterSupplier from '@/components/Supplier/FilterSupplier';
 import { logger } from '@/lib/default-logger';
-import apiClient from '@/services/ApiClient';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, CircularProgress, Grid2 as Grid, IconButton, Modal } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -131,12 +130,12 @@ function Product() {
                         </Box>
                     ) : (
                         <>
-                            <Grid container={true} spacing={2}>
-                                <Grid item={true} className={classes.left} size={4}>
+                            <Grid container spacing={2}>
+                                <Grid item className={classes.left} size={4}>
                                     <FilterSupplier onFilterChange={handleFilterChange} />
                                 </Grid>
 
-                                <Grid item={true} className={classes.right} size={8}>
+                                <Grid item className={classes.right} size={8}>
                                     <ProductList
                                         products={products}
                                         currentPage={currentPage}

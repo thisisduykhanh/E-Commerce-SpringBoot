@@ -81,11 +81,7 @@ export const paths = {
             create: '/dashboard/blog/create',
         },
         calendar: '/dashboard/calendar',
-        chat: {
-            base: '/dashboard/chat',
-            compose: '/dashboard/chat/compose',
-            thread: (threadType, threadId) => `/dashboard/chat/${threadType}/${threadId}`,
-        },
+
         crypto: '/dashboard/crypto',
         customers: {
             list: '/dashboard/customers',
@@ -185,11 +181,7 @@ export const paths = {
             details: (orderId) => `/supplier/orders/${orderId}`,
 
         },
-        chat: {
-            base: '/supplier/chat',
-            compose: '/supplier/chat/compose',
-            thread: (threadType, threadId) => `/supplier/chat/${threadType}/${threadId}`,
-        },
+
     },
     // policy: {
     //     order: '/user/policy/OderPolicy',

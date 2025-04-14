@@ -96,7 +96,7 @@ export function ItemModal({ item, onClose, onDelete, onFavorite, open = false })
                             </IconButton>
                         </Stack>
                         <div>
-                            <Grid alignItems="center" container={true} spacing={3}>
+                            <Grid alignItems="center" container spacing={3}>
                                 <Grid
                                     size={{
                                         sm: 4,

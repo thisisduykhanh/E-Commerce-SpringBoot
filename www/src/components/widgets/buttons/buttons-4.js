@@ -24,7 +24,7 @@ export function Buttons4() {
                 <IconButton color="error">
                     <TrashIcon />
                 </IconButton>
-                <IconButton disabled={true}>
+                <IconButton disabled>
                     <TrashIcon />
                 </IconButton>
             </Stack>

@@ -2,16 +2,14 @@
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Chip from '@mui/material/Chip';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CheckCircle as CheckCircleIcon } from '@phosphor-icons/react/dist/ssr/CheckCircle';
 import { X as XIcon } from '@phosphor-icons/react/dist/ssr/X';
-import { useRouter } from 'next/navigation';
+import { useRouter , useSearchParams } from 'next/navigation';
 import * as React from 'react';
 
 import { DataTable } from '@/components/core/data-table';
@@ -19,10 +17,7 @@ import { PropertyItem } from '@/components/core/property-item';
 import { PropertyList } from '@/components/core/property-list';
 import { paths } from '@/paths';
 import { fetchProductDetail } from '@/services/category-service';
-import { useSearchParams } from 'next/navigation';
 
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 
 export function ProductModal({ open }) {

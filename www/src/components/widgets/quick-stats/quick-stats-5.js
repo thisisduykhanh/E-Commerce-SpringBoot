@@ -79,8 +79,8 @@ function Summary({ color, compare, data, title, total }) {
             <NoSsr fallback={<Box sx={{ height: `${chartHeight}px` }} />}>
                 <ResponsiveContainer height={chartHeight}>
                     <LineChart data={data} height={chartHeight} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                        <XAxis axisLine={false} dataKey="name" hide={true} type="category" />
-                        <YAxis axisLine={false} hide={true} type="number" />
+                        <XAxis axisLine={false} dataKey="name" hide type="category" />
+                        <YAxis axisLine={false} hide type="number" />
                         <Line
                             animationDuration={300}
                             dataKey="value"

@@ -19,9 +19,12 @@ import ConfirmationDialog from "../ConfirmationDialog/page";
 import CartItem from "./cart-item";
 import OrderSummary from "../orders/order_summary/page";
 import CartSocketListener from "@/components/CartSocketListener"; // ✅ Mới thêm
-import { useCart } from "@/contexts/cartContext";
+import { useCart } from "@/contexts/CartContext";
+
+import { useRouter } from "next/navigation";
 
 function CartPage() {
+      const router = useRouter();
       const { fetchCartQuantity } = useCart();
     
   const [cartData, setCartData] = useState(null);
@@ -107,7 +110,8 @@ function CartPage() {
   };
 
   const handlePayment = () => {
-    window.location.href = "/user/orders";
+    // window.location.href = "/user/orders";
+    router.push("/user/orders");
   };
 
   return (
@@ -218,12 +222,10 @@ function CartPage() {
       </Snackbar>
 
       {/* ✅ WebSocket listener */}
-      {cartData && (
-        <CartSocketListener
+      {cartData ? <CartSocketListener
           accountId={cartData.id}
           onCartUpdate={fetchCartData}
-        />
-      )}
+        /> : null}
     </Box>
   );
 }

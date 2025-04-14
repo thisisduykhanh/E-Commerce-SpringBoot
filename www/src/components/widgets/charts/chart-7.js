@@ -39,7 +39,7 @@ export function Chart7() {
                                     >
                                         <CartesianGrid horizontal={false} strokeDasharray="2 4" />
                                         <XAxis axisLine={false} tickLine={false} type="number" />
-                                        <YAxis axisLine={false} dataKey="name" hide={true} type="category" />
+                                        <YAxis axisLine={false} dataKey="name" hide type="category" />
                                         {bars.map((bar) => (
                                             <Bar
                                                 animationDuration={300}

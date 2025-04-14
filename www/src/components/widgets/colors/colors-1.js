@@ -14,14 +14,14 @@ const colors = [
 export function Colors1() {
     return (
         <Box sx={{ p: 3 }}>
-            <List disablePadding={true}>
+            <List disablePadding>
                 {colors.map((color) => (
-                    <ListItem disableGutters={true} key={color.code}>
+                    <ListItem disableGutters key={color.code}>
                         <ListItemAvatar>
                             <Box sx={{ bgcolor: color.code, borderRadius: '10px', height: '46px', width: '46px' }} />
                         </ListItemAvatar>
                         <ListItemText
-                            disableTypography={true}
+                            disableTypography
                             primary={<Typography variant="subtitle2">{color.name}</Typography>}
                             secondary={
                                 <Typography color="text.secondary" variant="caption">

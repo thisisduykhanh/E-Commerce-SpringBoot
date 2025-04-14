@@ -24,7 +24,7 @@ export function MultiFactor() {
             />
             <CardContent>
                 <Stack spacing={3}>
-                    <Grid container={true} spacing={3}>
+                    <Grid container spacing={3}>
                         <Grid
                             size={{
                                 xl: 6,

@@ -68,7 +68,7 @@ const columns = [
                 <Typography variant="subtitle2">{row.id}</Typography>
                 <Typography
                     color="text.secondary"
-                    suppressHydrationWarning={true}
+                    suppressHydrationWarning
                     sx={{ whiteSpace: 'nowrap' }}
                     variant="body2"
                 >

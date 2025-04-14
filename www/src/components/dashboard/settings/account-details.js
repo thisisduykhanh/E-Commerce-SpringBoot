@@ -81,7 +81,7 @@ export function AccountDetails() {
                             <InputLabel>Full name</InputLabel>
                             <OutlinedInput defaultValue="Sofia Rivers" name="fullName" />
                         </FormControl>
-                        <FormControl disabled={true}>
+                        <FormControl disabled>
                             <InputLabel>Email address</InputLabel>
                             <OutlinedInput name="email" type="email" value="sofia@devias.io" />
                             <FormHelperText>

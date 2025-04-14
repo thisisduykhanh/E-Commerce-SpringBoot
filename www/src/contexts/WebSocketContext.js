@@ -7,7 +7,7 @@ import SockJS from 'sockjs-client';
 
 export const WebSocketContext = createContext();
 
-export const WebSocketProvider = ({ children }) => {
+export function WebSocketProvider({ children }) {
  
   const clientRef =React.useRef(null); 
   const [client, setClient] = React.useState(null);
@@ -23,7 +23,7 @@ export const WebSocketProvider = ({ children }) => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: (frame) => {
-        console.log('Connected: ' + frame);
+        console.log(`Connected: ${  frame}`);
         console.log("token: ", token);
           console.log("client1: ", newClient);
           console.log("Connect frame headers: ", frame.headers);
@@ -31,8 +31,8 @@ export const WebSocketProvider = ({ children }) => {
          
       },
       onStompError: (frame) => {
-        console.error('Broker reported error: ' + frame.headers['message']);
-        console.error('Additional details: ' + frame.body);
+        console.error(`Broker reported error: ${  frame.headers['message']}`);
+        console.error(`Additional details: ${  frame.body}`);
       },
     });
 
@@ -52,4 +52,4 @@ export const WebSocketProvider = ({ children }) => {
       {children}
     </WebSocketContext.Provider>
   );
-};
+}

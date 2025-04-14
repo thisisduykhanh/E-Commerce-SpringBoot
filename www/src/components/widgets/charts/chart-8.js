@@ -54,7 +54,7 @@ export function Chart8() {
                             <BarChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                                 <CartesianGrid strokeDasharray="2 4" vertical={false} />
                                 <XAxis axisLine={false} dataKey="name" tickLine={false} type="category" />
-                                <YAxis axisLine={false} hide={true} type="number" />
+                                <YAxis axisLine={false} hide type="number" />
                                 <Bar
                                     animationDuration={300}
                                     barSize={20}
@@ -68,7 +68,7 @@ export function Chart8() {
                     </NoSsr>
                     <List>
                         {pages.map((page) => (
-                            <ListItem divider={true} key={page.path} sx={{ justifyContent: 'space-between', py: 2 }}>
+                            <ListItem divider key={page.path} sx={{ justifyContent: 'space-between', py: 2 }}>
                                 <Typography variant="body2">{page.path}</Typography>
                                 <Typography color="text.secondary" variant="subtitle2">
                                     {page.views}

@@ -108,7 +108,7 @@ export function TopProducts({ products }) {
                 title="Top selling products"
             />
             <Box sx={{ overflowX: 'auto', '--mui-palette-TableCell-border': 'transparent' }}>
-                <DataTable columns={columns} hideHead={true} rows={products} />
+                <DataTable columns={columns} hideHead rows={products} />
             </Box>
         </Card>
     );

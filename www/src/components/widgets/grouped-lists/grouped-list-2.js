@@ -38,7 +38,7 @@ export function GroupedList2() {
                     />
                     <Divider />
                     <Box sx={{ overflowX: 'auto' }}>
-                        <List disablePadding={true}>
+                        <List disablePadding>
                             {referrals.map((referral, index) => (
                                 <ListItem divider={index < referrals.length - 1} key={referral.name}>
                                     <ListItemAvatar>
@@ -49,9 +49,9 @@ export function GroupedList2() {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        disableTypography={true}
+                                        disableTypography
                                         primary={
-                                            <Typography noWrap={true} variant="subtitle2">
+                                            <Typography noWrap variant="subtitle2">
                                                 {referral.name}
                                             </Typography>
                                         }

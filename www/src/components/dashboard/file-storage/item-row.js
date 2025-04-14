@@ -69,7 +69,7 @@ export function ItemRow({ item, onDelete, onFavorite, onOpen }) {
                         </Box>
                         <Box sx={{ minWidth: 0 }}>
                             <Typography
-                                noWrap={true}
+                                noWrap
                                 onClick={() => {
                                     onOpen?.(item.id);
                                 }}
@@ -86,11 +86,11 @@ export function ItemRow({ item, onDelete, onFavorite, onOpen }) {
                     </Stack>
                 </TableCell>
                 <TableCell>
-                    <Typography noWrap={true} variant="subtitle2">
+                    <Typography noWrap variant="subtitle2">
                         Created at
                     </Typography>
                     {item.createdAt ? (
-                        <Typography color="text.secondary" noWrap={true} variant="body2">
+                        <Typography color="text.secondary" noWrap variant="body2">
                             {dayjs(item.createdAt).format('MMM D, YYYY')}
                         </Typography>
                     ) : undefined}

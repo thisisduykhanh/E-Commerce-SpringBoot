@@ -28,7 +28,7 @@ export function Subscriptions({ subscriptions }) {
                 title="Our subscriptions"
             />
             <CardContent sx={{ pb: '8px' }}>
-                <List disablePadding={true}>
+                <List disablePadding>
                     {subscriptions.map((subscription) => (
                         <SubscriptionItem key={subscription.id} subscription={subscription} />
                     ))}
@@ -52,7 +52,7 @@ function SubscriptionItem({ subscription }) {
     }[subscription.status];
 
     return (
-        <ListItem disableGutters={true}>
+        <ListItem disableGutters>
             <ListItemAvatar>
                 <Avatar
                     src={subscription.icon}
@@ -64,9 +64,9 @@ function SubscriptionItem({ subscription }) {
                 />
             </ListItemAvatar>
             <ListItemText
-                disableTypography={true}
+                disableTypography
                 primary={
-                    <Typography noWrap={true} variant="subtitle2">
+                    <Typography noWrap variant="subtitle2">
                         {subscription.title}
                     </Typography>
                 }

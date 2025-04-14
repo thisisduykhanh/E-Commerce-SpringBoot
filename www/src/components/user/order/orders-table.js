@@ -170,7 +170,7 @@ export function OrdersTable({ rows })  {
                     selectOne(row.id);
                 }}
                 rows={rows}
-                selectable={true}
+                selectable
                 selected={selected}
             />
             {!rows.length ? (

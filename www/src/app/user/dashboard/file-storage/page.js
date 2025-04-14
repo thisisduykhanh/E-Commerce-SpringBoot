@@ -176,7 +176,7 @@ export default function Page({ searchParams }) {
                         <UplaodButton />
                     </Box>
                 </Stack>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid
                         size={{
                             md: 8,

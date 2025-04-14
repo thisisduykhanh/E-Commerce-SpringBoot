@@ -36,7 +36,7 @@ export function Events({ events }) {
                 title="Upcoming events"
             />
             <CardContent sx={{ py: '8px' }}>
-                <List disablePadding={true}>
+                <List disablePadding>
                     {events.map((event) => (
                         <EventItem event={event} key={event.id} />
                     ))}
@@ -54,7 +54,7 @@ export function Events({ events }) {
 
 function EventItem({ event }) {
     return (
-        <ListItem disableGutters={true} key={event.id}>
+        <ListItem disableGutters key={event.id}>
             <ListItemAvatar>
                 <Box
                     sx={{
@@ -70,14 +70,14 @@ function EventItem({ event }) {
                 </Box>
             </ListItemAvatar>
             <ListItemText
-                disableTypography={true}
+                disableTypography
                 primary={
-                    <Typography noWrap={true} variant="subtitle2">
+                    <Typography noWrap variant="subtitle2">
                         {event.title}
                     </Typography>
                 }
                 secondary={
-                    <Typography color="text.secondary" noWrap={true} variant="body2">
+                    <Typography color="text.secondary" noWrap variant="body2">
                         {event.description}
                     </Typography>
                 }

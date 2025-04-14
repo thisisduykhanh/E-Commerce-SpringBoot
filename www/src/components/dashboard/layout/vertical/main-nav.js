@@ -72,7 +72,7 @@ export function MainNav({ items }) {
                         <NotificationsButton />
                         <ContactsButton />
                         <Divider
-                            flexItem={true}
+                            flexItem
                             orientation="vertical"
                             sx={{ borderColor: 'var(--MainNav-divider)', display: { xs: 'none', lg: 'block' } }}
                         />

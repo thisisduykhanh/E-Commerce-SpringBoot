@@ -85,7 +85,7 @@ export default function Page() {
                         </div>
                     </Stack>
                 </Stack>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid
                         size={{
                             lg: 4,
@@ -260,7 +260,7 @@ export default function Page() {
                                     title="Shipping addresses"
                                 />
                                 <CardContent>
-                                    <Grid container={true} spacing={3}>
+                                    <Grid container spacing={3}>
                                         {[
                                             {
                                                 id: 'ADR-001',

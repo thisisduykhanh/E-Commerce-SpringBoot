@@ -672,9 +672,9 @@ Các Điều Khoản Dịch Vụ này được điều chỉnh bởi và diễn 
     }, [drawerOpen]);
     return (
         <Box sx={{ paddingTop: 2 }}>
-                <Grid item={true} size={{ xs: 12, md: 9 }}>
-                    <Grid container={true} justifyContent="center">
-                        <Grid item={true}>
+                <Grid item size={{ xs: 12, md: 9 }}>
+                    <Grid container justifyContent="center">
+                        <Grid item>
                             <Typography
                                 variant="h6"
                                 sx={{

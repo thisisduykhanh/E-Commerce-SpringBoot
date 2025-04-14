@@ -63,7 +63,7 @@ export function Stats() {
                                 >
                                     <RadialBar
                                         animationDuration={300}
-                                        background={true}
+                                        background
                                         cornerRadius={16}
                                         dataKey="value"
                                         endAngle={-320}
@@ -96,14 +96,14 @@ export function Stats() {
                             </Typography>
                         </Box>
                     </Stack>
-                    <List disablePadding={true}>
+                    <List disablePadding>
                         {totals.map((total) => (
-                            <ListItem disableGutters={true} key={total.label}>
+                            <ListItem disableGutters key={total.label}>
                                 <ListItemIcon>
                                     <FileIcon extension={total.extension} />
                                 </ListItemIcon>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={<Typography variant="body2">{total.label}</Typography>}
                                     secondary={
                                         <Typography color="text.secondary" variant="caption">

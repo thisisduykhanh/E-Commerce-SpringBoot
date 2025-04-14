@@ -69,7 +69,7 @@ const projects = [
 export function GridList2() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 {projects.map((project) => (
                     <Grid
                         key={project.id}
@@ -153,7 +153,7 @@ export function GridList2() {
                                         </Typography>
                                     </Stack>
                                 </Stack>
-                                <Rating readOnly={true} size="small" value={project.rating} />
+                                <Rating readOnly size="small" value={project.rating} />
                             </Stack>
                         </Card>
                     </Grid>

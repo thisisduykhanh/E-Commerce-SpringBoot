@@ -64,9 +64,9 @@ export function Modal5() {
                 <Box sx={{ p: 2 }}>
                     <Typography variant="h6">Notifications</Typography>
                 </Box>
-                <List disablePadding={true}>
+                <List disablePadding>
                     {notifications.map((notification) => (
-                        <ListItem divider={true} key={notification.id}>
+                        <ListItem divider key={notification.id}>
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{
@@ -78,14 +78,14 @@ export function Modal5() {
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         {notification.title}
                                     </Typography>
                                 }
                                 secondary={
-                                    <Typography color="text.secondary" noWrap={true} variant="body2">
+                                    <Typography color="text.secondary" noWrap variant="body2">
                                         {notification.description}
                                     </Typography>
                                 }

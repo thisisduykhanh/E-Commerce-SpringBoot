@@ -90,9 +90,7 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                             </Box>
 
                             {/* Quantity adjustment and total price */}
-                            {handleQuantityChange && handleRemoveItem && (
-                                
-                                <Box display="flex" alignItems="center" sx={{ gap: 2, minWidth: '180px' }}>
+                            {handleQuantityChange && handleRemoveItem ? <Box display="flex" alignItems="center" sx={{ gap: 2, minWidth: '180px' }}>
                                     <Box
                                         display="flex"
                                         alignItems="center"
@@ -157,8 +155,7 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
                                     <IconButton color="error" sx={{ marginLeft: 3 }} onClick={() => handleRemoveItem(item.id)}>
                                         <DeleteIcon />
                                     </IconButton>
-                                </Box>
-                            )}
+                                </Box> : null}
 
                             {/* Total price for the product */}
                             {!handleQuantityChange && !handleRemoveItem && (

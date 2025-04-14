@@ -1,3 +1,5 @@
+
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -49,12 +51,12 @@ export function GroupedList9() {
                                 </Link>
                                 <Stack
                                     direction="row"
-                                    divider={<Divider flexItem={true} orientation="vertical" />}
+                                    divider={<Divider flexItem orientation="vertical" />}
                                     spacing={1}
                                     sx={{ alignItems: 'center', flexWrap: 'wrap' }}
                                 >
                                     <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                                        <Rating readOnly={true} value={5} />
+                                        <Rating readOnly value={5} />
                                         <Typography variant="subtitle2">{review.rating}</Typography>
                                     </Stack>
                                     <Typography color="text.secondary" variant="body2">

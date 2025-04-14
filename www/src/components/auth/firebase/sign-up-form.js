@@ -193,7 +193,7 @@ export function SignUpForm() {
                                         }
                                     />
                                     {errors.terms ? (
-                                        <FormHelperText error={true}>{errors.terms.message}</FormHelperText>
+                                        <FormHelperText error>{errors.terms.message}</FormHelperText>
                                     ) : null}
                                 </div>
                             )}

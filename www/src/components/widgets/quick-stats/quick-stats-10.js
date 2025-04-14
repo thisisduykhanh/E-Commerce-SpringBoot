@@ -12,7 +12,7 @@ export function QuickStats10() {
             <Card>
                 <CardHeader title="Today's stats" />
                 <CardContent>
-                    <Grid container={true} spacing={3}>
+                    <Grid container spacing={3}>
                         <Grid
                             size={{
                                 md: 4,

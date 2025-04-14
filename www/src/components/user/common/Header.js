@@ -1,7 +1,7 @@
 "use client";
 
 import { logger } from "@/lib/default-logger";
-import "@/styles/global.css";
+
 import {
   ExitToApp as ExitToAppIcon,
   LocalShipping as LocalShippingIcon,
@@ -18,22 +18,23 @@ import {
   TextField,
   Toolbar,
   Typography,
-  Badge
+  Badge,
 } from "@mui/material";
 import Link from "next/link";
 import * as React from "react";
 import { getUser } from "../../../services/auth";
 import CategoryMenu from "../Menu/CategoryMenu";
-
-import { useCart } from "@/contexts/cartContext";
+import { useRouter } from "next/navigation";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [user, setUser] = React.useState(null);
+  const router = useRouter();
 
   // const [cartQuantity, setCartQuantity] = React.useState(0);
 
-  const { cartQuantity, fetchCartQuantity } = useCart()
+  const { cartQuantity, fetchCartQuantity } = useCart();
   // const fetchCartQuantity = async () => {
   //   try {
   //     const response = await fetchCart();
@@ -83,7 +84,7 @@ export default function Header() {
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     setUser(null);
-    window.location.reload();
+    router.push("/user");
   };
 
   const handleTabChange = (_event, newValue) => {
@@ -137,26 +138,30 @@ export default function Header() {
             width: "auto",
           }}
         >
-         
-          <Button
-            variant="text"
-            startIcon={<LocalShippingIcon sx={{ color: "#00A6B7" }} />}
-            component={Link}
-            href="/user/order-history"
-            sx={{
-              color: "#666666 !important",
-              textTransform: "none",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Kiểm tra đơn hàng
-          </Button>
-          <Divider
-            orientation="vertical"
-            flexItem={true}
-            sx={{ borderColor: "#666666", margin: "0 10px", opacity: 0.5 }}
-          />
+          {user && (
+            <>
+            <Button
+              variant="text"
+              startIcon={<LocalShippingIcon sx={{ color: "#00A6B7" }} />}
+              // component={Link}
+              onClick={() => router.push("/user/order-history")}
+              sx={{
+                color: "#666666 !important",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "16px",
+              }}
+            >
+              Kiểm tra đơn hàng
+            </Button>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ borderColor: "#666666", margin: "0 10px", opacity: 0.5 }}
+            />
+            </>
+          )}
+
           <Typography
             sx={{
               color: "#666666",
@@ -200,13 +205,13 @@ export default function Header() {
             justifyContent: "flex-start",
           }}
         >
-          <Link href="/user">
+          <Button onClick={() => router.push("/user")}>
             <img
               src="/img/image/logo/1.png"
               alt="Logo"
               style={{ height: "60px", width: "auto", cursor: "pointer" }}
             />
-          </Link>
+          </Button>
         </Box>
         <Box
           sx={{
@@ -253,9 +258,13 @@ export default function Header() {
             <>
               <Button
                 variant="text"
-                href="/user/cart"
+                onClick={() => router.push("/user/cart")}
                 startIcon={
-                  <Badge badgeContent={cartQuantity} color="error" overlap="rectangular">
+                  <Badge
+                    badgeContent={cartQuantity}
+                    color="error"
+                    overlap="rectangular"
+                  >
                     <ShoppingCartIcon sx={{ color: "#00A6B7" }} />
                   </Badge>
                 }
@@ -284,7 +293,8 @@ export default function Header() {
           ) : (
             <Button
               variant="text"
-              href="/auth/custom/sign-in"
+              // href="/auth/custom/sign-in"
+              onClick={() => router.push("/auth/custom/sign-in")}
               startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
               sx={{
                 color: "#666666 !important",

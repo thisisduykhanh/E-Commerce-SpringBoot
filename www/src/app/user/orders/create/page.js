@@ -43,7 +43,7 @@ const validateForm = (formData) => {
     }
 };
 
-const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
+function OrdersForm({ onCancel, idCartDetails, onAddNewAddress }) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [city, setCity] = useState('');
@@ -201,7 +201,7 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
         },
     };
     return (
-        <Dialog open={true} onClose={onCancel}>
+        <Dialog open onClose={onCancel}>
             <DialogTitle
                 sx={{
                     display: 'flex',
@@ -241,26 +241,26 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
                 <Box p={2} sx={{ backgroundColor: '#fff', width: '100%', padding: 0 }}>
                     <TextField
                         label="Họ tên"
-                        fullWidth={true}
+                        fullWidth
                         variant="outlined"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         sx={{ mb: 2, ...commonStyles, width: '100%' }}
-                        error={!!formErrors.name}
+                        error={Boolean(formErrors.name)}
                         helperText={formErrors.name}
                     />
                     <TextField
                         label="Số điện thoại"
-                        fullWidth={true}
+                        fullWidth
                         type='tel'
                         variant="outlined"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         sx={{ mb: 2, ...commonStyles }}
-                        error={!!formErrors.phone}
+                        error={Boolean(formErrors.phone)}
                         helperText={formErrors.phone}
                     />
-                    <FormControl fullWidth={true} sx={{ mb: 2, ...commonStyles }}>
+                    <FormControl fullWidth sx={{ mb: 2, ...commonStyles }}>
                         <InputLabel>Thành phố</InputLabel>
                         <Select
                             value={city || ''}
@@ -286,8 +286,7 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
                         </Select>
                     </FormControl>
 
-                    {city && (
-                        <FormControl fullWidth={true} sx={{ mb: 2, ...commonStyles }}>
+                    {city ? <FormControl fullWidth sx={{ mb: 2, ...commonStyles }}>
                             <InputLabel sx={{ color: '#000' }}>Quận/Huyện</InputLabel>
                             <Select
                                 value={districts.find((d) => d.isSelected)?.DistrictName || ''}
@@ -307,15 +306,14 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
                                     </MenuItem>
                                 )}
                             </Select>
-                        </FormControl>
-                    )}
+                        </FormControl> : null}
                     <TextField
                         label="Số nhà và tên đường"
-                        fullWidth={true}
+                        fullWidth
                         value={streetDetail}
                         onChange={handleStreetChange}
                         onBlur={handleStreetBlur}
-                        error={!!formErrors.addressDetail}
+                        error={Boolean(formErrors.addressDetail)}
                         helperText={formErrors.addressDetail}
                         sx={{ mb: 2, ...commonStyles }}
                     />
@@ -345,6 +343,6 @@ const OrdersForm = ({ onCancel, idCartDetails, onAddNewAddress }) => {
             </DialogContent>
         </Dialog>
     );
-};
+}
 
 export default OrdersForm;

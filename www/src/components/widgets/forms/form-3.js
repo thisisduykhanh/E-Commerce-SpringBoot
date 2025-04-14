@@ -17,7 +17,7 @@ export function Form3() {
             <CardHeader title="Notifications" />
             <Divider />
             <CardContent>
-                <Grid container={true} spacing={6} wrap="wrap">
+                <Grid container spacing={6} wrap="wrap">
                     <Grid
                         size={{
                             md: 4,
@@ -33,10 +33,10 @@ export function Form3() {
                                 </Typography>
                             </div>
                             <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Email alerts" />
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Email alerts" />
                                 <FormControlLabel control={<Checkbox />} label="Push notifications" />
-                                <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Text message" />
-                                <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Phone calls" />
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Text message" />
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Phone calls" />
                             </FormGroup>
                         </Stack>
                     </Grid>
@@ -55,9 +55,9 @@ export function Form3() {
                                 </Typography>
                             </div>
                             <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked={true} />} label="Email" />
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
                                 <FormControlLabel
-                                    control={<Checkbox defaultChecked={true} />}
+                                    control={<Checkbox defaultChecked />}
                                     label="Push notifications"
                                 />
                             </FormGroup>

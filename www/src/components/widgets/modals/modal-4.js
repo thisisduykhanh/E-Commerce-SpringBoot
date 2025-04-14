@@ -106,17 +106,17 @@ export function Modal4() {
                     <Typography variant="h6">Contacts</Typography>
                 </Box>
                 <Box sx={{ maxHeight: '320px', overflowY: 'auto', px: 1, pb: 2 }}>
-                    <List disablePadding={true} sx={{ '& .MuiListItemButton-root': { borderRadius: 1 } }}>
+                    <List disablePadding sx={{ '& .MuiListItemButton-root': { borderRadius: 1 } }}>
                         {contacts.map((contact) => (
-                            <ListItem disablePadding={true} key={contact.id}>
+                            <ListItem disablePadding key={contact.id}>
                                 <ListItemButton>
                                     <ListItemAvatar>
                                         <Avatar src={contact.avatar} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        disableTypography={true}
+                                        disableTypography
                                         primary={
-                                            <Typography noWrap={true} variant="subtitle2">
+                                            <Typography noWrap variant="subtitle2">
                                                 {contact.name}
                                             </Typography>
                                         }

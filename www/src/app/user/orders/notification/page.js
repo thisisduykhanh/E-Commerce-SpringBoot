@@ -4,7 +4,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ProgressBar from '../step/page';
 
 
-const OrderConfirm = () => {
+function OrderConfirm() {
     return (
         <Box
             sx={{
@@ -76,201 +76,13 @@ const OrderConfirm = () => {
                                     <ProgressBar />
                                 </Box>
                             </CardContent>
-                            {/* <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'left',
-                                    mt: 2,
-                                }}
-                            >
-                                <Typography variant="body2" color="textSecondary" sx={{ marginRight: 2 }}>
-                                    Ngày giao hàng dự kiến: <strong style={{ color: '#000' }}>16 Tháng 1, 2021</strong>
-                                </Typography>
-
-                                <Typography
-                                    variant="body2"
-                     sx={{
-                                        color: '#1976d2',
-                                        fontWeight: 'bold',
-                                        cursor: 'pointer',
-                                        textDecoration: 'underline',
-                                    }}
-                                >
-                                    Theo dõi đơn hàng
-                                </Typography>
-                            </Box> */}
+                            
                         </Card>
                     </Box>
                 </Box>
-
-                {/* Right: Order Details */}
-                {/* <Box
-                    sx={{
-                        flex: 1,
-                        color: '#000',
-                        padding: '0px',
-                        backgroundColor: '#F4F4F8',
-                        boxShadow: 'none !important',
-                    }}
-                >
-                    <Container sx={{ boxShadow: 'none !important', padding: '0px !important' }}>
-                        <Grid container spacing={3}>
-                            {/* Order Header */}
-                {/* <Grid item xs={12}>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        mb: 2,
-                                        padding: 2,
-                                    }}
-                                >
-                                    <Box>
-                                        <Typography variant="h6">Chi tiết đơn hàng</Typography>
-                                        <Typography variant="body2" color="textSecondary">
-                                            #2059666
-                                        </Typography>
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            gap: 1,
-                                            flexDirection: 'column',
-                                            color: '#000',
-                                            fontSize: '14px',
-                                        }}
-                                    >
-                                        <Typography>Pay with PayPal</Typography>
-                                        <Button
-                                            variant="outlined"
-                                            sx={{
-                                                borderColor: '#000',
-                                                color: '#000',
-                                                padding: '0px 10px',
-                                            }}
-                                        >
-                                            Download Invoice
-                                        </Button>
-                                    </Box>
-                                </Box>
-                            </Grid> */}
-
-                {/* Địa chỉ giao hàng */}
-                {/* <Grid item sx={{ width: '100%', paddingTop: '0px !important' }}>
-                                <Card
-                                    sx={{
-                                        padding: 0,
-                                        boxShadow: 'none !important',
-                                        bgcolor: '#fff',
-                                        borderRadius: 'unset',
-                                        color: '#000',
-                                        marginBottom: '10px',
-                                    }}
-                                >
-                                    <CardContent sx={{ boxShadow: 'none' }}>
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                boxShadow: 'none',
-                                            }}
-                                        >
-                                            <Typography variant="h6">Địa chỉ giao hàng</Typography>
-                                        </Box>
-                                        <Divider sx={{ padding: '2px 0px' }} />
-                                        <Typography variant="body2" mt={2}>
-                                            VVIP Address, Raj Nagar Extension Road <br />
-                                            Ghaziabad, London 201001, India
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid> */}
-
-                {/* Địa chỉ thanh toán */}
-                {/* <Grid item sx={{ width: '100%', paddingTop: '0px !important' }}>
-                                <Card
-                                    sx={{
-                                        marginBottom: '10px',
-                                        padding: 0,
-                                        boxShadow: 'none !important',
-                                        bgcolor: '#fff',
-                                        borderRadius: 'unset',
-                                        color: '#000',
-                                    }}
-                                >
-                                    <CardContent>
-                                        <Typography variant="h6">Địa chỉ thanh toán</Typography>
-                                        <Divider sx={{ padding: '2px 0px' }} />
-                                        <Typography variant="body2" mt={2}>
-                                            VVIP Address, Raj Nagar Extension Road <br />
-                                            Ghaziabad, London 201001, India
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid> */}
-
-                {/* Chi tiết liên hệ */}
-                {/* <Grid item sx={{ width: '100%', paddingTop: '0px !important' }}>
-                                <Card
-                                    sx={{
-                                        padding: 0,
-                                        marginBottom: '10px',
-                                        boxShadow: 'none !important',
-                                        bgcolor: '#fff',
-                                        borderRadius: 'unset',
-                                        color: '#000',
-                                    }}
-                                >
-                                    <CardContent>
-                                        <Typography variant="h6">Chi tiết liên hệ</Typography>
-                                        <Divider sx={{ padding: '2px 0px' }} />
-                                        <Typography variant="body2" mt={2}>
-                                            Email: example@company.com <br />
-                                            Phone: +91-987 000 0000 <br />
-                                            Phone: +91-987 000 000
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid> */}
-
-                {/* Order Summary */}
-                {/* <Grid item sx={{ width: '100%', paddingTop: '0px !important' }}>
-                                <Card
-                                    sx={{
-                                        padding: 0,
-                                        boxShadow: 'none !important',
-                                        bgcolor: '#F4F4F8',
-                                        borderRadius: 'unset',
-                                        color: '#000',
-                                    }}
-                                >
-                                    <CardContent>
-                                        <Typography variant="h6" sx={{ bgcolor: '#fff', padding: 2 }}>
-                                            Order Summary (3)
-                                        </Typography>
-                                        <Typography variant="body2" mt={2} sx={{ fontWeight: 'bold' }}>
-                                            Sub Total: <span style={{ float: 'right' }}>£15.00</span> <br />
-                                            Delivery: <span style={{ float: 'right' }}>£16.00</span> <br />
-                                            <Divider
-                                                style={{ borderColor: '#D6D5DA', height: '2px', margin: '8px 0' }}
-                                            />
-                                            <strong>
-                                                Total: <span style={{ float: 'right' }}>£31.00</span>
-                                            </strong>
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid> */}
-                {/* </Grid>
-                    </Container> */}
-                {/* </Box>  */}
             </Box>
         </Box>
     );
-};
+}
 
 export default OrderConfirm;

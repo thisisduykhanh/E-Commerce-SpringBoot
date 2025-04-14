@@ -95,7 +95,7 @@ export function OrderCreateForm() {
             toast.success('Đơn hàng đã được tạo');
             router.push('/order-history');
         } catch (error) {
-            throw new Error('API error: ' + error.message);
+            throw new Error(`API error: ${  error.message}`);
         }
     };
 
@@ -106,7 +106,7 @@ export function OrderCreateForm() {
                     <Stack divider={<Divider />} spacing={4}>
                         <Stack spacing={3}>
                             <Typography variant="h6">Thông tin cơ bản</Typography>
-                            <Grid container={true} spacing={3}>
+                            <Grid container spacing={3}>
                                 <Grid
                                     size={{
                                         md: 6,
@@ -117,7 +117,7 @@ export function OrderCreateForm() {
                                         control={control}
                                         name="customer"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.customer)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.customer)} fullWidth>
                                                 <InputLabel>Họ tên khách hàng</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.customer ? (
@@ -137,7 +137,7 @@ export function OrderCreateForm() {
                                         control={control}
                                         name="phone"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.phone)} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.phone)} fullWidth>
                                                 <InputLabel>Số điện thoại</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.phone ? (
@@ -157,8 +157,8 @@ export function OrderCreateForm() {
                                         control={control}
                                         name="billingAddress"
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.billingAddress)} fullWidth={true}>
-                                                <InputLabel required={true}>Địa chỉ</InputLabel>
+                                            <FormControl error={Boolean(errors.billingAddress)} fullWidth>
+                                                <InputLabel required>Địa chỉ</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress ? (
                                                     <FormHelperText>{errors.billingAddress?.message}</FormHelperText>
@@ -173,8 +173,7 @@ export function OrderCreateForm() {
                             <Typography variant="h6">Thông tin sản phẩm</Typography>
                             <Stack spacing={2}>
                                 <Card sx={{ borderRadius: 1 }} variant="outlined">
-                                    {cartData &&
-                                        cartData.map((supplier) => (
+                                    {cartData ? cartData.map((supplier) => (
                                             <Stack key={supplier.id} spacing={2}>
                                                 <Typography
                                                     variant="h6"
@@ -188,7 +187,7 @@ export function OrderCreateForm() {
                                                         {
                                                             name: 'Sản phẩm',
                                                             formatter: (row) => (
-                                                                <Typography variant="body2" noWrap={true}>
+                                                                <Typography variant="body2" noWrap>
                                                                     {row.productName}
                                                                 </Typography>
                                                             ),
@@ -235,7 +234,7 @@ export function OrderCreateForm() {
                                                     }}
                                                 />
                                             </Stack>
-                                        ))}
+                                        )) : null}
                                 </Card>
                             </Stack>
                         </Stack>

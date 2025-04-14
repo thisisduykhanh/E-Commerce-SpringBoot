@@ -40,7 +40,7 @@ export function StorageView({ view }) {
                         deleteItem(itemId);
                     }}
                     onFavorite={favoriteItem}
-                    open={true}
+                    open
                 />
             ) : null}
         </React.Fragment>

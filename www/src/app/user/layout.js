@@ -1,5 +1,5 @@
 'use client';
-import '@/styles/global.css';
+
 import Footer from '@/components/user/common/Footer';
 import Header from '@/components/user/common/Header';
 import React from 'react';

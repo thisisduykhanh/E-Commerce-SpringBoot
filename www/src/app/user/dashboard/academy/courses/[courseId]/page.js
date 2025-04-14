@@ -80,7 +80,7 @@ export default function Page() {
                 width: 'var(--Content-width)',
             }}
         >
-            <Grid container={true} spacing={4}>
+            <Grid container spacing={4}>
                 <Grid
                     size={{
                         md: 4,

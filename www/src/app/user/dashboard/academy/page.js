@@ -87,7 +87,7 @@ export default function Page() {
                         Nice progress so far, keep it up!
                     </Typography>
                 </Stack>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid
                         size={{
                             md: 8,
@@ -107,7 +107,7 @@ export default function Page() {
                 </Grid>
                 <Stack spacing={4}>
                     <Typography variant="h6">My courses</Typography>
-                    <Grid container={true} spacing={4}>
+                    <Grid container spacing={4}>
                         {courses.map((course) => (
                             <Grid
                                 key={course.id}

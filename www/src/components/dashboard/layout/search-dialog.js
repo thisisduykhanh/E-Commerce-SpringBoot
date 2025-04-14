@@ -72,7 +72,7 @@ export function SearchDialog({ onClose, open = false }) {
     }, []);
 
     return (
-        <Dialog fullWidth={true} maxWidth="sm" onClose={onClose} open={open}>
+        <Dialog fullWidth maxWidth="sm" onClose={onClose} open={open}>
             <Stack
                 direction="row"
                 spacing={3}
@@ -88,7 +88,7 @@ export function SearchDialog({ onClose, open = false }) {
                     <Tip message="Search by entering a keyword and pressing Enter" />
                     <form onSubmit={handleSubmit}>
                         <OutlinedInput
-                            fullWidth={true}
+                            fullWidth
                             onChange={(event) => {
                                 setValue(event.target.value);
                             }}

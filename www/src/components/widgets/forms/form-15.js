@@ -20,11 +20,11 @@ export function Form15() {
                     <CardContent>
                         <Stack divider={<Divider />} spacing={3}>
                             <Stack spacing={2}>
-                                <FormControl fullWidth={true}>
+                                <FormControl fullWidth>
                                     <InputLabel>Email address</InputLabel>
                                     <OutlinedInput name="email" type="email" />
                                 </FormControl>
-                                <FormControl fullWidth={true}>
+                                <FormControl fullWidth>
                                     <InputLabel>Password</InputLabel>
                                     <OutlinedInput name="password" type="password" />
                                 </FormControl>

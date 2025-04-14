@@ -81,21 +81,21 @@ export function GroupedList1() {
                         </Box>
                     </Box>
                     <Divider />
-                    <List disablePadding={true}>
+                    <List disablePadding>
                         {events.map((event, index) => (
                             <ListItem divider={index < events.length - 1} key={event.id}>
                                 <ListItemAvatar>
                                     <Avatar src={event.customer.avatar} sx={{ cursor: 'pointer' }} />
                                 </ListItemAvatar>
                                 <ListItemText
-                                    disableTypography={true}
+                                    disableTypography
                                     primary={
-                                        <Typography noWrap={true} variant="subtitle2">
+                                        <Typography noWrap variant="subtitle2">
                                             {event.customer.name}
                                         </Typography>
                                     }
                                     secondary={
-                                        <Typography color="text.secondary" noWrap={true} variant="body2">
+                                        <Typography color="text.secondary" noWrap variant="body2">
                                             {event.description}
                                         </Typography>
                                     }

@@ -97,8 +97,8 @@ function Segment({ color, data: dataRaw, diff, name, trend, value }) {
                                 <stop offset="75%" stopColor={color} stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <XAxis axisLine={false} dataKey="name" hide={true} type="category" />
-                        <YAxis axisLine={false} domain={[min - 200, max + 50]} hide={true} type="number" />
+                        <XAxis axisLine={false} dataKey="name" hide type="category" />
+                        <YAxis axisLine={false} domain={[min - 200, max + 50]} hide type="number" />
                         <Area
                             animationDuration={300}
                             dataKey="value"

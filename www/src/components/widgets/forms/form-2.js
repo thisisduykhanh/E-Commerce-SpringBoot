@@ -45,7 +45,7 @@ export function Form2() {
     return (
         <Box sx={{ p: 3 }}>
             <Input
-                fullWidth={true}
+                fullWidth
                 placeholder="Enter a keyword"
                 startAdornment={
                     <InputAdornment position="start">
@@ -82,7 +82,7 @@ export function Form2() {
                     <MultiSelect label="Status" options={statusOptions} value={statusValues} />
                     <MultiSelect label="Availability" options={stockOptions} value={availabilityValues} />
                 </Stack>
-                <FormControlLabel control={<Checkbox defaultChecked={true} />} label="In network" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="In network" />
             </Stack>
         </Box>
     );

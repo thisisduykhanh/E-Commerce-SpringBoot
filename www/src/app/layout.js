@@ -11,8 +11,8 @@ import { UserProvider } from '@/contexts/auth/user-context';
 import { SettingsProvider } from '@/contexts/settings';
 import { applyDefaultSettings } from '@/lib/settings/apply-default-settings';
 import { getSettings as getPersistedSettings } from '@/lib/settings/get-settings';
-import '@/styles/global.css';
-import { CartProvider } from "@/contexts/cartContext";
+
+import { CartProvider } from "@/contexts/CartContext";
 
 export const metadata = { title: config.site.name };
 
@@ -26,8 +26,8 @@ export default async function Layout({ children }) {
     const settings = applyDefaultSettings(await getPersistedSettings());
 
     return (
-        <html lang={settings.language} suppressHydrationWarning={true}>
-            <body>
+        <html lang={settings.language} suppressHydrationWarning>
+            <body style={{ margin: '24px', padding: 0 }}>
                 <InitColorSchemeScript attribute="class" />
                 <Analytics>
                     <LocalizationProvider>

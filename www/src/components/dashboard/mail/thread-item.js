@@ -91,16 +91,16 @@ export function ThreadItem({ thread, onDeselect, onSelect, selected, href }) {
             >
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', display: 'flex' }}>
                     <Avatar src={thread.from.avatar} />
-                    <Typography noWrap={true} sx={{ width: '120px' }} variant={thread.isUnread ? 'body2' : 'subtitle2'}>
+                    <Typography noWrap sx={{ width: '120px' }} variant={thread.isUnread ? 'body2' : 'subtitle2'}>
                         {thread.from.name}
                     </Typography>
                 </Stack>
                 <Stack spacing={1} sx={{ flex: '1 1 auto', overflow: 'hidden', width: { xs: '100%', md: 'auto' } }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: 'center', maxWidth: '800px', width: '100%' }}>
-                        <Typography noWrap={true} sx={{ minWidth: '100px', maxWidth: '400px' }} variant="subtitle2">
+                        <Typography noWrap sx={{ minWidth: '100px', maxWidth: '400px' }} variant="subtitle2">
                             {thread.subject}
                         </Typography>
-                        <Typography color="text.secondary" noWrap={true} variant="body2">
+                        <Typography color="text.secondary" noWrap variant="body2">
                             —{thread.message}
                         </Typography>
                     </Stack>

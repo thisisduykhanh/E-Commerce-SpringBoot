@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 
-const ConfirmationDialog = ({ open, onClose, onConfirm, title, message }) => {
+function ConfirmationDialog({ open, onClose, onConfirm, title, message }) {
     return (
         <Dialog 
             open={open} 
@@ -49,6 +49,6 @@ const ConfirmationDialog = ({ open, onClose, onConfirm, title, message }) => {
             </DialogActions>
         </Dialog>
     );
-};
+}
 
 export default ConfirmationDialog;

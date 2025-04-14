@@ -981,17 +981,17 @@ function A() {
     );
     return (
         <Box sx={{ paddingTop: 2 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 {/* Cột trái - Danh sách các chính sách
                 <Grid item={true} size={{ xs: 12, md: 2 }}>
                     <PolicySidebar />
                 </Grid> */}
 
                 {/* Cột phải - Nội dung chi tiết chính sách */}
-                <Grid item={true} size={{ xs: 12, md: 10 }}>
+                <Grid item size={{ xs: 12, md: 10 }}>
                     {/* Cột giữa cho tiêu đề */}
-                    <Grid container={true} justifyContent="center">
-                        <Grid item={true}>
+                    <Grid container justifyContent="center">
+                        <Grid item>
                             <Typography
                                 variant="h4"
                                 sx={{

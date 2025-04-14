@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
-const CartSocketListener = ({ accountId, onCartUpdate }) => {
+function CartSocketListener({ accountId, onCartUpdate }) {
   useEffect(() => {
     const socket = new SockJS("http://localhost:8085/ws"); // Đổi lại đúng endpoint backend của bạn
     const stompClient = new Client({
@@ -25,6 +25,6 @@ const CartSocketListener = ({ accountId, onCartUpdate }) => {
   }, [accountId, onCartUpdate]);
 
   return null;
-};
+}
 
 export default CartSocketListener;

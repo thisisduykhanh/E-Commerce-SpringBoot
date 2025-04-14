@@ -140,7 +140,7 @@ const columns = [
     },
     {
         formatter: (row) => (
-            <Typography noWrap={true} variant="inherit">
+            <Typography noWrap variant="inherit">
                 {row.tags}
             </Typography>
         ),
@@ -201,7 +201,7 @@ export function Table5() {
                 </Stack>
                 <Divider />
                 <Box sx={{ overflowX: 'auto' }}>
-                    <DataTable columns={columns} rows={products} selectable={true} />
+                    <DataTable columns={columns} rows={products} selectable />
                 </Box>
             </Card>
         </Box>

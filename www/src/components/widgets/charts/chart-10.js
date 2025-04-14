@@ -69,9 +69,9 @@ export function Chart10() {
                                     <Tooltip animationDuration={50} content={<TooltipContent />} />
                                 </PieChart>
                             </NoSsr>
-                            <List disablePadding={true}>
+                            <List disablePadding>
                                 {data.map((entry) => (
-                                    <ListItem disableGutters={true} key={entry.name}>
+                                    <ListItem disableGutters key={entry.name}>
                                         <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                                             <Box
                                                 sx={{

@@ -1,4 +1,3 @@
-import apiClient from "@/services/ApiClient";
 import PeopleIcon from "@mui/icons-material/People";
 import {
   Avatar,

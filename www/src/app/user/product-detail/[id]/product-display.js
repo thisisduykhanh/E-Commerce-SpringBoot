@@ -180,7 +180,7 @@ export function ProductDisplay({
 
                 {/* Đánh giá và ngôi sao */}
                 <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
-                    <Rating value={5} readOnly={true} precision={0.5} size="small" />
+                    <Rating value={5} readOnly precision={0.5} size="small" />
                     <Typography variant="body2" sx={{ marginLeft: '10px', color: 'gray' }}>
                         4 đánh giá
                     </Typography>
@@ -389,16 +389,12 @@ export function ProductDisplay({
                         </Button>
                     </Box>
                     {/* Success or Error Messages */}
-                    {successMessage && (
-                        <Typography variant="body2" color="primary" sx={{ marginTop: '10px' }}>
+                    {successMessage ? <Typography variant="body2" color="primary" sx={{ marginTop: '10px' }}>
                             {successMessage}
-                        </Typography>
-                    )}
-                    {error && (
-                        <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
+                        </Typography> : null}
+                    {error ? <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
                             {error}
-                        </Typography>
-                    )}
+                        </Typography> : null}
                 </Box>
 
                 <Divider

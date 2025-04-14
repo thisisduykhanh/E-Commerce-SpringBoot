@@ -1,3 +1,4 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
@@ -33,9 +34,9 @@ export function GroupedList4() {
                         <ListItem divider={index < notifications.length - 1} key={notification.id}>
                             <ListItemIcon>{icons[notification.type]}</ListItemIcon>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         {new Intl.NumberFormat('vi-VN').format(notification.amount)} {notification.type}
                                         s {notification.message}
                                     </Typography>

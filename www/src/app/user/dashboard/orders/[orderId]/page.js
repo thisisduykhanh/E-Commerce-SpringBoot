@@ -109,7 +109,7 @@ export default function Page() {
                         </div>
                     </Stack>
                 </div>
-                <Grid container={true} spacing={4}>
+                <Grid container spacing={4}>
                     <Grid
                         size={{
                             md: 8,

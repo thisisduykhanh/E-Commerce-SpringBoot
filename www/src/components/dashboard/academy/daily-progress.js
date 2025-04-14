@@ -49,7 +49,7 @@ export function DailyProgress({ timeCurrent, timeGoal }) {
                                 >
                                     <RadialBar
                                         animationDuration={300}
-                                        background={true}
+                                        background
                                         cornerRadius={10}
                                         dataKey="value"
                                         endAngle={-320}

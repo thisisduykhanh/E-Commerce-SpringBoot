@@ -13,15 +13,15 @@ export function Form11() {
     return (
         <Box sx={{ p: 3 }}>
             <Stack spacing={3}>
-                <Grid container={true} spacing={3}>
+                <Grid container spacing={3}>
                     <Grid
                         size={{
                             md: 6,
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
-                            <InputLabel required={true}>Price</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel required>Price</InputLabel>
                             <OutlinedInput name="price" type="number" />
                         </FormControl>
                     </Grid>
@@ -31,7 +31,7 @@ export function Form11() {
                             xs: 12,
                         }}
                     >
-                        <FormControl fullWidth={true}>
+                        <FormControl fullWidth>
                             <InputLabel>Sell price</InputLabel>
                             <OutlinedInput name="salePrice" type="number" />
                         </FormControl>
@@ -39,7 +39,7 @@ export function Form11() {
                     <Grid size={12}>
                         <FormGroup>
                             <FormControlLabel
-                                control={<Checkbox defaultChecked={true} name="isTaxable" />}
+                                control={<Checkbox defaultChecked name="isTaxable" />}
                                 label="Product is taxable"
                             />
                             <FormControlLabel

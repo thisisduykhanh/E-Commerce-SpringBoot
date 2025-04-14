@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -100,7 +100,7 @@ const columns = [
                     <Typography sx={{ whiteSpace: 'nowrap' }} variant="subtitle2">
                         {row.name}
                     </Typography>
-                    <Typography color="text.secondary" noWrap={true} variant="body2">
+                    <Typography color="text.secondary" noWrap variant="body2">
                         <Typography color="success.main" component="span" variant="subtitle2">
                             {new Intl.NumberFormat('vi-VN').format(row.sales)}
                         </Typography>{' '}
@@ -115,7 +115,7 @@ const columns = [
         formatter: (row) => (
             <div>
                 <Typography variant="subtitle2">Profit</Typography>
-                <Typography color="text.secondary" noWrap={true} variant="body2">
+                <Typography color="text.secondary" noWrap variant="body2">
                     {new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: row.currency,
@@ -160,7 +160,7 @@ export function GroupedList5() {
                     title="Profitable products"
                 />
                 <Box sx={{ overflowX: 'auto' }}>
-                    <DataTable columns={columns} hideHead={true} rows={products} />
+                    <DataTable columns={columns} hideHead rows={products} />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                     <Button color="secondary" endIcon={<ArrowRightIcon />} size="small">

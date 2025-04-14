@@ -38,9 +38,9 @@ export function Modal1() {
                     </IconButton>
                 </Stack>
                 <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}>
-                    <Input fullWidth={true} placeholder="To" />
+                    <Input fullWidth placeholder="To" />
                     <Divider />
-                    <Input fullWidth={true} placeholder="Subject" />
+                    <Input fullWidth placeholder="Subject" />
                     <Divider />
                     <Box
                         sx={{

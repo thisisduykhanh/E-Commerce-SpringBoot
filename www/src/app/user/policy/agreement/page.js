@@ -111,8 +111,8 @@ Các thành viên vi phạm sẽ phải chịu các biện pháp xử lý theo q
     }, [drawerOpen]);
     return (
         <Box sx={{ paddingTop: 2 }}>
-            <Grid container={true} spacing={3}>
-                <Grid item={true} size={{ xs: 12, md: 3 }}>
+            <Grid container spacing={3}>
+                <Grid item size={{ xs: 12, md: 3 }}>
                     <Drawer
                         sx={{
                             display: { xs: 'block', md: 'none' },
@@ -172,9 +172,9 @@ Các thành viên vi phạm sẽ phải chịu các biện pháp xử lý theo q
                     </Drawer>
                 </Grid>
 
-                <Grid item={true} size={{ xs: 12, md: 9 }}>
-                    <Grid container={true} justifyContent="center">
-                        <Grid item={true}>
+                <Grid item size={{ xs: 12, md: 9 }}>
+                    <Grid container justifyContent="center">
+                        <Grid item>
                             <Typography
                                 variant="h6"
                                 sx={{

@@ -43,8 +43,8 @@ export function Chart3() {
                             <LineChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                                 <CartesianGrid strokeDasharray="2 4" vertical={false} />
                                 <XAxis axisLine={false} dataKey="name" tickLine={false} type="category" />
-                                <YAxis axisLine={false} domain={[0, 9000]} hide={true} type="number" yAxisId={0} />
-                                <YAxis axisLine={false} domain={[0, 100]} hide={true} type="number" yAxisId={1} />
+                                <YAxis axisLine={false} domain={[0, 9000]} hide type="number" yAxisId={0} />
+                                <YAxis axisLine={false} domain={[0, 100]} hide type="number" yAxisId={1} />
                                 {lines.map((line, index) => (
                                     <Line
                                         animationDuration={300}

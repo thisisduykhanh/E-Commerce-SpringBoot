@@ -56,7 +56,7 @@ export function CountrySessionsVsBounce({ data }) {
                                 layout="vertical"
                                 margin={{ top: 0, right: 0, bottom: 0, left: 100 }}
                             >
-                                <CartesianGrid horizontal={false} strokeDasharray="2 4" syncWithTicks={true} />
+                                <CartesianGrid horizontal={false} strokeDasharray="2 4" syncWithTicks />
                                 <XAxis axisLine={false} tickLine={false} type="number" />
                                 <YAxis
                                     axisLine={false}
@@ -104,7 +104,7 @@ function Tick({ height, payload, width, x, y }) {
                 >
                     <Box alt={name} component="img" src={flag} sx={{ height: 'auto', width: '100%' }} />
                 </Box>
-                <Typography noWrap={true} variant="body2">
+                <Typography noWrap variant="body2">
                     {name}
                 </Typography>
             </Stack>

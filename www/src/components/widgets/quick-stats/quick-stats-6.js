@@ -17,7 +17,7 @@ import { NoSsr } from '@/components/core/no-ssr';
 export function QuickStats6() {
     return (
         <Box sx={{ bgcolor: 'var(--mui-palette-background-level1)', p: 3 }}>
-            <Grid container={true} spacing={3}>
+            <Grid container spacing={3}>
                 <Grid
                     size={{
                         md: 6,

@@ -106,7 +106,7 @@ function SidebarContent({ closeOnSelect, currentLabelId, labels, onClose, onComp
                 {Object.keys(groupedLabels).map((type) => (
                     <React.Fragment key={type}>
                         {type === 'custom' ? (
-                            <ListSubheader disableSticky={true}>
+                            <ListSubheader disableSticky>
                                 <Typography color="text.secondary" variant="overline">
                                     Custom Labels
                                 </Typography>

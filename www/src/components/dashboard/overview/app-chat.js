@@ -35,7 +35,7 @@ export function AppChat({ messages }) {
                 title="App chat"
             />
             <List
-                disablePadding={true}
+                disablePadding
                 sx={{
                     p: 1,
                     '& .MuiListItemButton-root': { borderRadius: 1 },
@@ -50,7 +50,7 @@ export function AppChat({ messages }) {
                 }}
             >
                 {messages.map((message) => (
-                    <ListItem disablePadding={true} key={message.id}>
+                    <ListItem disablePadding key={message.id}>
                         <ListItemButton>
                             <ListItemAvatar>
                                 {message.author.status === 'online' ? (
@@ -66,14 +66,14 @@ export function AppChat({ messages }) {
                                 )}
                             </ListItemAvatar>
                             <ListItemText
-                                disableTypography={true}
+                                disableTypography
                                 primary={
-                                    <Typography noWrap={true} variant="subtitle2">
+                                    <Typography noWrap variant="subtitle2">
                                         {message.author.name}
                                     </Typography>
                                 }
                                 secondary={
-                                    <Typography color="text.secondary" noWrap={true} variant="body2">
+                                    <Typography color="text.secondary" noWrap variant="body2">
                                         {message.content}
                                     </Typography>
                                 }

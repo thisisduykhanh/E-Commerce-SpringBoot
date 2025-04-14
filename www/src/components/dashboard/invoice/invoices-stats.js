@@ -10,7 +10,7 @@ import { Receipt as ReceiptIcon } from '@phosphor-icons/react/dist/ssr/Receipt';
 
 export function InvoicesStats() {
     return (
-        <Grid container={true} spacing={4}>
+        <Grid container spacing={4}>
             <Grid
                 size={{
                     md: 6,

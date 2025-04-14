@@ -20,11 +20,11 @@ export function Form12() {
                         <Option value="cars">Cars</Option>
                     </Select>
                 </FormControl>
-                <FormControl fullWidth={true}>
+                <FormControl fullWidth>
                     <InputLabel>SKU</InputLabel>
                     <OutlinedInput name="sku" />
                 </FormControl>
-                <FormControl fullWidth={true}>
+                <FormControl fullWidth>
                     <InputLabel>Barcode</InputLabel>
                     <OutlinedInput name="barcode" />
                 </FormControl>

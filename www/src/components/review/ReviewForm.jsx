@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { addReview, getReviews } from "@/services/review";
+import React, { useState } from "react";
+import { addReview } from "@/services/review";
 import  {updateOrderViewed} from "@/services/order";
 import { logger } from "@/lib/default-logger";
 
@@ -88,11 +88,9 @@ function ReviewForm({ order, orderIdViewed }) {
         ))}
         <button type="submit">Submit Reviews</button>
       </form>
-      {alertMessage && (
-        <div style={{ color: alertMessage.type === 'success' ? 'green' : 'red' }}>
+      {alertMessage ? <div style={{ color: alertMessage.type === 'success' ? 'green' : 'red' }}>
           {alertMessage.text}
-        </div>
-      )}
+        </div> : null}
     </div>
   );
 }

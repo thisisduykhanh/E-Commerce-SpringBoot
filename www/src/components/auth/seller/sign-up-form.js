@@ -124,7 +124,7 @@ export function SignUpForm() {
             if (error) {
                 setError('root', { type: 'server', message: error });
                 setIsPending(false);
-                return;
+                
             } else {
                 // Handle successful registration
                 const toastId = toast.success('Đăng ký thành công!', {
@@ -269,14 +269,12 @@ export function SignUpForm() {
                                         control={control}
                                         name={`deliveryInfo[${index}]`}
                                         render={({ field }) => (
-                                            <FormControl error={Boolean(errors.deliveryInfo?.[index])} fullWidth={true}>
+                                            <FormControl error={Boolean(errors.deliveryInfo?.[index])} fullWidth>
                                                 <InputLabel>Thông tin giao hàng {index + 1}</InputLabel>
                                                 <OutlinedInput {...field} />
-                                                {errors.deliveryInfo?.[index] && (
-                                                    <FormHelperText>
+                                                {errors.deliveryInfo?.[index] ? <FormHelperText>
                                                         {errors.deliveryInfo[index]?.message}
-                                                    </FormHelperText>
-                                                )}
+                                                    </FormHelperText> : null}
                                             </FormControl>
                                         )}
                                     />
@@ -300,8 +298,8 @@ export function SignUpForm() {
                         </Button>
 
                         <input type="file" onChange={handleImageUpload} />
-                        {imageFile && <img src={URL.createObjectURL(imageFile)} alt="Selected" width="100" />}
-                        {submitted && !imageFile && <FormHelperText error={true}>Vui lòng chọn ảnh!</FormHelperText>}
+                        {imageFile ? <img src={URL.createObjectURL(imageFile)} alt="Selected" width="100" /> : null}
+                        {submitted && !imageFile ? <FormHelperText error>Vui lòng chọn ảnh!</FormHelperText> : null}
                         <Controller
                             control={control}
                             name="terms"
@@ -317,7 +315,7 @@ export function SignUpForm() {
                                         }
                                     />
                                     {errors.terms ? (
-                                        <FormHelperText error={true}>{errors.terms.message}</FormHelperText>
+                                        <FormHelperText error>{errors.terms.message}</FormHelperText>
                                     ) : null}
                                 </div>
                             )}

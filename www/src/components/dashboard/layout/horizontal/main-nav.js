@@ -109,7 +109,7 @@ export function MainNav({ color = 'evident', items = [] }) {
                         <NotificationsButton />
                         <ContactsButton />
                         <Divider
-                            flexItem={true}
+                            flexItem
                             orientation="vertical"
                             sx={{ borderColor: 'var(--MainNav-divider)', display: { xs: 'none', md: 'block' } }}
                         />
