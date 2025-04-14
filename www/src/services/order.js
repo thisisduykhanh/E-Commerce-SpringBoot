@@ -87,3 +87,43 @@ export const getOrderDetail = async (id) => {
         throw error;
     }
 }
+
+export const exportInvoiceById = async (id) => {
+    try {
+        const response = await apiClient.get(`/invoice/export/${id}`, {
+            responseType: 'blob', // Set the response type to 'blob' for file download
+        });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const exportInvoices = async (format) => {
+    try {
+        const response = await apiClient.get(`/invoice/export`, { params: { format } });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getInvoiceById = async (id) => {
+    try {
+        const response = await apiClient.get(`/invoice/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const createInvoice = async (orderId, items, totalPrice) => {
+    try {
+        const response = await apiClient.post(`/invoice`, { id: orderId, totalPrice, items });
+
+        console.log("Invoice created successfully:", response.data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

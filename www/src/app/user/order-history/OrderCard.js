@@ -14,7 +14,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
-import { getOrderDetail } from "@/services/order";
+import { getOrderDetail, exportInvoiceById } from "@/services/order";
 import { logger } from "@/lib/default-logger";
 import ReviewForm from "@/components/review/ReviewForm";
 
@@ -33,11 +33,13 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   const [paymentOrderId, setPaymentOrderId] = useState(null); // State for selected order ID for payment
   const [paymentMethod, setPaymentMethod] = useState(null); // State for payment method
 
+  const [idOrderSelected, setIdOrderSelected] = useState(null);
 
   const handleViewDetail = async (id) => {
     try {
       const res = await getOrderDetail(id);
       setSelectedOrder(res.data);
+      setIdOrderSelected(id);
       logger.debug("Order detail:", res.data);
       setOpen(true);
     } catch (error) {
@@ -45,14 +47,43 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
     }
   };
 
+  const handleExportInvoice = async (orderId) => {
+    try {
+      const res = await exportInvoiceById(orderId); // Hàm này trả về Response
+      
+      const url = window.URL.createObjectURL(res);
+  
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `invoice-${orderId}.pdf`; // Tên file tải về
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  
+      window.URL.revokeObjectURL(url); // Dọn dẹp bộ nhớ
+      handleClose();
+    } catch (error) {
+      console.error("Failed to export invoice:", error);
+      handleClose();
+    }
+  };
+  
+
   const handleClose = () => {
     setOpen(false);
     setSelectedOrder(null);
+    setIdOrderSelected(null);
   };
 
-  const handleOpenPaymentModal = (orderId) => {
-    setPaymentOrderId(orderId);
-    setPaymentModalOpen(true);
+  const handleOpenPaymentModal = async (orderId) => {
+    try {
+      const res = await getOrderDetail(orderId); // Fetch order details
+      setSelectedOrder(res.data); // Set the selected order
+      setPaymentOrderId(orderId);
+      setPaymentModalOpen(true);
+    } catch (error) {
+      console.error("Failed to fetch order detail for payment:", error);
+    }
   };
 
   const handleClosePaymentModal = () => {
@@ -62,7 +93,17 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
   const handlePaymentMethod = (method) => {
 
-    onPayment(paymentOrderId, method);
+
+    const items = selectedOrder.map((item) => ({
+      productId: item.productId,
+      productName: item.productName,
+      quantity: item.quantity,
+      price: item.productPrice,
+    }));
+
+    console.log("Selected payment method:", items);
+
+    onPayment(paymentOrderId, method, items, selectedOrder.totalPrice);
     handleClosePaymentModal();
   };
 
@@ -180,15 +221,15 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 </Grid>
               </Grid>
 
-               {order.orderStatus.name === "PAID" && (
-                
-              <Grid item xs={12} container spacing={2} alignItems="center" >
-                <Grid item xs={12}>
-                  <Typography variant="body1">Đã thanh toán bằng: {order.paymentMethod}</Typography>
+              {order.orderStatus.name === "PAID" && (
+                <Grid item xs={12} container spacing={2} alignItems="center">
+                  <Grid item xs={12}>
+                    <Typography variant="body1">
+                      Đã thanh toán bằng: {order.paymentMethod}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-               )
-              }       
+              )}
 
               <Grid
                 item
@@ -335,6 +376,11 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           )}
         </DialogContent>
         <DialogActions>
+
+          <Button onClick={() => handleExportInvoice(idOrderSelected)} color="success">
+            Xuất hóa đơn
+          </Button>
+
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
@@ -486,7 +532,8 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
       </Dialog>
 
       {/* Review Form Modal */}
-      {reviewOrderId ? <Dialog
+      {reviewOrderId ? (
+        <Dialog
           open={Boolean(reviewOrderId)}
           onClose={handleCloseReviewForm}
           fullWidth
@@ -499,7 +546,8 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           <DialogActions>
             <Button onClick={handleCloseReviewForm}>Close</Button>
           </DialogActions>
-        </Dialog> : null}
+        </Dialog>
+      ) : null}
     </>
   );
 }

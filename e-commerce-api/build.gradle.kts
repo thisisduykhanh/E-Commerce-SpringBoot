@@ -59,6 +59,13 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket
 	implementation("org.springframework.boot:spring-boot-starter-websocket:3.4.4")
 
+	// https://mvnrepository.com/artifact/com.github.librepdf/openpdf
+	implementation("com.github.librepdf:openpdf:2.0.3")
+
+
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+//	implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0-rc2")
+
 }
 
 tasks.named<Test>("test") {

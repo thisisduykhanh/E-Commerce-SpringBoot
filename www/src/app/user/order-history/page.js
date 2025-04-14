@@ -3,7 +3,7 @@ import { Box, Grid2 as Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import OrderCard from './OrderCard';
 import Pagination from './Pagination';
-import { getMyOrder, updateOrderStatus, paymentOrder } from '@/services/order'; // Import cancelOrder service
+import { getMyOrder, updateOrderStatus, paymentOrder, createInvoice } from '@/services/order'; // Import cancelOrder service
 import { useEffect } from 'react';
 import { Payment } from '@mui/icons-material';
 
@@ -82,10 +82,13 @@ function OrderHistory() {
         }
     };
 
-    const handlePayment = async (orderId, method) => {
+    const handlePayment = async (orderId, method, items, totalPrice) => {
         try {
             console.log("Processing payment for order ID:", orderId);
             await paymentOrder(orderId, method); // Call updateOrderStatus API with PAID status
+
+            await createInvoice(orderId, items, totalPrice);
+
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
                     order.id === orderId
