@@ -101,7 +101,7 @@ export const exportInvoiceById = async (id) => {
 
 export const exportInvoices = async (format) => {
     try {
-        const response = await apiClient.get(`/invoice/export`, { params: { format } });
+        const response = await apiClient.get(`/invoice/export?format=${format}`);
         return response;
     } catch (error) {
         throw error;
@@ -111,6 +111,15 @@ export const exportInvoices = async (format) => {
 export const getInvoiceById = async (id) => {
     try {
         const response = await apiClient.get(`/invoice/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getInvoices = async () => {
+    try {
+        const response = await apiClient.get(`/invoice`);
         return response;
     } catch (error) {
         throw error;

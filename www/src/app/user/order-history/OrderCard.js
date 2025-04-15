@@ -33,7 +33,9 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   const [paymentOrderId, setPaymentOrderId] = useState(null); // State for selected order ID for payment
   const [paymentMethod, setPaymentMethod] = useState(null); // State for payment method
 
+
   const [idOrderSelected, setIdOrderSelected] = useState(null);
+
 
   const handleViewDetail = async (id) => {
     try {
@@ -50,24 +52,24 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   const handleExportInvoice = async (orderId) => {
     try {
       const res = await exportInvoiceById(orderId); // Hàm này trả về Response
-      
+
       const url = window.URL.createObjectURL(res);
-  
+
       const link = document.createElement("a");
       link.href = url;
       link.download = `invoice-${orderId}.pdf`; // Tên file tải về
       document.body.appendChild(link);
       link.click();
       link.remove();
-  
+
       window.URL.revokeObjectURL(url); // Dọn dẹp bộ nhớ
       handleClose();
     } catch (error) {
       console.error("Failed to export invoice:", error);
+      alert("Đơn hàng chưa được thanh toán hoặc đã hủy, không thể xuất hóa đơn");
       handleClose();
     }
   };
-  
 
   const handleClose = () => {
     setOpen(false);
@@ -92,8 +94,6 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   };
 
   const handlePaymentMethod = (method) => {
-
-
     const items = selectedOrder.map((item) => ({
       productId: item.productId,
       productName: item.productName,
@@ -103,7 +103,9 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
     console.log("Selected payment method:", items);
 
-    onPayment(paymentOrderId, method, items, selectedOrder.totalPrice);
+    const order = orders.filter((order) => order.id === paymentOrderId)[0];
+
+    onPayment(paymentOrderId, method, items, order.totalPrice); // Call the payment function with the selected order ID
     handleClosePaymentModal();
   };
 
@@ -376,10 +378,13 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           )}
         </DialogContent>
         <DialogActions>
-
-          <Button onClick={() => handleExportInvoice(idOrderSelected)} color="success">
-            Xuất hóa đơn
-          </Button>
+            <Button
+              onClick={() => handleExportInvoice(idOrderSelected)}
+              color="success"
+            >
+              Xuất hóa đơn
+            </Button>
+          
 
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>

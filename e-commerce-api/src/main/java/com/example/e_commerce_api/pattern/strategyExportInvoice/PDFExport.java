@@ -2,18 +2,32 @@ package com.example.e_commerce_api.pattern.strategyExportInvoice;
 
 import com.example.e_commerce_api.entity.Invoice;
 import com.example.e_commerce_api.entity.InvoiceItem;
+import com.example.e_commerce_api.pattern.repository.save.invoice.InvoiceItemRepository;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.draw.LineSeparator;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+
+@Service
+
 public class PDFExport implements IExportStrategy {
+
+    @Autowired
+    InvoiceItemRepository invoiceItemRepository;
+
+
 
     @Override
     public byte[] export(List<Invoice> invoices) throws Exception {
@@ -51,12 +65,18 @@ public class PDFExport implements IExportStrategy {
             addHeader(itemTable, "Unit Price");
             addHeader(itemTable, "Subtotal");
 
-//            for (InvoiceItem item : inv.getItems()) {
-//                itemTable.addCell(new PdfPCell(new Phrase(item.getProductName(), normalFont)));
-//                itemTable.addCell(item.getQuantity() + "");
-//                itemTable.addCell("$" + item.getPrice());
-//                itemTable.addCell("$" + item.getTotal());
-//            }
+            // Duyệt qua danh sách sản phẩm trong hóa đơn
+
+            List<InvoiceItem> items = invoiceItemRepository.findByInvoice(inv);
+
+
+
+            for (InvoiceItem item : items) {
+                itemTable.addCell(new PdfPCell(new Phrase(item.getProductName(), normalFont)));
+                itemTable.addCell(item.getQuantity() + "");
+                itemTable.addCell("$" + item.getPrice());
+                itemTable.addCell("$" + item.getTotal());
+            }
 
             document.add(itemTable);
 

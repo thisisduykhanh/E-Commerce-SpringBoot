@@ -71,22 +71,7 @@ export const layoutConfig = {
                         
                     ],
                 },
-                {
-                    key: 'jobs',
-                    title: 'Việc làm',
-                    icon: 'read-cv-logo',
-                    items: [
-                        { key: 'jobs:browse', title: 'Duyệt việc làm', href: paths.dashboard.jobs.browse },
-                        { key: 'jobs:create', title: 'Tạo việc làm', href: paths.dashboard.jobs.create },
-                        {
-                            key: 'jobs:company',
-                            title: 'Chi tiết công ty',
-                            href: paths.dashboard.jobs.companies.overview('1'),
-                            matcher: { type: 'startsWith', href: '/dashboard/jobs/companies/1' },
-                        },
-                    ],
-                },
-                
+              
                
                 
                

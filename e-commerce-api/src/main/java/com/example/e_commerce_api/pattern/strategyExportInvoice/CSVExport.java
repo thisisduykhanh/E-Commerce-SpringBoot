@@ -1,10 +1,12 @@
 package com.example.e_commerce_api.pattern.strategyExportInvoice;
 
 import com.example.e_commerce_api.entity.Invoice;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Service
 public class CSVExport implements IExportStrategy {
 
     @Override

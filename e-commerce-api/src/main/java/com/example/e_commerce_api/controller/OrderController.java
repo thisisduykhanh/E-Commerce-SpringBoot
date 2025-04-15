@@ -65,7 +65,7 @@ public class OrderController {
 
     @GetMapping("/myOrders")
     public ResponseEntity<ApiResponse<List<Order>>> getOrdersByUser() {
-        Pageable pageable = PageRequest.of(0, 10);
+        Pageable pageable = PageRequest.of(0, 100000);
         // hoặc thay đổi theo nhu cầu của bạn
         Page<Order> ordersPage = orderService.getOrdersByUser(pageable);
         ApiResponse<List<Order>> response = new ApiResponse<>(true, "Lấy danh sách đơn hàng thành công", ordersPage.getContent(), null);

@@ -114,7 +114,8 @@ public class InvoiceController {
                         .body(("Invoice not found with ID: " + invoiceId).getBytes());
             }
 
-            IExportStrategy strategy = exportContext.getStrategy("pdf");
+            IExportStrategy strategy = exportContext.getStrategy("pdfexport");
+
             byte[] content = strategy.export(List.of(invoiceOpt.get()));
 
             return ResponseEntity.ok()

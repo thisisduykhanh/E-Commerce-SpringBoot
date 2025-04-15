@@ -5,7 +5,6 @@ import OrderCard from './OrderCard';
 import Pagination from './Pagination';
 import { getMyOrder, updateOrderStatus, paymentOrder, createInvoice } from '@/services/order'; // Import cancelOrder service
 import { useEffect } from 'react';
-import { Payment } from '@mui/icons-material';
 
 const styles = {
     primaryColor: '#00A6B7',
@@ -59,6 +58,7 @@ function OrderHistory() {
         const response = await getMyOrder();
         if (response && response.data) {
             setOrders(response.data);
+            console.log("Orders fetched successfully", response.data);
         }
     };
 
