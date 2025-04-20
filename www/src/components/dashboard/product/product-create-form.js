@@ -156,7 +156,7 @@ export function ProductCreateForm() {
     );
 
     if (missingAttributes) {
-      alert("Vui lòng nhập đầy đủ các thuộc tính của sản phẩm.");
+      setInfoMessage("Vui lòng nhập đầy đủ các thuộc tính của sản phẩm.");
       return;
     }
 

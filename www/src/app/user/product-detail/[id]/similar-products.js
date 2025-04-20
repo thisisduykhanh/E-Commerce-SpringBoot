@@ -94,24 +94,7 @@ export function SimilarProducts({ products }) {
                                 gap: '5px',
                             }}
                         >
-                            <IconButton
-                                sx={{
-                                    color: '#757575',
-                                    backgroundColor: '#F5F5F5',
-                                    padding: '5px',
-                                }}
-                            >
-                                <FavoriteBorderIcon fontSize="small" />
-                            </IconButton>
-                            <IconButton
-                                sx={{
-                                    color: '#757575',
-                                    backgroundColor: '#F5F5F5',
-                                    padding: '5px',
-                                }}
-                            >
-                                <LockIcon fontSize="small" />
-                            </IconButton>
+                           
                         </Box>
 
                         <CardContent

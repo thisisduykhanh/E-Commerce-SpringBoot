@@ -115,118 +115,125 @@ function CartPage() {
   };
 
   return (
-    <Box p={2} display="flex" justifyContent="center" paddingX={0}>
-      <Grid container spacing={2} paddingX={0}>
-        <Grid item xs={12} md={8} paddingX={0}>
-          <Card sx={{ color: "black", boxShadow: "none", marginBottom: 2 }}>
-            {cartData?.cartSupplierDTOs?.length === 0 ? (
-              <Card
-                sx={{
-                  bgcolor: "white",
-                  color: "black",
-                  boxShadow: "none",
-                  marginBottom: 2,
-                  paddingY: "16px",
-                  width: "100%",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: "#000",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  Giỏ hàng của bạn đang trống
-                </Typography>
-              </Card>
-            ) : (
-              <Card
-                sx={{
-                  bgcolor: "white",
-                  color: "black",
-                  boxShadow: "none",
-                  marginBottom: 2,
-                  paddingY: "16px",
-                  width: "100%",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: "#000",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  Danh sách sản phẩm trong giỏ hàng
-                </Typography>
-              </Card>
-            )}
-
-            <Card
+    <Box p={2} display="flex" justifyContent="center" paddingX={0} minHeight={"85vh"}>
+  <Grid container spacing={2} paddingX={0}>
+    <Grid item xs={12} md={cartData?.cartSupplierDTOs?.length === 0 ? 12 : 8} paddingX={0}>
+      <Card sx={{ color: "black", boxShadow: "none", marginBottom: 2 }}>
+        {cartData?.cartSupplierDTOs?.length === 0 ? (
+          <Box
+            sx={{
+              bgcolor: "white",
+              color: "black",
+              boxShadow: "none",
+              marginBottom: 2,
+              paddingY: "16px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "600px", // Giới hạn chiều rộng
+              margin: "0 auto", // Căn giữa phần thông báo
+            }}
+          >
+            <Typography
+              variant="h6"
               sx={{
-                bgcolor: "white",
-                color: "black",
-                boxShadow: "none",
-                marginBottom: 2,
-                width: "100%",
+                fontSize: "1.5rem",
+                fontWeight: 700,
+                color: "#000",
+                textAlign: "center",
               }}
             >
-              <CartItem
-                cartData={cartData?.cartSupplierDTOs || []}
-                handleQuantityChange={handleQuantityChange}
-                handleRemoveItem={(id) =>
-                  setConfirmDialog({ open: true, itemId: id })
-                }
-              />
-            </Card>
+              Giỏ hàng của bạn đang trống
+            </Typography>
+          </Box>
+        ) : (
+          <Card
+            sx={{
+              bgcolor: "white",
+              color: "black",
+              boxShadow: "none",
+              marginBottom: 2,
+              paddingY: "16px",
+              width: "100%",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: "1.5rem",
+                fontWeight: 700,
+                color: "#000",
+                marginBottom: "1rem",
+              }}
+            >
+              Danh sách sản phẩm trong giỏ hàng
+            </Typography>
           </Card>
-        </Grid>
-        {cartData?.cartSupplierDTOs?.length > 0 && (
-          <Grid item xs={12} md={4}>
-            <OrderSummary
-              totalPrice={cartData.totalPrice}
-              taxRate={taxRate}
-              shippingFee={shippingFee}
-              onPayment={handlePayment}
-            />
-          </Grid>
         )}
-      </Grid>
 
-      <ConfirmationDialog
-        open={confirmDialog.open}
-        onClose={() => setConfirmDialog({ open: false, itemId: null })}
-        onConfirm={confirmDeletion}
-        title="Xóa sản phẩm"
-        message="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
-      />
-
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={() => setOpenSnackbar(false)}
-          severity="success"
-          sx={{ width: "100%" }}
+        <Card
+          sx={{
+            bgcolor: "white",
+            color: "black",
+            boxShadow: "none",
+            marginBottom: 2,
+            width: "100%",
+          }}
         >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+          <CartItem
+            cartData={cartData?.cartSupplierDTOs || []}
+            handleQuantityChange={handleQuantityChange}
+            handleRemoveItem={(id) =>
+              setConfirmDialog({ open: true, itemId: id })
+            }
+          />
+        </Card>
+      </Card>
+    </Grid>
 
-      {/* ✅ WebSocket listener */}
-      {cartData ? <CartSocketListener
-          accountId={cartData.id}
-          onCartUpdate={fetchCartData}
-        /> : null}
-    </Box>
+    {/* Khi giỏ hàng có sản phẩm thì phần summary sẽ hiển thị, nếu không có sản phẩm thì giỏ hàng chiếm hết diện tích */}
+    {cartData?.cartSupplierDTOs?.length > 0 && (
+      <Grid item xs={12} md={4}>
+        <OrderSummary
+          totalPrice={cartData.totalPrice}
+          taxRate={taxRate}
+          shippingFee={shippingFee}
+          onPayment={handlePayment}
+        />
+      </Grid>
+    )}
+  </Grid>
+
+  <ConfirmationDialog
+    open={confirmDialog.open}
+    onClose={() => setConfirmDialog({ open: false, itemId: null })}
+    onConfirm={confirmDeletion}
+    title="Xóa sản phẩm"
+    message="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
+  />
+
+  <Snackbar
+    open={openSnackbar}
+    autoHideDuration={3000}
+    onClose={() => setOpenSnackbar(false)}
+    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+  >
+    <Alert
+      onClose={() => setOpenSnackbar(false)}
+      severity="success"
+      sx={{ width: "100%" }}
+    >
+      {snackbarMessage}
+    </Alert>
+  </Snackbar>
+
+  {/* ✅ WebSocket listener */}
+  {cartData ? (
+    <CartSocketListener accountId={cartData.id} onCartUpdate={fetchCartData} />
+  ) : null}
+</Box>
+
   );
 }
 

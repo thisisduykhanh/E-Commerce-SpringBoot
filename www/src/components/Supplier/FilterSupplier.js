@@ -135,7 +135,7 @@ function FilterSupplier({ onFilterChange }) {
     }, [filters]);
 
     return (
-        <Box width="100%" padding={2} boxShadow={2} borderRadius={2}>
+        <Box width="80%" padding={2} boxShadow={2} borderRadius={2}>
             <Grid2 container direction="column" spacing={2}>
               <Grid2 item>
                     <Typography fontSize={18} fontWeight="bold" color="#00A6B7">

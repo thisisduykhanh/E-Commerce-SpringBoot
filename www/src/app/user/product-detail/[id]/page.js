@@ -203,6 +203,9 @@ function ProductDetailPage() {
             flexDirection: "row",
             gap: "20px",
             marginBottom: "40px",
+            flexWrap: "wrap", // Đảm bảo các phần tử có thể wrap lại khi không đủ không gian
+            justifyContent: "space-between", // Căn đều các phần tử
+            marginX: "20px", // Thêm khoảng cách giữa các phần tử và lề trái/phải
           }}
         >
           {/* Bên trái - Danh sách ảnh */}
@@ -213,6 +216,8 @@ function ProductDetailPage() {
               alignItems: "center",
               gap: "10px",
               border: "none",
+              width: "100%",
+              maxWidth: "150px", // Giới hạn chiều rộng tối đa của cột ảnh
             }}
           >
             {/* Nút cuộn lên */}
@@ -240,6 +245,8 @@ function ProductDetailPage() {
                 flexDirection: "column",
                 gap: "10px",
                 alignItems: "center",
+                maxHeight: "300px", // Giới hạn chiều cao của danh sách ảnh
+                overflowY: "auto", // Thêm thanh cuộn nếu quá nhiều ảnh
               }}
             >
               {productDetail?.images?.map((image, index) => (
@@ -250,15 +257,15 @@ function ProductDetailPage() {
                   alt={`Thumbnail ${index}`}
                   onClick={() => handleImageClick(index)} // Truyền index thay vì ID
                   sx={{
-                    width: "80px",
-                    height: "80px",
+                    width: "80px", // Chiều rộng ảnh thu nhỏ
+                    height: "80px", // Chiều cao ảnh thu nhỏ
                     borderRadius: "8px",
                     cursor: "pointer",
                     border:
                       activeImageIndex === index
                         ? "2px solid #00A6B7"
                         : "1px solid #fff",
-                    objectFit: "cover",
+                    objectFit: "contain", // Giữ tỷ lệ gốc của ảnh mà không bị méo
                   }}
                 />
               ))}
@@ -284,23 +291,38 @@ function ProductDetailPage() {
           </Box>
 
           {/* Hình ảnh chính */}
-          <CardMedia
-            component="img"
-            image={productDetail?.images?.[activeImageIndex]?.url} // Ảnh chính
-            alt="Main Product Image"
+          <Box
             sx={{
-              width: "50%",
-              height: "500px",
-              borderRadius: "8px",
-              objectFit: "cover",
-              transition: "opacity 0.3s ease-in-out", // Hiệu ứng chuyển ảnh mượt mà
+              flexGrow: 1,
+              minWidth: "300px",
             }}
-          />
+          >
+            <CardMedia
+              component="img"
+              image={productDetail?.images?.[activeImageIndex]?.url}
+              alt="Main Product Image"
+              sx={{
+                width: "100%", // Đảm bảo chiều rộng 100% của box chứa
+                height: "auto",
+                maxHeight: "500px", // Giới hạn chiều cao tối đa của ảnh chính
+                borderRadius: "8px",
+                objectFit: "contain",
+                transition: "opacity 0.3s ease-in-out", // Hiệu ứng chuyển ảnh mượt mà
+              }}
+            />
+          </Box>
 
           {/* Bên phải - Nội dung sản phẩm */}
-          <Box sx={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+          <Box
+            sx={{
+              padding: "20px",
+              maxWidth: "500px", // Giới hạn chiều rộng của nội dung bên phải
+              flexBasis: "300px", // Giới hạn chiều rộng tối thiểu của nội dung bên phải
+              marginLeft: "20px", // Thêm khoảng cách trái giữa phần mô tả và ảnh chính
+            }}
+          >
             {/* Tên sản phẩm và trạng thái */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center", marginBottom: "15px" }}>
               <Typography variant="h4" fontWeight="bold">
                 {productDetail?.productName}
               </Typography>
@@ -330,18 +352,13 @@ function ProductDetailPage() {
               <Typography
                 variant="body1"
                 sx={{
-                  textDecoration: "line-through",
-                  color: "#B3B3B3",
+                  color: "#000000",
                   marginRight: "10px",
                 }}
               >
                 {productDetail?.price?.toLocaleString()} VND
               </Typography>
-              
             </Box>
-
-            {/* Công ty và chia sẻ */}
-            {/* <CompanyShare productDetail={productDetail} /> */}
 
             {/* Mô tả sản phẩm */}
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -355,31 +372,13 @@ function ProductDetailPage() {
               </Box>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginTop: "20px",
-              }}
-            >
-              <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  Danh mục:
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#808080" }}>
-                  {productDetail?.productTypeName}
-                </Typography>
-              </Box>
-            </Box>
-
             {/* Số lượng và nút thêm vào giỏ hàng */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: "20px",
-                width: "100%", // Adjusted width to fit both elements in one line
+                width: "100%",
                 backgroundColor: "#fff",
                 color: "black !important",
                 marginTop: "20px",
@@ -388,32 +387,46 @@ function ProductDetailPage() {
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #fff",
-                  borderRadius: "30px",
+                  alignItems: "center", // Căn giữa các phần tử theo chiều dọc
+                  gap: "10px",  // Khoảng cách giữa các phần tử
+                  width: "100%", // Đảm bảo chiều rộng đầy đủ
+                  backgroundColor: "#fff",
+                  marginBottom: "20px",
+                  borderRadius: "30px", // Góc bo tròn
                 }}
               >
+                {/* Text "Số Lượng" */}
                 <Typography
                   variant="body1"
-                  marginBottom="20px"
-                  width="60%"
-                  fontSize="16px"
-                  sx={{ fontWeight: "bold" }}
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    color: "#333",
+                    flexShrink: 0, // Đảm bảo chữ không co giãn
+                    minWidth: "80px", // Giới hạn chiều rộng của phần text
+                  }}
                 >
-                  Số Lượng :
+                  Số Lượng:
                 </Typography>
+
+                {/* Nút giảm số lượng */}
                 <IconButton
                   onClick={() => handleQuantityChange("decrement")}
                   disabled={quantity <= 1}
                   sx={{
                     padding: "10px",
-                    borderRadius: "30px",
-                    backgroundColor: "#FAFAFA !important",
-                    color: quantity > 1 ? "#757575" : "#E0E0E0 !important",
+                    borderRadius: "50%",
+                    backgroundColor: "#FAFAFA",
+                    color: quantity > 1 ? "#757575" : "#E0E0E0",
+                    "&:hover": {
+                      backgroundColor: "#E0E0E0",  // Màu nền khi hover
+                    },
                   }}
                 >
                   <RemoveIcon />
                 </IconButton>
+
+                {/* TextField hiển thị số lượng */}
                 <TextField
                   value={`${quantity}`}
                   disabled
@@ -423,76 +436,84 @@ function ProductDetailPage() {
                       readOnly: true,
                       style: {
                         width: "50px",
-                        padding: "0",
                         height: "40px",
                         lineHeight: "40px",
+                        textAlign: "center",
                         color: "black !important",
                         backgroundColor: "#FFF",
+                        border: "none", // Bỏ viền TextField
                       },
                     },
                   }}
                   variant="standard"
                   sx={{
-                    margin: "0 10px",
                     "& .MuiInputBase-root": {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                     },
                     "& .MuiInputBase-input": {
-                      textAlign: "center",
+                      fontSize: "16px",  // Cỡ chữ cho số lượng
                     },
-                    "& .MuiInput-underline:before": {
-                      borderBottom: "none",
-                    },
-                    "& .MuiInput-underline:after": {
-                      borderBottom: "none",
-                    },
-                    color: "black !important",
-                    backgroundColor: "#FFF",
-                    ":read-only": {
-                      backgroundColor: "#FFF",
-                      color: "black !important",
+                    "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                      borderBottom: "none",  // Bỏ viền dưới
                     },
                   }}
                 />
+
+                {/* Nút tăng số lượng */}
                 <IconButton
                   onClick={() => handleQuantityChange("increment")}
                   sx={{
                     padding: "10px",
-                    borderRadius: "30px",
-                    backgroundColor: "#FAFAFA !important",
+                    borderRadius: "50%",
+                    backgroundColor: "#FAFAFA",
                     color: "#757575",
+                    "&:hover": {
+                      backgroundColor: "#E0E0E0",  // Màu nền khi hover
+                    },
                   }}
                 >
                   <AddIcon />
                 </IconButton>
               </Box>
+
             </Box>
             <Button
               variant="contained"
               sx={{
-                padding: "10px 20px",
+                padding: "12px 24px", // Tăng kích thước nút
                 fontWeight: "bold",
-                fontSize: "16px",
+                fontSize: "18px", // Tăng cỡ chữ
                 borderRadius: "30px",
-                background: quantity >= 0 ? "#00A6B7" : "#E0E0E0",
-                color: quantity >= 0 ? "#fff" : "#000 !important",
+                backgroundColor: quantity >= 1 ? "#00A6B7" : "#E0E0E0",
+                color: quantity >= 1 ? "#fff" : "#000",
                 borderColor: "#00A6B7",
-                cursor: quantity >= 0 ? "pointer" : "not-allowed !important",
+                cursor: quantity >= 1 ? "pointer" : "not-allowed",
+                transition: "background-color 0.3s ease, transform 0.3s ease", // Thêm hiệu ứng mượt
+                "&:hover": {
+                  backgroundColor: quantity >= 1 ? "#fb8c00" : "#E0E0E0", // Màu khi hover
+                },
               }}
               onClick={handleAddToCart}
-              disabled={isLoading || quantity < 0}
+              disabled={isLoading || quantity < 1}
             >
-              {isLoading ? "Đang thêm..." : "Thêm vào giỏ hàng"}
-              <ShoppingBag />
+              {isLoading ? (
+                "Đang thêm..."
+              ) : (
+                <>
+                  Thêm vào giỏ hàng
+                  <ShoppingBag style={{ marginLeft: "10px", fontSize: "22px" }} /> {/* Thay đổi icon và kích thước */}
+                </>
+              )}
             </Button>
+
 
             {/* Thông báo thành công hoặc lỗi */}
             {successMessage ? (
               <Typography
                 variant="body2"
-                color="primary"
+                color="success"
                 sx={{ marginTop: "10px" }}
               >
                 {successMessage}
@@ -659,111 +680,147 @@ function ProductDetailPage() {
               </Box>
             )}
             {activeTab === 1 && (
-              <>
-                {/* Nếu không có đánh giá nào */}
-                {reviews.length === 0 && (
-                  <Typography variant="body2" color="#555">
-                    Chưa có đánh giá nào cho sản phẩm này.
-                  </Typography>
-                )}
+  <>
+    {/* Nếu không có đánh giá nào */}
+    {reviews.length === 0 && (
+      <Typography variant="body2" color="#555" sx={{ textAlign: 'center', fontSize: '16px', padding: '20px' }}>
+        Chưa có đánh giá nào cho sản phẩm này.
+      </Typography>
+    )}
 
-                {reviews.length > 0 && (
-                  <Box
-                    sx={{
-                      padding: "20px",
-                      width: "80%",
-                      margin: "0 auto",
-                    }}
-                  >
-                    {/* Danh sách đánh giá */}
-                    {currentData.map((review, index) => (
-                      <Box key={review.id} sx={{ marginBottom: "20px" }}>
-                        {/* Dòng trên cùng */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <Avatar
-                            src="/avatars/defult.png"
-                            alt={review.fullName}
-                            sx={{
-                              width: "40px",
-                              height: "40px",
-                              backgroundColor: "#fff",
-                            }}
-                          >
-                            {!review.avatar && review.fullName.charAt(0)}
-                          </Avatar>
+    {reviews.length > 0 && (
+      <Box
+        sx={{
+          padding: "20px",
+          width: "80%",
+          margin: "0 auto",
+          borderRadius: "12px",
+        }}
+      >
+        {/* Danh sách đánh giá */}
+        {currentData.map((review, index) => (
+          <Box
+            key={review.id}
+            sx={{
+              marginBottom: "20px",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0px 6px 16px rgba(0, 0, 0, 0.1)",
+              position: "relative",
+              overflow: "hidden",
+              transition: "all 0.3s ease-in-out",
+             
+            }}
+          >
+            {/* Dòng trên cùng */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "15px",
+                marginBottom: "15px",
+              }}
+            >
+              <Avatar
+                src={review.avatar || "/avatars/default-avt.png"}
+                alt={review.fullName}
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  backgroundColor: "#E5E5E5",
+                  fontSize: "18px",
+                  transition: "all 0.3s ease",
+              
+                }}
+              >
+                {!review.avatar && review.fullName.charAt(0)}
+              </Avatar>
 
-                          <Box>
-                            <Typography variant="body1" fontWeight="bold">
-                              {review.fullName}
-                            </Typography>
+              <Box>
+                <Typography variant="body1" fontWeight="bold" sx={{ fontSize: "16px" }}>
+                  {review.fullName}
+                </Typography>
 
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <span
-                                key={star}
-                                style={{
-                                  color:
-                                    review.rating >= star ? "gold" : "gray",
-                                }}
-                              >
-                                ★
-                              </span>
-                            ))}
-                          </Box>
-
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              marginLeft: "auto",
-                              color: "#848484",
-                              fontSize: "12px",
-                            }}
-                          >
-                            {review.time}
-                          </Typography>
-                        </Box>
-
-                        {/* Nội dung đánh giá */}
-                        <Typography
-                          variant="body2"
-                          color="#555"
-                          sx={{ marginBottom: "10px" }}
-                        >
-                          {review.comment}
-                        </Typography>
-
-                        {/* Đường kẻ ngăn cách */}
-                        {index < currentData.length - 1 && (
-                          <Divider sx={{ marginTop: "10px" }} />
-                        )}
-                      </Box>
-                    ))}
-
-                    {/* Phân trang */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        marginTop: "20px",
+                {/* Đánh giá sao */}
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      style={{
+                        color: review.rating >= star ? "gold" : "gray",
+                        fontSize: "18px",
                       }}
                     >
-                      <Pagination
-                        count={Math.ceil(reviews.length / itemsPerPage)}
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        color="primary"
-                      />
-                    </Box>
-                  </Box>
-                )}
-              </>
-            )}
+                      ★
+                    </span>
+                  ))}
+                </Box>
+              </Box>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  marginLeft: "auto",
+                  color: "#848484",
+                  fontSize: "12px",
+                }}
+              >
+                {review.time}
+              </Typography>
+            </Box>
+
+            {/* Nội dung đánh giá */}
+            <Typography
+              variant="body2"
+              color="#555"
+              sx={{
+                marginBottom: "15px",
+                fontSize: "14px",
+                lineHeight: "1.5",
+                wordBreak: "break-word",
+                textAlign: "justify",
+              }}
+            >
+              {review.comment}
+            </Typography>
+          </Box>
+        ))}
+
+        {/* Phân trang */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Pagination
+            count={Math.ceil(reviews.length / itemsPerPage)}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                borderRadius: "50%",
+                backgroundColor: "#F2F2F2",
+                color: "#555",
+                "&:hover": {
+                  backgroundColor: "#00A6B7",
+                  color: "white",
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#00A6B7",
+                  color: "white",
+                },
+              },
+            }}
+          />
+        </Box>
+      </Box>
+    )}
+  </>
+)}
+
 
             {activeTab === 2 && (
               <Box sx={{ padding: "20px" }}>

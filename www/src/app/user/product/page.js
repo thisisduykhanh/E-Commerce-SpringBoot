@@ -145,7 +145,6 @@ function Product() {
                                     />
                                 </Grid>
                             </Grid>
-
                             <Modal open={openModal} onClose={handleCloseModal}>
                                 <Box className={classes.modalContent}>
                                     <IconButton

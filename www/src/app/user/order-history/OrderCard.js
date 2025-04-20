@@ -12,6 +12,8 @@ import {
   Divider,
   FormControlLabel,
   Checkbox,
+  TextField,
+  CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
 import { getOrderDetail, exportInvoiceById } from "@/services/order";
@@ -29,13 +31,18 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   const [open, setOpen] = useState(false);
   const [reviewOrderId, setReviewOrderId] = useState(null);
   const [orderIdViewed, setOrderIdViewed] = useState(null);
-  const [paymentModalOpen, setPaymentModalOpen] = useState(false); // State for payment modal
-  const [paymentOrderId, setPaymentOrderId] = useState(null); // State for selected order ID for payment
-  const [paymentMethod, setPaymentMethod] = useState(null); // State for payment method
-
-
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [paymentOrderId, setPaymentOrderId] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [idOrderSelected, setIdOrderSelected] = useState(null);
-
+  const [creditCardDetails, setCreditCardDetails] = useState({
+    cardNumber: "",
+    cardHolder: "",
+    expiryDate: "",
+    cvv: "",
+  });
+  const [loading, setLoading] = useState(false); // Loading state
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false); // Success dialog state
 
   const handleViewDetail = async (id) => {
     try {
@@ -51,18 +58,15 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
   const handleExportInvoice = async (orderId) => {
     try {
-      const res = await exportInvoiceById(orderId); // Hàm này trả về Response
-
+      const res = await exportInvoiceById(orderId);
       const url = window.URL.createObjectURL(res);
-
       const link = document.createElement("a");
       link.href = url;
-      link.download = `invoice-${orderId}.pdf`; // Tên file tải về
+      link.download = `invoice-${orderId}.pdf`;
       document.body.appendChild(link);
       link.click();
       link.remove();
-
-      window.URL.revokeObjectURL(url); // Dọn dẹp bộ nhớ
+      window.URL.revokeObjectURL(url);
       handleClose();
     } catch (error) {
       console.error("Failed to export invoice:", error);
@@ -79,8 +83,8 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
   const handleOpenPaymentModal = async (orderId) => {
     try {
-      const res = await getOrderDetail(orderId); // Fetch order details
-      setSelectedOrder(res.data); // Set the selected order
+      const res = await getOrderDetail(orderId);
+      setSelectedOrder(res.data);
       setPaymentOrderId(orderId);
       setPaymentModalOpen(true);
     } catch (error) {
@@ -91,9 +95,26 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
   const handleClosePaymentModal = () => {
     setPaymentModalOpen(false);
     setPaymentOrderId(null);
+    setPaymentMethod(null);
+    setCreditCardDetails({
+      cardNumber: "",
+      cardHolder: "",
+      expiryDate: "",
+      cvv: "",
+    });
+    setLoading(false);
   };
 
-  const handlePaymentMethod = (method) => {
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethod(method);
+  };
+
+  const handleCreditCardInputChange = (e) => {
+    const { name, value } = e.target;
+    setCreditCardDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePayment = async () => {
     const items = selectedOrder.map((item) => ({
       productId: item.productId,
       productName: item.productName,
@@ -101,20 +122,46 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
       price: item.productPrice,
     }));
 
-    console.log("Selected payment method:", items);
+    const order = orders.find((order) => order.id === paymentOrderId);
 
-    const order = orders.filter((order) => order.id === paymentOrderId)[0];
+    if (paymentMethod === "creditCard") {
+      if (
+        !creditCardDetails.cardNumber ||
+        !creditCardDetails.cardHolder ||
+        !creditCardDetails.expiryDate ||
+        !creditCardDetails.cvv
+      ) {
+        alert("Vui lòng điền đầy đủ thông tin thẻ tín dụng.");
+        return;
+      }
+    }
 
-    onPayment(paymentOrderId, method, items, order.totalPrice); // Call the payment function with the selected order ID
-    handleClosePaymentModal();
+    setLoading(true); // Show loading indicator
+
+    // Simulate payment processing with a 2-second delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    try {
+      await onPayment(paymentOrderId, paymentMethod, items, order.totalPrice, creditCardDetails);
+      setLoading(false);
+      handleClosePaymentModal();
+      setSuccessDialogOpen(true); // Show success dialog
+    } catch (error) {
+      setLoading(false);
+      console.error("Payment failed:", error);
+      alert("Thanh toán thất bại. Vui lòng thử lại.");
+    }
+  };
+
+  const handleCloseSuccessDialog = () => {
+    setSuccessDialogOpen(false);
   };
 
   const handleOpenReviewForm = async (orderId) => {
     try {
       setOrderIdViewed(orderId);
       const res = await getOrderDetail(orderId);
-
-      setReviewOrderId(res.data); // Pass the entire order details
+      setReviewOrderId(res.data);
     } catch (error) {
       console.error("Failed to fetch order detail for review:", error);
     }
@@ -131,7 +178,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           Không có đơn hàng nào
         </Typography>
       ) : (
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+        <Typography variant="h6" color="black" mb={2}>
           Bạn có {orders.length} đơn hàng
         </Typography>
       )}
@@ -139,7 +186,13 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
       {orders.map((order, index) => (
         <Card
           key={index}
-          sx={{ bgcolor: "#fff", mb: 2, boxShadow: 1, color: "#000" }}
+          sx={{
+            bgcolor: "#f9f9f9",
+            mb: 2,
+            boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            border: "1px solid #e0e0e0",
+          }}
         >
           <CardContent>
             <Grid
@@ -159,8 +212,8 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                   <Grid item>
                     <Grid container spacing={1} alignItems="center">
                       <Grid item>
-                        <Typography variant="body2" color="text.secondary">
-                          đặt lúc{" "}
+                        <Typography variant="body2" color="black">
+                          Đặt lúc{" "}
                           {Intl.DateTimeFormat("vi-VN", {
                             year: "numeric",
                             month: "2-digit",
@@ -170,22 +223,6 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                           }).format(new Date(order.createDate))}
                         </Typography>
                       </Grid>
-                      <Grid item>
-                        <Box
-                          component="img"
-                          src={
-                            order.supplier.image ||
-                            "https://via.placeholder.com/24"
-                          }
-                          alt="Avatar"
-                          sx={{
-                            width: 24,
-                            height: 24,
-                            borderRadius: "100%",
-                            border: "1px solid #e0e0e0",
-                          }}
-                        />
-                      </Grid>
                       <Grid item sx={{ maxWidth: 120 }}>
                         <Typography
                           variant="body2"
@@ -193,7 +230,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            color: "text.dark",
+                            color: "black",
                           }}
                         >
                           {order.supplier.nameSupply}
@@ -206,9 +243,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                       variant="body2"
                       sx={{
                         fontWeight: "bold",
-                        color:
-                          statusColorMap[order.orderStatus.name] ||
-                          "text.primary",
+                        color: statusColorMap[order.orderStatus.name] || "text.primary",
                       }}
                     >
                       {order.orderStatus.name}
@@ -219,14 +254,14 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
               <Grid item xs={12} container spacing={2} alignItems="center">
                 <Grid item xs={12}>
-                  <Typography variant="body1">Order No #{order.id}</Typography>
+                  <Typography variant="body1" color="black">Order No #{order.id}</Typography>
                 </Grid>
               </Grid>
 
               {order.orderStatus.name === "PAID" && (
                 <Grid item xs={12} container spacing={2} alignItems="center">
                   <Grid item xs={12}>
-                    <Typography variant="body1">
+                    <Typography variant="body1" color="black">
                       Đã thanh toán bằng: {order.paymentMethod}
                     </Typography>
                   </Grid>
@@ -241,11 +276,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 flexDirection="column"
               >
                 <Grid item>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.dark"
-                  >
+                  <Typography variant="body1" fontWeight="bold" color="black">
                     Tổng số tiền:{" "}
                     {new Intl.NumberFormat("vi-VN", {
                       style: "currency",
@@ -256,10 +287,15 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 <Grid item sx={{ mt: 1 }}>
                   {order.orderStatus.name === "PAID" && !order.reviewed ? (
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       size="small"
                       color="success"
-                      sx={{ mr: 3 }}
+                      sx={{
+                        mr: 3,
+                        bgcolor: "#388E3C",
+                        "&:hover": { bgcolor: "#2C6B34" },
+                        borderRadius: "8px",
+                      }}
                       onClick={() => handleOpenReviewForm(order.id)}
                     >
                       Review
@@ -274,14 +310,18 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                     </Typography>
                   ) : null}
 
-                  {/* Show Cancel button for PENDING orders */}
                   {order.orderStatus.name === "PENDING" && (
                     <>
                       <Button
-                        variant="outlined"
+                        variant="contained"
                         size="small"
-                        color="error"
-                        sx={{ mr: 3 }}
+                        color="primary"
+                        sx={{
+                          mr: 3,
+                          bgcolor: "#1976D2",
+                          "&:hover": { bgcolor: "#1565C0" },
+                          borderRadius: "8px",
+                        }}
                         onClick={() => handleOpenPaymentModal(order.id)}
                       >
                         Thanh toán
@@ -291,7 +331,16 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                         variant="outlined"
                         size="small"
                         color="error"
-                        sx={{ mr: 3 }}
+                        sx={{
+                          mr: 3,
+                          borderColor: "#D32F2F",
+                          color: "#D32F2F",
+                          "&:hover": {
+                            borderColor: "#C62828",
+                            color: "#C62828",
+                          },
+                          borderRadius: "8px",
+                        }}
                         onClick={() => onCancelOrder(order.id)}
                       >
                         Hủy đơn
@@ -303,6 +352,15 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                     variant="outlined"
                     size="small"
                     onClick={() => handleViewDetail(order.id)}
+                    sx={{
+                      borderColor: "#00A6B7",
+                      color: "#00A6B7",
+                      "&:hover": {
+                        borderColor: "#0097A7",
+                        color: "#0097A7",
+                      },
+                      borderRadius: "8px",
+                    }}
                   >
                     View detail
                   </Button>
@@ -378,14 +436,12 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           )}
         </DialogContent>
         <DialogActions>
-            <Button
-              onClick={() => handleExportInvoice(idOrderSelected)}
-              color="success"
-            >
-              Xuất hóa đơn
-            </Button>
-          
-
+          <Button
+            onClick={() => handleExportInvoice(idOrderSelected)}
+            color="success"
+          >
+            Xuất hóa đơn
+          </Button>
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
@@ -412,7 +468,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
               <span style={{ color: "#4B5D26", fontWeight: "bold" }}>
                 Asizon
               </span>
-              .Số tiền bạn thanh toán sẽ được đảm bảo an toàn cho đến khi bạn
+              . Số tiền bạn thanh toán sẽ được đảm bảo an toàn cho đến khi bạn
               nhận được sản phẩm đúng như mô tả từ Nhà Cung Cấp{" "}
               <a
                 href="https://example.com"
@@ -431,11 +487,12 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
             <Box mt={2}>
               <FormControlLabel
-                control={<Checkbox />}
-                value="bankTransfer"
-                onChange={(e) => {
-                  setPaymentMethod(e.target.value);
-                }}
+                control={
+                  <Checkbox
+                    checked={paymentMethod === "bankTransfer"}
+                    onChange={() => handlePaymentMethodChange("bankTransfer")}
+                  />
+                }
                 label={
                   <Box display="flex" alignItems="center">
                     <img
@@ -461,11 +518,12 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 }}
               />
               <FormControlLabel
-                control={<Checkbox sx={{ padding: 0, marginRight: 1 }} />}
-                value="eWallet"
-                onChange={(e) => {
-                  setPaymentMethod(e.target.value);
-                }}
+                control={
+                  <Checkbox
+                    checked={paymentMethod === "eWallet"}
+                    onChange={() => handlePaymentMethodChange("eWallet")}
+                  />
+                }
                 label={
                   <Box display="flex" alignItems="center">
                     <img
@@ -479,7 +537,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                       }}
                     />
                     <span style={{ fontSize: "1rem", fontWeight: 500 }}>
-                      Thanh toán qua ví ZaloPay (Miễn phí thanh toán)
+                      Thanh toán qua ví ZaloPay 
                     </span>
                   </Box>
                 }
@@ -490,13 +548,13 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                   marginLeft: 0,
                 }}
               />
-
               <FormControlLabel
-                control={<Checkbox />}
-                value="creditCard"
-                onChange={(e) => {
-                  setPaymentMethod(e.target.value);
-                }}
+                control={
+                  <Checkbox
+                    checked={paymentMethod === "creditCard"}
+                    onChange={() => handlePaymentMethodChange("creditCard")}
+                  />
+                }
                 label={
                   <Box display="flex" alignItems="center">
                     <img
@@ -508,7 +566,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                         marginRight: 8,
                         objectFit: "contain",
                       }}
-                    />{" "}
+                    />
                     <span style={{ fontSize: "1rem", fontWeight: 500 }}>
                       Thẻ tín dụng
                     </span>
@@ -521,18 +579,132 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 }}
               />
             </Box>
+
+            {(paymentMethod === "bankTransfer") && (
+              <Box mt={3} textAlign="center">
+                <Typography variant="h6" mb={2}>
+                  Quét mã QR Vietcombank để thanh toán
+                </Typography>
+                <img
+                  src="/payment/bank.jpg"
+                  alt="QR Code"
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+            )}
+
+            {(paymentMethod === "eWallet" ) && (
+              <Box mt={3} textAlign="center">
+                <Typography variant="h6" mb={2}>
+                  Quét mã QR ZaloPay để thanh toán
+                </Typography>
+                <img
+                  src="/payment/zalo.jpg"
+                  alt="QR Code"
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+            )}
+
+            {paymentMethod === "creditCard" && (
+              <Box mt={3}>
+                <Typography variant="h6" mb={2}>
+                  Thông tin thẻ tín dụng
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Số thẻ"
+                      name="cardNumber"
+                      value={creditCardDetails.cardNumber}
+                      onChange={handleCreditCardInputChange}
+                      placeholder="1234 5678 9012 3456"
+                      inputProps={{ maxLength: 19 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Tên chủ thẻ"
+                      name="cardHolder"
+                      value={creditCardDetails.cardHolder}
+                      onChange={handleCreditCardInputChange}
+                      placeholder="NGUYEN VAN A"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      label="Ngày hết hạn"
+                      name="expiryDate"
+                      value={creditCardDetails.expiryDate}
+                      onChange={handleCreditCardInputChange}
+                      placeholder="MM/YY"
+                      inputProps={{ maxLength: 5 }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      label="CVV"
+                      name="cvv"
+                      value={creditCardDetails.cvv}
+                      onChange={handleCreditCardInputChange}
+                      placeholder="123"
+                      inputProps={{ maxLength: 3 }}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            )}
           </Box>
         </DialogContent>
         <DialogActions>
           <Button
             color="success"
-            onClick={() => handlePaymentMethod(paymentMethod)}
-            disabled={!paymentMethod}
+            onClick={handlePayment}
+            disabled={!paymentMethod || loading}
+            startIcon={loading ? <CircularProgress size={20} /> : null}
           >
-            Thanh toán
+            {loading ? "Đang xử lý..." : "Xác nhận thanh toán"}
           </Button>
+          <Button onClick={handleClosePaymentModal} disabled={loading}>
+            Đóng
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-          <Button onClick={handleClosePaymentModal}>Đóng</Button>
+      {/* Success Dialog */}
+      <Dialog
+        open={successDialogOpen}
+        onClose={handleCloseSuccessDialog}
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle>Thanh toán thành công</DialogTitle>
+        <DialogContent>
+          <Box textAlign="center">
+            <Typography variant="h6" color="success.main" mb={2}>
+              🎉 Giao dịch của bạn đã được xử lý thành công!
+            </Typography>
+            <Typography variant="body1">
+              Cảm ơn bạn đã mua sắm tại Asizon. Đơn hàng của bạn sẽ sớm được xử lý.
+            </Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSuccessDialog} color="primary">
+            Đóng
+          </Button>
         </DialogActions>
       </Dialog>
 

@@ -1,4 +1,5 @@
 import PeopleIcon from "@mui/icons-material/People";
+import { useRouter } from 'next/router';
 import {
   Avatar,
   Box,
@@ -7,10 +8,17 @@ import {
   Pagination,
   Rating,
   Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Link from "next/link";
 import * as React from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import { getReviews } from "@/services/review";
 
@@ -26,9 +34,10 @@ function ProductList({
   products,
   currentPage,
   onPageChange,
-  onImageClick,
   filters,
 }) {
+
+  
   const classes = useStyles();
 
   const [ratings, setRatings] = React.useState({});
@@ -37,17 +46,13 @@ function ProductList({
     try {
       const { data } = await getReviews(id);
 
-      console.log("data", data);
-
       const totalStars = data.reduce((sum, r) => sum + r.rating, 0);
-    const average = totalStars / data.length;
+      const average = totalStars / data.length;
 
-    setRatings((prev) => ({ ...prev, [id]: parseFloat(average.toFixed(1)) }));
-  
+      setRatings((prev) => ({ ...prev, [id]: parseFloat(average.toFixed(1)) }));
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        // Không có đánh giá -> gán mặc định "chưa đánh giá"
-        setRatings((prev) => ({ ...prev, [id]: "chưa đánh giá" }));
+        setRatings((prev) => ({ ...prev, [id]: "Chưa đánh giá" }));
       }
     }
   };
@@ -57,9 +62,7 @@ function ProductList({
       if (!ratings[product.id]) {
         getStar(product.id);
       }
-
     });
-
   }, [products]);
 
   if (!products) {
@@ -81,8 +84,16 @@ function ProductList({
   }
 
   return (
-    <Box width="100%">
-      <Grid container spacing={2}>
+    <Box
+      width="100%"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',  // Căn giữa container
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <Grid container spacing={3} justifyContent="center" wrap="wrap"> {/* Thêm khoảng cách giữa các sản phẩm */}
         {products.map((product) => {
           const formattedPrices = Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -90,113 +101,184 @@ function ProductList({
           }).format(product.price);
           return (
             <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-              <Box
-                border={1}
-                borderColor="grey.300"
-                borderRadius={2}
-                padding={1}
-                display="flex"
-                flexDirection="column"
-                maxWidth={280}
-                minHeight={367}
+              <Card
+                elevation={3}
+                sx={{
+                  width: "280px", // Cố định chiều ngang
+                  border: "1px solid #ccc", // Viền cho card
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  position: "relative",
+                  transition: "all 0.3s ease-in-out",
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  "&:hover": {
+                    boxShadow: "0px 4px 10px rgba(0, 166, 183, 0.5)",
+                    borderColor: "#00A6B7",
+                  },
+                  "&:hover .cart-icon": {
+                    backgroundColor: "#00A6B7", // Màu nền icon giỏ hàng khi hover
+                    color: "white", // Màu của icon giỏ hàng khi hover
+                  },
+                }}
               >
-                <Link href={`/user/product-detail/${product.id}`} passHref>
-                  <button
-                    type="button"
-                    style={{
-                      border: "none",
-                      background: "none",
-                      padding: 0,
-                      height: "260px",
-                      width: "270px",
+                {/* Sale Badge */}
+                {product.isSale && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "10px",
+                      left: "10px",
+                      backgroundColor: "#EA4B48",
+                      color: "white",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      padding: "5px 10px",
+                      borderRadius: "30px",
                     }}
-                    onClick={() => onImageClick?.(product)}
                   >
-                    <img
-                      src={product.images?.[0]?.url || "/default-image.jpg"}
-                      alt={product.productName}
-                      className={classes.imageThumbnail}
-                      style={{ height: "260px", width: "260px" }}
-                    />
-                  </button>
+                    Sale {product.salePercent}
+                  </Box>
+                )}
+
+                {/* Hình ảnh sản phẩm */}
+                <Link href={`/user/product-detail/${product.id}`} passHref>
+                  <Button
+                    sx={{
+                      borderRadius: 1,
+                      padding: 0,
+                      height: "300px",
+                      width: "100%",
+                      display: "block",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        position: "relative",
+                        width: "100%",
+                        height: "300px", // Cố định chiều cao của container ảnh
+                        overflow: "hidden", // Đảm bảo ảnh không bị tràn ra ngoài
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={product.images?.[0]?.url || "/default-image.jpg"}
+                        alt={product.productName}
+                        sx={{
+                          height: "100%", // Cố định chiều cao của ảnh
+                          objectFit: "cover", // Giữ ảnh tỷ lệ hợp lý
+                          transition: "transform 0.3s ease", // Thêm hiệu ứng zoom
+                          "&:hover": {
+                            transform: "scale(1.1)", // Zoom ảnh khi hover
+                          },
+                        }}
+                      />
+                    </Box>
+                  </Button>
                 </Link>
 
+                {/* Yêu thích và Khóa */}
                 <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  width="260px"
-                  mt={1}
-                  minHeight={50}
+                  sx={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
+                >
+                  {/* Thêm icon yêu thích và khóa nếu cần */}
+                </Box>
+
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    padding: "10px",
+                  }}
                 >
                   <Typography
-                    variant="subtitle1"
-                    fontWeight="bold"
-                    sx={{ width: "260px" }}
+                    className="product-name"
+                    variant="body1"
+                    color="#000000"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      fontFamily: "'Poppins', sans-serif",
+                      transition: "color 0.3s ease",
+                    }}
                   >
                     {product.productName || "Tên sản phẩm không có"}
                   </Typography>
-                </Box>
 
-                <Box display="flex" justifyContent="left" width="100%" mt={1}>
-                    {ratings[product.id] === "chưa đánh giá" ? (
-                      
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "gray", marginRight: 1 }}
-
-                      >
-                        Chưa có đánh giá
-                      </Typography>
-
-                    ) : (
-
-                    <Rating
-                      value={ratings[product.id] || "chưa đánh giá"}
-                      readOnly
-                      precision={0.1}
-                      size="small"
-                      sx={{ marginRight: 1 }}
-                    />
-                    )}
-                </Box>
-
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  width="100%"
-                  mt={1}
-                >
-                  <Typography variant="h6" sx={{ color: "#1a1a1a" }}>
-                    {formattedPrices || "Không có giá trị hợp lệ."}
-                  </Typography>
-                </Box>
-
-                <Box
-                  display="flex"
-                  alignItems="flex-start"
-                  sx={{ paddingY: "5px" }}
-                >
-                  <Avatar
-                    src={
-                      product.logo ||
-                      "https://res.cloudinary.com/dgts7tmnb/image/upload/v1735478087/photo_2024-12-29_20-12-26_kjerh5.jpg"
-                    }
-                    alt={product.supplierName || "Không có tên nhà cung cấp"}
-                    sx={avatarStyles}
-                  />
-                  <Box>
-                    <Typography variant="subtitle1" sx={nameStyles}>
+                  <Typography variant="subtitle1" color="#4D4D4D" sx={{ fontSize: "14px", marginBottom: "5px" }}>
                       {product.supplierName || "Không có tên nhà cung cấp"}
                     </Typography>
-                    <Box display="flex" alignItems="center">
-                      <PeopleIcon sx={{ fontSize: 15, color: "gray", mr: 1 }} />
-                      <Typography variant="body2" sx={followerTextStyles}>
-                        0 người theo dõi
+
+                  {/* Giá */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "baseline",
+                      gap: "10px",
+                    }}
+                  >
+                    <Typography variant="body2" color="#000" sx={{ fontWeight: "600" }}>
+                      {formattedPrices || "Không có giá trị hợp lệ."}
+                    </Typography>
+                    {product.originalPrice && (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          textDecoration: "line-through",
+                          color: "#B3B3B3",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {product.originalPrice}
                       </Typography>
-                    </Box>
+                    )}
                   </Box>
+
+                  {/* Đánh giá */}
+                  <Typography variant="body2" color="#FFA41B" sx={{ marginTop: "5px" }}>
+                    {ratings[product.id] === "Chưa đánh giá" ? (
+                      <Typography variant="body2" color="gray">
+                        Chưa có đánh giá
+                      </Typography>
+                    ) : (
+                      "★".repeat(Math.floor(ratings[product.id] || 0)) +
+                      "☆".repeat(5 - Math.floor(ratings[product.id] || 0))
+                    )}
+                  </Typography>
+                </CardContent>
+
+                {/* Biểu tượng Giỏ hàng */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "10px",
+                  }}
+                >
+                  <IconButton
+                    className="cart-icon"
+                    sx={{
+                      color: "#000",
+                      backgroundColor: "#FAFAFA",
+                      padding: "5px",
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    <ShoppingCartIcon fontSize="small" />
+                  </IconButton>
                 </Box>
-              </Box>
+              </Card>
             </Grid>
           );
         })}
@@ -231,16 +313,6 @@ function ProductList({
 }
 
 const useStyles = makeStyles(() => ({
-  imageThumbnail: {
-    cursor: "pointer",
-    width: "100%",
-    height: "151px",
-    objectFit: "cover",
-    transition: "transform 0.3s ease",
-    "&:hover": {
-      transform: "scale(1.1)",
-    },
-  },
   loader: {
     display: "flex",
     justifyContent: "center",
@@ -248,24 +320,5 @@ const useStyles = makeStyles(() => ({
     height: "100vh",
   },
 }));
-
-const avatarStyles = {
-  width: { xs: 20, sm: 24 },
-  height: { xs: 20, sm: 24 },
-  marginRight: 1,
-};
-
-const nameStyles = {
-  fontSize: { xs: "0.7rem", sm: "0.9rem", md: "0.9rem", lg: "0.9rem" },
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-  maxWidth: "100%",
-};
-
-const followerTextStyles = {
-  fontSize: { xs: "0.5rem", sm: "0.5rem", md: "0.6rem" },
-  color: "gray",
-};
 
 export default ProductList;
