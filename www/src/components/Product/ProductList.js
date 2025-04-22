@@ -1,5 +1,4 @@
-import PeopleIcon from "@mui/icons-material/People";
-import { useRouter } from 'next/router';
+
 import {
   Avatar,
   Box,
@@ -215,9 +214,7 @@ function ProductList({
                     {product.productName || "Tên sản phẩm không có"}
                   </Typography>
 
-                  <Typography variant="subtitle1" color="#4D4D4D" sx={{ fontSize: "14px", marginBottom: "5px" }}>
-                      {product.supplierName || "Không có tên nhà cung cấp"}
-                    </Typography>
+                 
 
                   {/* Giá */}
                   <Box
@@ -244,6 +241,19 @@ function ProductList({
                       </Typography>
                     )}
                   </Box>
+
+                  {/* Thêm loại sản phẩm */}
+                  <Typography
+                    variant="subtitle2"
+                    color="#4D4D4D"
+                    sx={{ fontSize: "14px", marginBottom: "5px" }}
+                  >
+                    Loại: {product.productTypeName || "Không có loại sản phẩm"}
+                  </Typography>
+
+                  <Typography variant="subtitle1" color="#4D4D4D" sx={{ fontSize: "14px", marginBottom: "5px" }}>
+                      { "Nhà cung cấp: " + product.supplierName || "Không có tên nhà cung cấp"}
+                    </Typography>
 
                   {/* Đánh giá */}
                   <Typography variant="body2" color="#FFA41B" sx={{ marginTop: "5px" }}>

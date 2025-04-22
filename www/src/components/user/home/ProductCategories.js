@@ -9,25 +9,25 @@ function ProductCategories() {
     // Danh sách danh mục
     const categories = [
         {
-            name: 'Tai nghe',
-            image: '/img/image/category/headphone-cat.jpg',
+            name: 'Laptop',
+            image: '/img/image/category/Product_5.png',
             url: '/products/headphones',
         },
         {
-            name: 'Điện thoại',
-            image: '/img/image/category/headphone-cat.jpg',
+            name: 'Máy tính bảng',
+            image: '/img/image/category/tablet.png',
             url: '/products/phones',
         },
         {
-            name: 'Laptop',
-            image: '/img/image/category/headphone-cat.jpg',
+            name: 'Điện thoại',
+            image: '/img/image/category/phone.png',
             url: '/products/laptops',
         },
         {
-            name: 'Máy tính bảng',
+            name: 'Tai nghe',
             image: '/img/image/category/headphone-cat.jpg',
             url: '/products/tablets',
-        },
+        }
     ];
 
     // Style cho container

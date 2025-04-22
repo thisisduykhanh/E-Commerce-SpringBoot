@@ -12,56 +12,56 @@ function CartItem({ cartData, handleQuantityChange, handleRemoveItem }) {
     const router = useRouter();
     if (!cartData || cartData.length === 0) {
         return (
-          <Box
-            sx={{
-              textAlign: 'center',
-              margin: '20px auto',
-              width: '80%',
-              maxWidth: '600px',
-              padding: '20px',
-              borderRadius: '8px',
-            }}
-          >
-            <ShoppingCart
-              sx={{
-                fontSize: '80px', // Increased size for more visibility
-                color: '#D32F2F', // Red color to make the icon stand out
-                marginBottom: '16px',
-              }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                fontSize: '18px',
-                color: 'textSecondary',
-              }}
+            <Box
+                sx={{
+                    textAlign: 'center',
+                    margin: '20px auto',
+                    width: '80%',
+                    maxWidth: '600px',
+                    padding: '20px',
+                    borderRadius: '8px',
+                }}
             >
-              Giỏ hàng của bạn đang trống
-            </Typography>
-            
-            {/* Button to redirect to the product page */}
-            <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            marginTop: '20px',
-            padding: '10px 15px', // Increased padding for a bigger button
-            fontSize: '18px', // Larger text size for better visibility
-            borderRadius: '50px', // Round corners for a more modern look
-            backgroundColor: '#00A6B7', // Use a vibrant orange color to attract attention
-            '&:hover': {
-              backgroundColor: '#04545c', // Darker shade when hovered
-              boxShadow: '0 6px 10px rgba(0, 0, 0, 0.3)', // Stronger shadow on hover
-            },
-          }}
-          onClick={() => router.push('/user/product')} // Redirect to product page
-        >
-          Mua sắm ngay
-        </Button>
-          </Box>
+                <ShoppingCart
+                    sx={{
+                        fontSize: '80px', // Increased size for more visibility
+                        color: '#D32F2F', // Red color to make the icon stand out
+                        marginBottom: '16px',
+                    }}
+                />
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                        color: 'textSecondary',
+                    }}
+                >
+                    Giỏ hàng của bạn đang trống
+                </Typography>
+
+                {/* Button to redirect to the product page */}
+                <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                        marginTop: '20px',
+                        padding: '10px 15px', // Increased padding for a bigger button
+                        fontSize: '18px', // Larger text size for better visibility
+                        borderRadius: '50px', // Round corners for a more modern look
+                        backgroundColor: '#00A6B7', // Use a vibrant orange color to attract attention
+                        '&:hover': {
+                            backgroundColor: '#04545c', // Darker shade when hovered
+                            boxShadow: '0 6px 10px rgba(0, 0, 0, 0.3)', // Stronger shadow on hover
+                        },
+                    }}
+                    onClick={() => router.push('/user/product')} // Redirect to product page
+                >
+                    Mua sắm ngay
+                </Button>
+            </Box>
         );
-      }
+    }
 
     return (
         <>

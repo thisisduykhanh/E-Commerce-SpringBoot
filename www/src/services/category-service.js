@@ -4,7 +4,7 @@ import apiClient from './ApiClient';
 // Hàm lấy danh mục sản phẩm từ API
 export const fetchCategories = async () => {
     try {
-        const response = await apiClient.get('/product-group');
+        const response = await apiClient.get('/product-types');
         return response;
     } catch (error) {
         logger.error('Error fetching categories:', error);

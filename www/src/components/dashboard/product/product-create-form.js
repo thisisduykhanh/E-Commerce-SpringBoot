@@ -39,31 +39,32 @@ import {logger} from "@/lib/default-logger";
 
 const groupAttributes = {
   headphone: [
-    { name: "isWireless", type: "checkbox" },
-    { name: "batteryLife", type: "number" },
-    { name: "noiseCancellation", type: "text" },
+    { name: "isWireless", type: "checkbox", label: "Không dây" },
+    { name: "batteryLife", type: "number", label: "Thời gian sử dụng pin (giờ)" },
+    { name: "noiseCancellation", type: "text", label: "Khử tiếng ồn" },
   ],
   laptop: [
-    { name: "cpu", type: "text" },
-    { name: "ram", type: "number" },
-    { name: "storage", type: "number" },
+    { name: "cpu", type: "text", label: "CPU" },
+    { name: "ram", type: "number", label: "RAM (GB)" },
+    { name: "storage", type: "number", label: "Dung lượng lưu trữ (GB)" },
   ],
   smartwatch: [
-    { name: "hasGPS", type: "checkbox" },
-    { name: "waterResistant", type: "checkbox" },
-    { name: "batteryLife", type: "number" },
+    { name: "hasGPS", type: "checkbox", label: "Có GPS" },
+    { name: "waterResistant", type: "checkbox", label: "Chống nước" },
+    { name: "batteryLife", type: "number", label: "Thời gian sử dụng pin (giờ)" },
   ],
   phone: [
-    { name: "batteryLife", type: "number" },
-    { name: "cameraMP", type: "number" },
-    { name: "screenSize", type: "text" },
+    { name: "batteryLife", type: "number", label: "Thời gian sử dụng pin (giờ)" },
+    { name: "cameraMP", type: "number", label: "Độ phân giải camera (MP)" },
+    { name: "screenSize", type: "text", label: "Kích thước màn hình (inch)" },
   ],
   tablet: [
-    { name: "screenSize", type: "text" },
-    { name: "batteryLife", type: "number" },
-    { name: "hasPenSupport", type: "checkbox" },
+    { name: "screenSize", type: "text", label: "Kích thước màn hình (inch)" },
+    { name: "batteryLife", type: "number", label: "Thời gian sử dụng pin (giờ)" },
+    { name: "hasPenSupport", type: "checkbox", label: "Hỗ trợ bút cảm ứng" },
   ],
 };
+
 
 export function ProductCreateForm() {
   const _router = useRouter();
@@ -262,23 +263,51 @@ export function ProductCreateForm() {
                           fullWidth
                         >
                           <InputLabel>Loại sản phẩm</InputLabel>
-                          <Select
-                            {...field}
-                            onChange={(e) => {
-                              field.onChange(e);
-                              handleGroupChange(e);
-                            }}
-                            value={field.value ?? ""}
-                          >
-                            <MenuItem value="" disabled>
-                              Chọn loại sản phẩm
-                            </MenuItem>
-                            {productTypes.map((type) => (
-                              <MenuItem key={type.id} value={type.id}>
-                                {type.productTypeName}
-                              </MenuItem>
-                            ))}
-                          </Select>
+<Select
+  {...field}
+  onChange={(e) => {
+    field.onChange(e);
+    handleGroupChange(e);
+  }}
+  value={field.value ?? ""}
+  sx={{
+    backgroundColor: '#f5f5f5', // Light background for the Select
+    '&:hover': {
+      backgroundColor: '#e3e3e3', // Slightly darker on hover
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#3f51b5', // Blue border when focused
+    },
+    '& .MuiSelect-icon': {
+      color: '#3f51b5', // Icon color
+    },
+    fontSize: '16px', // Custom font size for better readability
+  }}
+>
+  <MenuItem value="" disabled sx={{ fontStyle: 'italic', color: '#888', margin: 'auto' }}>
+    Chọn loại sản phẩm
+  </MenuItem>
+  {productTypes.map((type) => (
+    <MenuItem
+      key={type.id}
+      value={type.id}
+      sx={{
+        padding: '10px 20px', // Adding padding for better spacing
+        fontSize: '16px', // Font size adjustment
+        '&:hover': {
+          backgroundColor: '#f0f0f0', // Light background color on hover
+        },
+        '&.Mui-selected': {
+          backgroundColor: '#3f51b5', // Highlight selected item with blue
+          color: 'white', // Text color when selected
+        },
+      }}
+    >
+      {type.productTypeName}
+    </MenuItem>
+  ))}
+</Select>
+
                           {errors.selectedProductType ? (
                             <FormHelperText>
                               {errors.selectedProductType.message}
@@ -292,48 +321,57 @@ export function ProductCreateForm() {
                   {selectedProductType && groupAttributesList.length > 0 ? <Grid item xs={12}>
                       <Typography variant="h6">Thuộc tính nhóm sản phẩm</Typography>
                       <Grid container spacing={2}>
-                        {groupAttributesList.map((attribute) => (
-                          <Grid item xs={12} sm={4} key={attribute.name}>
-                            <Controller
-                              control={control}
-                              name={`attributes.${attribute.name}`}
-                              render={({ field }) => (
-                                <FormControl fullWidth>
-                                  <InputLabel>{attribute.name}</InputLabel>
-                                  {attribute.type === "checkbox" ? (
-                                    <input
-                                      type="checkbox"
-                                      checked={attributesSelections[attribute.name] || false}
-                                      onChange={(e) => {
-                                        const value = e.target.checked;
-                                        field.onChange(value);
-                                        setAttributesSelections((prev) => ({
-                                          ...prev,
-                                          [attribute.name]: value,
-                                        }));
-                                      }}
-                                    />
-                                  ) : (
-                                    <OutlinedInput
-                                      {...field}
-                                      type={attribute.type}
-                                      placeholder={`Nhập ${attribute.name}`}
-                                      value={attributesSelections[attribute.name] || ""}
-                                      onChange={(e) => {
-                                        const value = e.target.value;
-                                        field.onChange(value);
-                                        setAttributesSelections((prev) => ({
-                                          ...prev,
-                                          [attribute.name]: value,
-                                        }));
-                                      }}
-                                    />
-                                  )}
-                                </FormControl>
-                              )}
-                            />
-                          </Grid>
-                        ))}
+                      {groupAttributesList.map((attribute) => (
+  <Grid item xs={12} sm={4} key={attribute.name}>
+    <Controller
+      control={control}
+      name={`attributes.${attribute.name}`}
+      render={({ field }) => (
+        <FormControl fullWidth>
+          <InputLabel>{attribute.label}</InputLabel> {/* Sử dụng attribute.label thay vì attribute.name */}
+          {attribute.type === "checkbox" ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
+              <input
+                type="checkbox"
+                checked={attributesSelections[attribute.name] || false}
+                onChange={(e) => {
+                  const value = e.target.checked;
+                  field.onChange(value);
+                  setAttributesSelections((prev) => ({
+                    ...prev,
+                    [attribute.name]: value,
+                  }));
+                }}
+                style={{
+                  marginRight: "8px", // Tạo khoảng cách giữa checkbox và nhãn
+                  transform: "scale(1.2)", // Tăng kích thước checkbox
+                }}
+              />
+              <Typography variant="body2">{attribute.label}</Typography> {/* Đưa nhãn vào dòng cùng với checkbox */}
+            </Box>
+          ) : (
+            <OutlinedInput
+              {...field}
+              type={attribute.type}
+              placeholder={`Nhập ${attribute.label}`}
+              value={attributesSelections[attribute.name] || ""}
+              onChange={(e) => {
+                const value = e.target.value;
+                field.onChange(value);
+                setAttributesSelections((prev) => ({
+                  ...prev,
+                  [attribute.name]: value,
+                }));
+              }}
+            />
+          )}
+        </FormControl>
+      )}
+    />
+  </Grid>
+))}
+
+                      
                       </Grid>
                     </Grid> : null}
                   <Grid item md={6} xs={12}>
@@ -347,18 +385,46 @@ export function ProductCreateForm() {
                         >
                           <InputLabel>Nhà cung cấp</InputLabel>
                           <Select
-                            {...field}
-                            value={field.value ?? ""}
-                          >
-                            <MenuItem value="" disabled>
-                              Chọn nhà cung cấp
-                            </MenuItem>
-                            {suppliers.map((supplier) => (
-                              <MenuItem key={supplier.id} value={supplier.id}>
-                                {supplier.supplyName}
-                              </MenuItem>
-                            ))}
-                          </Select>
+  {...field}
+  value={field.value ?? ""}
+  sx={{
+    backgroundColor: '#f5f5f5', // Lighter background color for Select
+    '&:hover': {
+      backgroundColor: '#e3e3e3', // Slightly darker on hover
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#3f51b5', // Blue border when focused
+    },
+    '& .MuiSelect-icon': {
+      color: '#3f51b5', // Icon color
+    },
+    fontSize: '16px', // Custom font size
+  }}
+>
+  <MenuItem value="" disabled sx={{ fontStyle: 'italic', color: '#888', margin: 'auto' }}>
+    Chọn nhà cung cấp
+  </MenuItem>
+  {suppliers.map((supplier) => (
+    <MenuItem
+      key={supplier.id}
+      value={supplier.id}
+      sx={{
+        padding: '10px 20px', // Adding padding to make the item clickable and have more space
+        fontSize: '16px', // Adjust font size
+        '&:hover': {
+          backgroundColor: '#f0f0f0', // Light background color on hover
+        },
+        '&.Mui-selected': {
+          backgroundColor: '#3f51b5', // Highlight selected option with blue
+          color: 'white', // Text color when selected
+        },
+      }}
+    >
+      {supplier.supplyName}
+    </MenuItem>
+  ))}
+</Select>
+
                           {errors.supplierId ? (
                             <FormHelperText>
                               {errors.supplierId.message}

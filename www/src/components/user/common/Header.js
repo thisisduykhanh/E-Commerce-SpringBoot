@@ -152,7 +152,7 @@ export default function Header() {
     </IconButton>
     <TextField
       variant="standard"
-      placeholder="Search..."
+      placeholder="Tìm kiếm sản phẩm ..."
       sx={{
         flex: 1,
         fontSize: "14px",

@@ -178,7 +178,8 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           Không có đơn hàng nào
         </Typography>
       ) : (
-        <Typography variant="h6" color="black" mb={2}>
+        <Typography variant="h5" sx={{ color: "#333", mb: 3 }}>
+
           Bạn có {orders.length} đơn hàng
         </Typography>
       )}
@@ -187,187 +188,255 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
         <Card
           key={index}
           sx={{
-            bgcolor: "#f9f9f9",
-            mb: 2,
-            boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)",
-            borderRadius: "12px",
+            bgcolor: "#fff",
+            mb: 3,
             border: "1px solid #e0e0e0",
+            borderRadius: "12px",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
+            transition: "0.3s",
+            "&:hover": {
+              boxShadow: "0px 8px 20px rgba(0, 166, 183, 0.15)",
+            },
           }}
         >
-          <CardContent>
-            <Grid
-              container
-              spacing={2}
-              flexDirection="column"
-              alignItems="left"
-              sx={{ maxWidth: 1200 }}
-            >
-              <Grid item sx={{ width: "100%" }}>
-                <Grid
-                  container
-                  alignItems="center"
-                  justifyContent="space-between"
-                  sx={{ color: "#000" }}
-                >
-                  <Grid item>
-                    <Grid container spacing={1} alignItems="center">
-                      <Grid item>
-                        <Typography variant="body2" color="black">
-                          Đặt lúc{" "}
-                          {Intl.DateTimeFormat("vi-VN", {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }).format(new Date(order.createDate))}
-                        </Typography>
-                      </Grid>
-                      <Grid item sx={{ maxWidth: 120 }}>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            color: "black",
-                          }}
-                        >
-                          {order.supplier.nameSupply}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: "bold",
-                        color: statusColorMap[order.orderStatus.name] || "text.primary",
-                      }}
-                    >
-                      {order.orderStatus.name}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
 
-              <Grid item xs={12} container spacing={2} alignItems="center">
-                <Grid item xs={12}>
-                  <Typography variant="body1" color="black">Order No #{order.id}</Typography>
-                </Grid>
-              </Grid>
-
-              {order.orderStatus.name === "PAID" && (
-                <Grid item xs={12} container spacing={2} alignItems="center">
-                  <Grid item xs={12}>
-                    <Typography variant="body1" color="black">
-                      Đã thanh toán bằng: {order.paymentMethod}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              )}
-
-              <Grid
-                item
-                xs={12}
-                container
-                alignItems="flex-end"
-                flexDirection="column"
+<CardContent sx={{ padding: { xs: "16px", sm: "20px", md: "24px" }, bgcolor: "#fff" }}>
+  <Grid
+    container
+    spacing={2}
+    direction="column"
+    sx={{ maxWidth: 1200, color: "#1a1a1a" }}
+  >
+    {/* Header: Date, Supplier, and Status */}
+    <Grid item sx={{ width: "100%" }}>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{
+          bgcolor: "#f0f7ff",
+          borderRadius: "10px",
+          padding: { xs: "12px", sm: "16px" },
+          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+        }}
+      >
+        <Grid item>
+          <Grid container spacing={1.5} alignItems="center">
+            <Grid item>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: { xs: "13px", sm: "14px" }, color: "#1a1a1a" }}
               >
-                <Grid item>
-                  <Typography variant="body1" fontWeight="bold" color="black">
-                    Tổng số tiền:{" "}
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(order?.totalPrice)}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ mt: 1 }}>
-                  {order.orderStatus.name === "PAID" && !order.reviewed ? (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="success"
-                      sx={{
-                        mr: 3,
-                        bgcolor: "#388E3C",
-                        "&:hover": { bgcolor: "#2C6B34" },
-                        borderRadius: "8px",
-                      }}
-                      onClick={() => handleOpenReviewForm(order.id)}
-                    >
-                      Review
-                    </Button>
-                  ) : order.orderStatus.name === "PAID" && order.reviewed ? (
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mr: 3 }}
-                    >
-                      Đã đánh giá
-                    </Typography>
-                  ) : null}
-
-                  {order.orderStatus.name === "PENDING" && (
-                    <>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="primary"
-                        sx={{
-                          mr: 3,
-                          bgcolor: "#1976D2",
-                          "&:hover": { bgcolor: "#1565C0" },
-                          borderRadius: "8px",
-                        }}
-                        onClick={() => handleOpenPaymentModal(order.id)}
-                      >
-                        Thanh toán
-                      </Button>
-
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="error"
-                        sx={{
-                          mr: 3,
-                          borderColor: "#D32F2F",
-                          color: "#D32F2F",
-                          "&:hover": {
-                            borderColor: "#C62828",
-                            color: "#C62828",
-                          },
-                          borderRadius: "8px",
-                        }}
-                        onClick={() => onCancelOrder(order.id)}
-                      >
-                        Hủy đơn
-                      </Button>
-                    </>
-                  )}
-
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => handleViewDetail(order.id)}
-                    sx={{
-                      borderColor: "#00A6B7",
-                      color: "#00A6B7",
-                      "&:hover": {
-                        borderColor: "#0097A7",
-                        color: "#0097A7",
-                      },
-                      borderRadius: "8px",
-                    }}
-                  >
-                    View detail
-                  </Button>
-                </Grid>
-              </Grid>
+                Đặt lúc{" "}
+                {Intl.DateTimeFormat("vi-VN", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }).format(new Date(order.createDate))}
+              </Typography>
             </Grid>
-          </CardContent>
+            <Grid item sx={{ maxWidth: { xs: 150, sm: 250 } }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: "13px", sm: "14px" },
+                  color: "#1a1a1a",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {order.supplier.nameSupply}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: "bold",
+              fontSize: { xs: "13px", sm: "14px" },
+              color: statusColorMap[order.orderStatus.name] || "#1a1a1a",
+      
+              padding: "4px 12px",
+              borderRadius: "16px",
+            }}
+          >
+            {order.orderStatus.name}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+
+    {/* Order Number */}
+    <Grid item xs={12}>
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: "bold",
+          fontSize: { xs: "18px", sm: "20px" },
+          color: "#1a1a1a",
+          mt: "12px",
+        }}
+      >
+        Mã đơn hàng #{order.id}
+      </Typography>
+    </Grid>
+
+    {/* Payment Method (if PAID) */}
+    {order.orderStatus.name === "PAID" && (
+      <Grid item xs={12}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "15px", sm: "16px" },
+            color: "#1a1a1a",
+            mt: "8px",
+          }}
+        >
+          Đã thanh toán bằng: {order.paymentMethod}
+        </Typography>
+      </Grid>
+    )}
+
+    {/* Total Price and Actions */}
+    <Grid
+      item
+      xs={12}
+      container
+      direction="column"
+      alignItems="flex-end"
+      sx={{ mt: "16px" }}
+    >
+      <Grid item>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "18px", sm: "20px" },
+            color: "#1a1a1a",
+          }}
+        >
+          Tổng số tiền:{" "}
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(order?.totalPrice)}
+        </Typography>
+      </Grid>
+      <Grid
+        item
+        sx={{
+          mt: "12px",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          justifyContent: "flex-end",
+        }}
+      >
+        {order.orderStatus.name === "PAID" && !order.reviewed ? (
+          <Button
+            variant="contained"
+            size="small"
+            sx={{
+              bgcolor: "#2e7d32",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+              borderRadius: "20px",
+              padding: "8px 20px",
+              "&:hover": { bgcolor: "#27632a" },
+              textTransform: "none",
+            }}
+            onClick={() => handleOpenReviewForm(order.id)}
+          >
+            Đánh giá
+          </Button>
+        ) : order.orderStatus.name === "PAID" && order.reviewed ? (
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#757575",
+              fontSize: "14px",
+              fontStyle: "italic",
+              alignSelf: "center",
+            }}
+          >
+            Đã đánh giá
+          </Typography>
+        ) : null}
+
+        {order.orderStatus.name === "PENDING" && (
+          <>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                bgcolor: "#0288d1",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "14px",
+                borderRadius: "20px",
+                padding: "8px 20px",
+                "&:hover": { bgcolor: "#0277bd" },
+                textTransform: "none",
+              }}
+              onClick={() => handleOpenPaymentModal(order.id)}
+            >
+              Thanh toán
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                borderColor: "#d32f2f",
+                color: "#d32f2f",
+                fontWeight: "bold",
+                fontSize: "14px",
+                borderRadius: "20px",
+                padding: "8px 20px",
+                "&:hover": {
+                  borderColor: "#b71c1c",
+                  color: "#b71c1c",
+                  bgcolor: "#d32f2f0a",
+                },
+                textTransform: "none",
+              }}
+              onClick={() => onCancelOrder(order.id)}
+            >
+              Hủy đơn
+            </Button>
+          </>
+        )}
+
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{
+            borderColor: "#00a6b7",
+            color: "#00a6b7",
+            fontWeight: "bold",
+            fontSize: "14px",
+            borderRadius: "20px",
+            padding: "8px 20px",
+            "&:hover": {
+              borderColor: "#00838f",
+              color: "#00838f",
+              bgcolor: "#00a6b70a",
+            },
+            textTransform: "none",
+          }}
+          onClick={() => handleViewDetail(order.id)}
+        >
+          Xem chi tiết
+        </Button>
+      </Grid>
+    </Grid>
+  </Grid>
+</CardContent>
         </Card>
       ))}
 
@@ -537,7 +606,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                       }}
                     />
                     <span style={{ fontSize: "1rem", fontWeight: 500 }}>
-                      Thanh toán qua ví ZaloPay 
+                      Thanh toán qua ví ZaloPay
                     </span>
                   </Box>
                 }
@@ -597,7 +666,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
               </Box>
             )}
 
-            {(paymentMethod === "eWallet" ) && (
+            {(paymentMethod === "eWallet") && (
               <Box mt={3} textAlign="center">
                 <Typography variant="h6" mb={2}>
                   Quét mã QR ZaloPay để thanh toán
