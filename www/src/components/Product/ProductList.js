@@ -92,7 +92,7 @@ function ProductList({
         flexDirection: 'column',
       }}
     >
-      <Grid container spacing={3} justifyContent="center" wrap="wrap"> {/* Thêm khoảng cách giữa các sản phẩm */}
+      <Grid container spacing={3} justifyContent="center" wrap="wrap" minHeight={"70vh"}>  {/* Thêm khoảng cách giữa các sản phẩm */}
         {products.map((product) => {
           const formattedPrices = Intl.NumberFormat("vi-VN", {
             style: "currency",

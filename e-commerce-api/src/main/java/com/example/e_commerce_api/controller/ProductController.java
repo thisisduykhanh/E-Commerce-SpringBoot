@@ -49,6 +49,52 @@ public class ProductController {
     private ProductTypeService productTypeService;
 
 
+    /**
+     * API: Lấy danh sách sản phẩm theo productTypeId.
+     *
+     * Phương thức này thực hiện các bước sau:
+     * 1. Nhận `productTypeId` từ đường dẫn API thông qua `@PathVariable`.
+     * 2. Gọi `productService.searchProducts()` để lấy danh sách sản phẩm thuộc loại sản phẩm được chỉ định.
+     * 3. Chuyển đổi danh sách sản phẩm sang `ProductDTO` sử dụng `productMapper`.
+     * 4. Trả về phản hồi API:
+     *    - Nếu thành công: Tạo `ApiResponse` với danh sách sản phẩm và trạng thái thành công.
+     *    - Nếu xảy ra lỗi: Trả về thông báo lỗi với mã trạng thái phù hợp.
+     *
+     * @param productTypeId ID của loại sản phẩm.
+     * @param page Số trang (mặc định = 0).
+     * @param size Số lượng kết quả mỗi trang (mặc định = 10).
+     * @return ResponseEntity<ApiResponse<List<ProductDTO>>> Danh sách sản phẩm thuộc loại sản phẩm.
+     */
+    @GetMapping("/by-type/{productTypeId}")
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> getProductsByType(
+            @PathVariable Integer productTypeId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            // Tìm kiếm sản phẩm theo productTypeId
+            Page<Product> products = productService.searchProducts(
+                    productTypeId, null, null, null, null, null, page, size);
+
+            // Chuyển đổi sang ProductDTO
+            Page<ProductDTO> productDTOs = products.map(product -> {
+                List<Image> images = imageService.getImageByProduct(product);
+                return productMapper.toProductDTO(product, images);
+            });
+
+            // Tạo response
+            ApiResponse<List<ProductDTO>> response = new ApiResponse<>(
+                    true, "Products retrieved successfully", productDTOs.getContent(), null);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException ex) {
+            ApiResponse<List<ProductDTO>> response = new ApiResponse<>(
+                    false, ex.getMessage(), null, null);
+            return ResponseEntity.status(404).body(response);
+        } catch (Exception ex) {
+            ApiResponse<List<ProductDTO>> response = new ApiResponse<>(
+                    false, "Error retrieving products: " + ex.getMessage(), null, null);
+            return ResponseEntity.status(500).body(response);
+        }
+    }
 
     /**
      * API: Lấy thông tin chi tiết sản phẩm theo ID.

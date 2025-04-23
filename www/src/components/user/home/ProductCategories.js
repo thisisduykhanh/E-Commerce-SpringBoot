@@ -11,22 +11,27 @@ function ProductCategories() {
         {
             name: 'Laptop',
             image: '/img/image/category/Product_5.png',
-            url: '/products/headphones',
+            url: '/user/products/1',
         },
         {
             name: 'Máy tính bảng',
             image: '/img/image/category/tablet.png',
-            url: '/products/phones',
+            url: '/user/products/2',
         },
         {
             name: 'Điện thoại',
             image: '/img/image/category/phone.png',
-            url: '/products/laptops',
+            url: '/user/products/3',
         },
         {
             name: 'Tai nghe',
             image: '/img/image/category/headphone-cat.jpg',
-            url: '/products/tablets',
+            url: '/user/products/4',
+        },
+        {
+            name: 'Đồng hồ thông minh',
+            image: '/img/image/category/smw.png',
+            url: '/user/products/5',
         }
     ];
 

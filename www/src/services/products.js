@@ -80,3 +80,13 @@ export const getMyOrder = async (status, page, size) => {
 
 
 // 1 accept 2 pending 3 completed
+export const getProductsByType = async (type, page = 0, size = 10) => {
+	try {
+		const response = await apiClient.get(
+			`/products/by-type/${type}?page=${page}&size=${size}`,
+		);
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
