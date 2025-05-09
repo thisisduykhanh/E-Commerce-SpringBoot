@@ -6,8 +6,7 @@ export const layoutConfig = {
             key: 'dashboards',
             title: 'Bảng điều khiển',
             items: [
-                { key: 'overview', title: 'Tổng quan', href: paths.dashboard.overview, icon: 'house' },
-                { key: 'analytics', title: 'Phân tích', href: paths.dashboard.analytics, icon: 'chart-pie' },
+                { key: 'analytics', title: 'Tổng quan', href: paths.dashboard.analytics, icon: 'house' },
                 { key: 'ecommerce', title: 'Thương mại điện tử', href: paths.dashboard.eCommerce, icon: 'cube' },
             ],
         },
@@ -28,7 +27,6 @@ export const layoutConfig = {
                     icon: 'users',
                     items: [
                         { key: 'customers', title: 'Danh sách khách hàng', href: paths.dashboard.customers.list },
-                        { key: 'customers:create', title: 'Tạo khách hàng', href: paths.dashboard.customers.create },
                        
                     ],
                 },

@@ -129,7 +129,7 @@ export function CustomerCreateForm() {
                 <CardContent>
                     <Stack divider={<Divider />} spacing={4}>
                         <Stack spacing={3}>
-                            <Typography variant="h6">Account information</Typography>
+                            <Typography variant="h6">Thông tin tài khoản</Typography>
                             <Grid container spacing={3}>
                                 <Grid size={12}>
                                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
@@ -157,7 +157,7 @@ export function CustomerCreateForm() {
                                             </Avatar>
                                         </Box>
                                         <Stack spacing={1} sx={{ alignItems: 'flex-start' }}>
-                                            <Typography variant="subtitle1">Avatar</Typography>
+                                            <Typography variant="subtitle1">Ảnh đại diện</Typography>
                                             <Typography variant="caption">Min 400x400px, PNG or JPEG</Typography>
                                             <Button
                                                 color="secondary"
@@ -166,7 +166,7 @@ export function CustomerCreateForm() {
                                                 }}
                                                 variant="outlined"
                                             >
-                                                Select
+                                                Chọn
                                             </Button>
                                             <input
                                                 hidden
@@ -188,7 +188,7 @@ export function CustomerCreateForm() {
                                         name="name"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.name)} fullWidth>
-                                                <InputLabel required>Name</InputLabel>
+                                                <InputLabel required>Tên</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.name ? (
                                                     <FormHelperText>{errors.name.message}</FormHelperText>
@@ -208,7 +208,7 @@ export function CustomerCreateForm() {
                                         name="email"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.email)} fullWidth>
-                                                <InputLabel required>Email address</InputLabel>
+                                                <InputLabel required>Email</InputLabel>
                                                 <OutlinedInput {...field} type="email" />
                                                 {errors.email ? (
                                                     <FormHelperText>{errors.email.message}</FormHelperText>
@@ -228,7 +228,7 @@ export function CustomerCreateForm() {
                                         name="phone"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.phone)} fullWidth>
-                                                <InputLabel required>Phone number</InputLabel>
+                                                <InputLabel required>Số điện thoại</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.phone ? (
                                                     <FormHelperText>{errors.phone.message}</FormHelperText>
@@ -248,7 +248,7 @@ export function CustomerCreateForm() {
                                         name="company"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.company)} fullWidth>
-                                                <InputLabel>Company</InputLabel>
+                                                <InputLabel>Công ty</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.company ? (
                                                     <FormHelperText>{errors.company.message}</FormHelperText>

@@ -129,7 +129,7 @@ export function CustomerCreateForm() {
                 <CardContent>
                     <Stack divider={<Divider />} spacing={4}>
                         <Stack spacing={3}>
-                            <Typography variant="h6">Account information</Typography>
+                            <Typography variant="h6">Thông tin tài khoản</Typography>
                             <Grid container spacing={3}>
                                 <Grid size={12}>
                                     <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
@@ -157,7 +157,7 @@ export function CustomerCreateForm() {
                                             </Avatar>
                                         </Box>
                                         <Stack spacing={1} sx={{ alignItems: 'flex-start' }}>
-                                            <Typography variant="subtitle1">Avatar</Typography>
+                                            <Typography variant="subtitle1">Ảnh đại diện</Typography>
                                             <Typography variant="caption">Min 400x400px, PNG or JPEG</Typography>
                                             <Button
                                                 color="secondary"
@@ -188,7 +188,7 @@ export function CustomerCreateForm() {
                                         name="name"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.name)} fullWidth>
-                                                <InputLabel required>Name</InputLabel>
+                                                <InputLabel required>Tên</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.name ? (
                                                     <FormHelperText>{errors.name.message}</FormHelperText>
@@ -208,7 +208,7 @@ export function CustomerCreateForm() {
                                         name="email"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.email)} fullWidth>
-                                                <InputLabel required>Email address</InputLabel>
+                                                <InputLabel required>Email</InputLabel>
                                                 <OutlinedInput {...field} type="email" />
                                                 {errors.email ? (
                                                     <FormHelperText>{errors.email.message}</FormHelperText>
@@ -228,7 +228,7 @@ export function CustomerCreateForm() {
                                         name="phone"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.phone)} fullWidth>
-                                                <InputLabel required>Phone number</InputLabel>
+                                                <InputLabel required>Số điện thoại</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.phone ? (
                                                     <FormHelperText>{errors.phone.message}</FormHelperText>
@@ -248,7 +248,7 @@ export function CustomerCreateForm() {
                                         name="company"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.company)} fullWidth>
-                                                <InputLabel>Company</InputLabel>
+                                                <InputLabel>Tên công ty</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.company ? (
                                                     <FormHelperText>{errors.company.message}</FormHelperText>
@@ -260,7 +260,7 @@ export function CustomerCreateForm() {
                             </Grid>
                         </Stack>
                         <Stack spacing={3}>
-                            <Typography variant="h6">Billing information</Typography>
+                            <Typography variant="h6">Thông tin thanh toán</Typography>
                             <Grid container spacing={3}>
                                 <Grid
                                     size={{
@@ -286,7 +286,7 @@ export function CustomerCreateForm() {
                                                         error={Boolean(errors.billingAddress?.country)}
                                                         fullWidth
                                                     >
-                                                        <InputLabel required>Country</InputLabel>
+                                                        <InputLabel required>Quốc gia</InputLabel>
                                                         <OutlinedInput
                                                             inputProps={params.inputProps}
                                                             ref={params.InputProps.ref}
@@ -319,7 +319,7 @@ export function CustomerCreateForm() {
                                         name="billingAddress.state"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.billingAddress?.state)} fullWidth>
-                                                <InputLabel required>State</InputLabel>
+                                                <InputLabel required>Tình trạng</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.state ? (
                                                     <FormHelperText>
@@ -341,7 +341,7 @@ export function CustomerCreateForm() {
                                         name="billingAddress.city"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.billingAddress?.city)} fullWidth>
-                                                <InputLabel required>City</InputLabel>
+                                                <InputLabel required>Thành phố</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.city ? (
                                                     <FormHelperText>
@@ -388,7 +388,7 @@ export function CustomerCreateForm() {
                                         name="billingAddress.line1"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.billingAddress?.line1)} fullWidth>
-                                                <InputLabel required>Address</InputLabel>
+                                                <InputLabel required>Địa chỉ</InputLabel>
                                                 <OutlinedInput {...field} />
                                                 {errors.billingAddress?.line1 ? (
                                                     <FormHelperText>
@@ -429,7 +429,7 @@ export function CustomerCreateForm() {
                             />
                         </Stack>
                         <Stack spacing={3}>
-                            <Typography variant="h6">Additional information</Typography>
+                            <Typography variant="h6">Thông tin bổ sung</Typography>
                             <Grid container spacing={3}>
                                 <Grid
                                     size={{
@@ -442,7 +442,7 @@ export function CustomerCreateForm() {
                                         name="timezone"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.timezone)} fullWidth>
-                                                <InputLabel required>Timezone</InputLabel>
+                                                <InputLabel required>Múi giờ</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a timezone</Option>
                                                     <Option value="new_york">US - New York</Option>
@@ -467,7 +467,7 @@ export function CustomerCreateForm() {
                                         name="language"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.language)} fullWidth>
-                                                <InputLabel required>Language</InputLabel>
+                                                <InputLabel required>Ngôn ngữ</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a language</Option>
                                                     <Option value="en">English</Option>
@@ -492,7 +492,7 @@ export function CustomerCreateForm() {
                                         name="currency"
                                         render={({ field }) => (
                                             <FormControl error={Boolean(errors.currency)} fullWidth>
-                                                <InputLabel>Currency</InputLabel>
+                                                <InputLabel>Mệnh giá</InputLabel>
                                                 <Select {...field}>
                                                     <Option value="">Select a currency</Option>
                                                     <Option value="USD">USD</Option>

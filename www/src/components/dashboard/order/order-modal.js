@@ -53,7 +53,7 @@ export function OrderModal({ open }) {
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-      <DialogTitle>Order Detail</DialogTitle>
+      <DialogTitle>Chi tiết đơn hàng</DialogTitle>
       <DialogContent dividers>
         {orderDetail ? (
           orderDetail.map((item, index) => (
@@ -64,7 +64,7 @@ export function OrderModal({ open }) {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="h6" fontWeight="bold">
-                    Product Details
+                    Chi tiết sảnp phẩm
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -74,17 +74,17 @@ export function OrderModal({ open }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>Product ID:</strong> {item.productId}
+                    <strong>Mã sản phẩm:</strong> {item.productId}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>Product Name:</strong> {item.productName}
+                    <strong>Tên sản phẩm:</strong> {item.productName}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>Price:</strong>{" "}
+                    <strong>Giá:</strong>{" "}
                     {new Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
@@ -93,12 +93,12 @@ export function OrderModal({ open }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>Quantity:</strong> {item.quantity}
+                    <strong>Số lượng:</strong> {item.quantity}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>Total Price:</strong>{" "}
+                    <strong>Tổng số tiền:</strong>{" "}
                     {new Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
@@ -112,11 +112,11 @@ export function OrderModal({ open }) {
             </Box>
           ))
         ) : (
-          <Typography>Loading...</Typography>
+          <Typography>Đang tải...</Typography>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose}>Đóng</Button>
       </DialogActions>
     </Dialog>
   );

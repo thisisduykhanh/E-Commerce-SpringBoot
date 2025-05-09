@@ -60,7 +60,7 @@ React.useEffect(() => {
             sx={{
                 maxWidth: 'var(--Content-maxWidth)',
                 m: 'var(--Content-margin)',
-                p: 'var(--Content-padding)',
+                p: '20px',
                 width: 'var(--Content-width)',
             }}
         >
@@ -75,11 +75,11 @@ React.useEffect(() => {
                             variant="subtitle2"
                         >
                             <ArrowLeftIcon fontSize="var(--icon-fontSize-md)" />
-                            Products
+                            Danh sách sản phẩm
                         </Link>
                     </div>
                     <div>
-                        <Typography variant="h4">Edit product</Typography>
+                        <Typography variant="h4">Chỉnh sửa sản phẩm</Typography>
                     </div>
                 </Stack>
                 <ProductEditForm

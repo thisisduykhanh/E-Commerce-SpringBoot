@@ -59,8 +59,8 @@ export function InvoicesSort({ filters = {}, sortDir = 'desc', view }) {
 
     return (
         <Select name="sort" onChange={handleSortChange} sx={{ maxWidth: '100%', width: '120px' }} value={sortDir}>
-            <Option value="desc">Newest</Option>
-            <Option value="asc">Oldest</Option>
+            <Option value="desc">Mới nhất</Option>
+            <Option value="asc">Cũ nhất</Option>
         </Select>
     );
 }

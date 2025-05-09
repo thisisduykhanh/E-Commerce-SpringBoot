@@ -278,4 +278,34 @@ public class ProductController {
 //
 //    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable Integer id) {
+        try {
+            productService.deleteProduct(id);
+            ApiResponse<String> response = new ApiResponse<>(
+                    true,
+                    "Xóa sản phẩm thành công (đã đánh dấu không hoạt động)",
+                    "Đã xử lý xóa mềm sản phẩm với ID: " + id,
+                    null
+            );
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            ApiResponse<String> response = new ApiResponse<>(
+                    false,
+                    "Không tìm thấy sản phẩm với ID: " + id,
+                    null,
+                    null
+            );
+            return ResponseEntity.status(404).body(response);
+        } catch (Exception e) {
+            ApiResponse<String> response = new ApiResponse<>(
+                    false,
+                    "Lỗi khi xóa sản phẩm: " + e.getMessage(),
+                    null,
+                    null
+            );
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
 }

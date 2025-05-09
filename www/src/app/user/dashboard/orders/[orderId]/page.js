@@ -168,7 +168,7 @@ export default function Page() {
                                                                     weight="fill"
                                                                 />
                                                             }
-                                                            label="Completed"
+                                                            label="Thành công"
                                                             size="small"
                                                             variant="outlined"
                                                         />

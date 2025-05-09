@@ -127,8 +127,8 @@ export function Table6() {
                         sx={{ flex: '1 1 auto' }}
                     />
                     <Select defaultValue="desc" name="sort" sx={{ maxWidth: '100%', width: '120px' }}>
-                        <Option value="desc">Newest</Option>
-                        <Option value="asc">Oldest</Option>
+                        <Option value="desc">Mới nhất</Option>
+                        <Option value="asc">Cũ nhất</Option>
                     </Select>
                     <Select defaultValue="all" name="sort" sx={{ maxWidth: '100%', width: '120px' }}>
                         <Option value="all">All</Option>

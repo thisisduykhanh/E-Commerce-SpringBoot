@@ -169,6 +169,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
   const handleCloseReviewForm = () => {
     setReviewOrderId(null);
+    window.location.reload(); // Reload the page to reflect the review submission 
   };
 
   return (
@@ -442,7 +443,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
 
       {/* Detail Modal */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>Order Detail</DialogTitle>
+        <DialogTitle>Chi tiết đơn hàng</DialogTitle>
         <DialogContent dividers>
           {selectedOrder ? (
             selectedOrder.map((item, index) => (
@@ -453,27 +454,27 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <Typography variant="h6" fontWeight="bold">
-                      Product Details
+                      Chi tiết sản phẩm
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>ID:</strong> {item.id}
+                      <strong>Mã đơn hàng:</strong> {item.id}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>Product ID:</strong> {item.productId}
+                      <strong>Mã sản phẩm:</strong> {item.productId}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>Product Name:</strong> {item.productName}
+                      <strong>Tên sản phẩm:</strong> {item.productName}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>Price:</strong>{" "}
+                      <strong>Đơn giá:</strong>{" "}
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
@@ -482,12 +483,12 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>Quantity:</strong> {item.quantity}
+                      <strong>Số lượng:</strong> {item.quantity}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="body2" color="text.secondary">
-                      <strong>Total Price:</strong>{" "}
+                      <strong>Tổng số tiền:</strong>{" "}
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
@@ -501,7 +502,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
               </Box>
             ))
           ) : (
-            <Typography>Loading...</Typography>
+            <Typography>Đang tải...</Typography>
           )}
         </DialogContent>
         <DialogActions>
@@ -511,7 +512,7 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           >
             Xuất hóa đơn
           </Button>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Đóng</Button>
         </DialogActions>
       </Dialog>
 
@@ -785,12 +786,11 @@ function OrderCard({ orders, onCancelOrder, onPayment }) {
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Write a Review</DialogTitle>
           <DialogContent>
             <ReviewForm order={reviewOrderId} orderIdViewed={orderIdViewed} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseReviewForm}>Close</Button>
+            <Button onClick={handleCloseReviewForm}>Đóng</Button>
           </DialogActions>
         </Dialog>
       ) : null}

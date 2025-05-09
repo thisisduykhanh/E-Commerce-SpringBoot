@@ -81,7 +81,7 @@ function Page() {
   return (
     <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
-        Invoices
+        Danh sách hóa đơn
       </Typography>
       <TableContainer component={Paper} sx={{ marginBottom: "20px" }}>
         <Table>
@@ -91,16 +91,16 @@ function Page() {
                 <strong>ID</strong>
               </TableCell>
               <TableCell>
-                <strong>User ID</strong>
+                <strong>Mã khách hàng</strong>
               </TableCell>
               <TableCell>
-                <strong>Created At</strong>
+                <strong>Tạo lúc</strong>
               </TableCell>
               <TableCell>
-                <strong>Total Price</strong>
+                <strong>Tổng giá tiền</strong>
               </TableCell>
               <TableCell>
-                <strong>Actions</strong>
+                <strong>Hành động</strong>
               </TableCell>
             </TableRow>
           </TableHead>

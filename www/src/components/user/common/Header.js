@@ -29,6 +29,7 @@ import { useCart } from "@/contexts/CartContext";
 export default function Header() {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [user, setUser] = React.useState(null);
+  const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
 
   // const [cartQuantity, setCartQuantity] = React.useState(0);
@@ -90,164 +91,174 @@ export default function Header() {
     setSelectedTab(newValue);
   };
 
+  const handleSearchKeyPress = (event) => {
+    if (event.key === "Enter" && searchQuery.trim()) {
+      router.push(`/user/search?query=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery(""); // Clear search input after submission
+    }
+  };
+
   return (
     <AppBar
-  position="static"
-  sx={{
-    background: "#ffffff !important",
-    boxShadow: "none",
-    padding: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-  }}
->
-  <Toolbar
-  sx={{
-    justifyContent: "space-between",
-    backgroundColor: "#00A6B7",
-    minHeight: "60px",
-    flexWrap: "wrap",
-    paddingX: "0 !important",
-    display: "flex",
-    alignItems: "center",
-  }}
->
-  {/* Logo section */}
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-start",
-      marginRight: "20px",
-    }}
-  >
-    <Button onClick={() => router.push("/user")}>
-      <img
-        src="/img/image/logo/1.png"
-        alt="Logo"
-        style={{ height: "60px", width: "auto", cursor: "pointer" }}
-      />
-    </Button>
-  </Box>
-
-  {/* Search bar section */}
-  <Box
-    sx={{
-      padding: 0,
-      display: "flex",
-      alignItems: "center",
-      width: { xs: "100%", sm: "50%" },
-      maxWidth: "600px",
-      backgroundColor: "#F3F9FB",
-      borderRadius: "8px",
-      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      justifyContent: "center",
-      marginTop: { xs: "10px", sm: "0" },
-      marginRight: "20px",
-      flexGrow: 1,  // Allow search bar to take up remaining space
-    }}
-  >
-    <IconButton>
-      <SearchIcon sx={{ color: "#00A6B7" }} />
-    </IconButton>
-    <TextField
-      variant="standard"
-      placeholder="Tìm kiếm sản phẩm ..."
+      position="static"
       sx={{
-        flex: 1,
-        fontSize: "14px",
-        color: "black",
-        "& .MuiInputBase-input": { color: "black" },
-        "& .MuiInputBase-root": { borderBottom: "none !important" },
-        "& .MuiInput-root:before, & .MuiInput-root:after": {
-          display: "none",
-        },
+        background: "#ffffff !important",
+        boxShadow: "none",
+        padding: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
       }}
-    />
-  </Box>
-
-  {/* Buttons section */}
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-      flexWrap: "wrap",
-      marginTop: { xs: "10px", sm: "0" },
-      gap: "20px",
-    }}
-  >
-    {user && (
-      <>
-        <Button
-          variant="text"
-          startIcon={<LocalShippingIcon sx={{ color: "white" }} />}
-          onClick={() => router.push("/user/order-history")}
+    >
+      <Toolbar
+        sx={{
+          justifyContent: "space-between",
+          backgroundColor: "#00A6B7",
+          minHeight: "60px",
+          flexWrap: "wrap",
+          paddingX: "0 !important",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        {/* Logo section */}
+        <Box
           sx={{
-            color: "white !important",
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: "16px",
-          }}
-        >
-          Kiểm tra đơn hàng
-        </Button>
-      </>
-    )}
-    {user ? (
-      <>
-        <Button
-          variant="text"
-          onClick={() => router.push("/user/cart")}
-          startIcon={
-            <Badge badgeContent={cartQuantity} color="error" overlap="rectangular">
-              <ShoppingCartIcon sx={{ color: "white" }} />
-            </Badge>
-          }
-          sx={{
-            color: "white !important",
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: "16px",
-          }}
-        >
-          Giỏ hàng
-        </Button>
-        <Button
-          onClick={handleLogout}
-          sx={{
-            color: "white !important",
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
             marginRight: "20px",
           }}
         >
-          <ExitToAppIcon sx={{ color: "white" }} />
-          Đăng xuất
-        </Button>
-      </>
-    ) : (
-      <Button
-        variant="text"
-        onClick={() => router.push("/auth/custom/sign-in")}
-        startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
-        sx={{
-          color: "white !important",
-          textTransform: "none",
-          fontWeight: "bold",
-          fontSize: "16px",
-          marginRight: "20px",
-        }}
-      >
-        Đăng nhập
-      </Button>
-    )}
-  </Box>
-</Toolbar>
+          <Button onClick={() => router.push("/user")}>
+            <img
+              src="/img/image/logo/1.png"
+              alt="Logo"
+              style={{ height: "60px", width: "auto", cursor: "pointer" }}
+            />
+          </Button>
+        </Box>
 
-  <CategoryMenu selectedTab={selectedTab} handleTabChange={handleTabChange} />
-</AppBar>
+        {/* Search bar section */}
+        <Box
+          sx={{
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
+            width: { xs: "100%", sm: "50%" },
+            maxWidth: "600px",
+            backgroundColor: "#F3F9FB",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            justifyContent: "center",
+            marginTop: { xs: "10px", sm: "0" },
+            marginRight: "20px",
+            flexGrow: 1,  // Allow search bar to take up remaining space
+          }}
+        >
+          <IconButton>
+            <SearchIcon sx={{ color: "#00A6B7" }} />
+          </IconButton>
+          <TextField
+            variant="standard"
+            placeholder="Tìm kiếm sản phẩm ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleSearchKeyPress}
+            sx={{
+              flex: 1,
+              fontSize: "14px",
+              color: "black",
+              "& .MuiInputBase-input": { color: "black" },
+              "& .MuiInputBase-root": { borderBottom: "none !important" },
+              "& .MuiInput-root:before, & .MuiInput-root:after": {
+                display: "none",
+              },
+            }}
+          />
+        </Box>
+
+        {/* Buttons section */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            flexWrap: "wrap",
+            marginTop: { xs: "10px", sm: "0" },
+            gap: "20px",
+          }}
+        >
+          {user && (
+            <>
+              <Button
+                variant="text"
+                startIcon={<LocalShippingIcon sx={{ color: "white" }} />}
+                onClick={() => router.push("/user/order-history")}
+                sx={{
+                  color: "white !important",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Kiểm tra đơn hàng
+              </Button>
+            </>
+          )}
+          {user ? (
+            <>
+              <Button
+                variant="text"
+                onClick={() => router.push("/user/cart")}
+                startIcon={
+                  <Badge badgeContent={cartQuantity} color="error" overlap="rectangular">
+                    <ShoppingCartIcon sx={{ color: "white" }} />
+                  </Badge>
+                }
+                sx={{
+                  color: "white !important",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Giỏ hàng
+              </Button>
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  color: "white !important",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  marginRight: "20px",
+                }}
+              >
+                <ExitToAppIcon sx={{ color: "white" }} />
+                Đăng xuất
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="text"
+              onClick={() => router.push("/auth/custom/sign-in")}
+              startIcon={<PersonIcon sx={{ color: "#00A6B7" }} />}
+              sx={{
+                color: "white !important",
+                textTransform: "none",
+                fontWeight: "bold",
+                fontSize: "16px",
+                marginRight: "20px",
+              }}
+            >
+              Đăng nhập
+            </Button>
+          )}
+        </Box>
+      </Toolbar>
+
+      <CategoryMenu selectedTab={selectedTab} handleTabChange={handleTabChange} />
+    </AppBar>
 
   );
 }

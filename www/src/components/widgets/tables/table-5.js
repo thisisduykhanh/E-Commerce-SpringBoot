@@ -182,8 +182,8 @@ export function Table5() {
                         sx={{ maxWidth: '100%', width: '500px' }}
                     />
                     <Select defaultValue="desc" name="sort" sx={{ maxWidth: '100%', width: '240px' }}>
-                        <Option value="desc">Newest</Option>
-                        <Option value="asc">Oldest</Option>
+                        <Option value="desc">Mới nhất</Option>
+                        <Option value="asc">Cũ nhất</Option>
                     </Select>
                     <Select defaultValue="" name="category" sx={{ maxWidth: '100%', width: '240px' }}>
                         <Option value="">All categories</Option>

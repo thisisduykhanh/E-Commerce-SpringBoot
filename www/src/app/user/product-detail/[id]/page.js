@@ -451,6 +451,7 @@ function ProductDetailPage() {
                   color: "#00A6B7",
                   borderRadius: "6px",
                   padding: "4px 12px",
+                  textAlign: "center",
                 }}
               >
                 Còn hàng

@@ -49,14 +49,14 @@ export default function Page({ searchParams }) {
                 sx={{
                     maxWidth: 'var(--Content-maxWidth)',
                     m: 'var(--Content-margin)',
-                    p: 'var(--Content-padding)',
+                    p: '20px',
                     width: 'var(--Content-width)',
                 }}
             >
                 <Stack spacing={4}>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} sx={{ alignItems: 'flex-start' }}>
                         <Box sx={{ flex: '1 1 auto' }}>
-                            <Typography variant="h4">Đặt hàng</Typography>
+                            <Typography variant="h4">Đơn hàng</Typography>
                         </Box>
                        
                     </Stack>
