@@ -115,11 +115,10 @@ function OrderHistory() {
 
 
     return (
-        <Box justifyContent="center" bgcolor="#fff">
-            <Grid container spacing={28}>
-                <Grid item xs={12} sm={2} md={2} />
+        <Box justifyContent="center" bgcolor="#fff" sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid container justifyContent="center" >
                 <Grid item xs={12} sm={10} md={10}>
-                    <Box sx={{ color: '#000', p: '0 !important', mt: 4 }}>
+                    <Box sx={{ color: '#000', p: '0 !important', mt: 4, minHeight: '75vh' }}>
                         <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, textAlign: 'left', color: '#000' }}>
                             Danh sách đơn hàng
                         </Typography>
@@ -158,6 +157,7 @@ function OrderHistory() {
                     </Box>
                 </Grid>
                 <Pagination />
+                
             </Grid>
         </Box>
     );

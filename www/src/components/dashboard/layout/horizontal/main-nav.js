@@ -203,29 +203,7 @@ function ContactsButton() {
     );
 }
 
-function LanguageSwitch() {
-    const { i18n } = useTranslation();
-    const popover = usePopover();
-    const language = i18n.language || 'en';
-    const flag = languageFlags[language];
 
-    return (
-        <React.Fragment>
-            <Tooltip title="Language">
-                <IconButton
-                    onClick={popover.handleOpen}
-                    ref={popover.anchorRef}
-                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-                >
-                    <Box sx={{ height: '24px', width: '24px' }}>
-                        <Box alt={language} component="img" src={flag} sx={{ height: 'auto', width: '100%' }} />
-                    </Box>
-                </IconButton>
-            </Tooltip>
-            <LanguagePopover anchorEl={popover.anchorRef.current} onClose={popover.handleClose} open={popover.open} />
-        </React.Fragment>
-    );
-}
 
 const user = {
     id: 'USR-000',

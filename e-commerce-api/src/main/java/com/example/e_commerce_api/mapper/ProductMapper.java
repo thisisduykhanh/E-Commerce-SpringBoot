@@ -3,6 +3,8 @@ package com.example.e_commerce_api.mapper;
 import com.example.e_commerce_api.dto.product.ProductDTO;
 import com.example.e_commerce_api.dto.product.ProductTypeDTO;
 import com.example.e_commerce_api.dto.supply.ImageDTO;
+import com.example.e_commerce_api.entity.product.Headphone;
+import com.example.e_commerce_api.entity.product.Laptop;
 import com.example.e_commerce_api.entity.product.Product;
 import com.example.e_commerce_api.entity.product.ProductType;
 import com.example.e_commerce_api.entity.supply.Image;
@@ -56,8 +58,52 @@ public class ProductMapper {
                 nameProductType,
                 nameSupplier,
                 imageDTOS,
-                product.getQuantity()
+                product.getQuantity(),
+                null, // Chưa có thuộc tính batteryLife, isWireless, noiseCancellation
+                null,
+                null,
+                null,
+                null,
+                null
         );
+
+        if (product instanceof Headphone) {
+            Headphone headphone = (Headphone) product;
+            dto = new ProductDTO(
+                    product.getId(),
+                    product.getProductName(),
+                    product.getPrice(),
+                    product.getDescription(),
+                    nameProductType,
+                    nameSupplier,
+                    imageDTOS,
+                    product.getQuantity(),
+                    headphone.getBatteryLife(),
+                    headphone.getIsWireless(),
+                    headphone.getNoiseCancellation(),
+                    null, // Không có các thuộc tính CPU, RAM, Storage cho Headphone
+                    null,
+                    null
+            );
+        } else if (product instanceof Laptop) {
+            Laptop laptop = (Laptop) product;
+            dto = new ProductDTO(
+                    product.getId(),
+                    product.getProductName(),
+                    product.getPrice(),
+                    product.getDescription(),
+                    nameProductType,
+                    nameSupplier,
+                    imageDTOS,
+                    product.getQuantity(),
+                    null, // Không có các thuộc tính đặc biệt cho Laptop
+                    null,
+                    null,
+                    laptop.getCpu(),
+                    laptop.getRam(),
+                    laptop.getStorage()
+            );
+        }
 
         return dto;
     }
@@ -103,7 +149,7 @@ public class ProductMapper {
                     productType.getId(),
                     productType.getProductTypeName().name()
             );
-           
+
             return dto;
         }).collect(Collectors.toList());
     }

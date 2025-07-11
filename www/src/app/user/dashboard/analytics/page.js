@@ -7,7 +7,7 @@ import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 
 import { config } from '@/config';
 import { ChannelSessionsVsBounce } from '@/components/dashboard/analytics/channel-sessions-vs-bounce-rate';
-import { CountrySessionsVsBounce } from '@/components/dashboard/analytics/country-sessions-vs-bounce-rate';
+import { CountrySessionsVsBounce } from '@/components/dashboard/analytics/order-dashboard';
 import { Devices } from '@/components/dashboard/analytics/devices';
 import { InboundOutbound } from '@/components/dashboard/analytics/inbound-outbound';
 import { Insight } from '@/components/dashboard/analytics/insight';

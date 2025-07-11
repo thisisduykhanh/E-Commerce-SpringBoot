@@ -34,8 +34,9 @@ function Orders() {
   const [addresses, setAddresses] = useState([]);
   const [formType, setFormType] = useState("add");
   const [shippingModalOpen, setShippingModalOpen] = useState(false);
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const [cartDetailIds, setCartDetailIds] = useState([]);
   const { fetchCartQuantity } = useCart();
@@ -49,7 +50,7 @@ function Orders() {
   };
 
   const handleSnackbarClose = () => {
-    setErrorSnackbarOpen(false);
+    setSnackbarOpen(false);
   };
 
   const taxRate = 0.1; // Thuế 10%
@@ -180,8 +181,9 @@ function Orders() {
 
       if (response?.data) {
         logger.debug("Đơn hàng đã được tạo thành công:", response.data);
-        setErrorMessage("Đơn hàng đã được tạo thành công!");
-        setErrorSnackbarOpen(true);
+        setSuccessMessage("Đơn hàng đã được tạo thành công!");
+      setErrorMessage(""); // Clear lỗi nếu có
+      setSnackbarOpen(true); // Mở snackbar
         fetchCartQuantity(); // Cập nhật số lượng giỏ hàng
         router.push("/user/orders/notification");
       } else {
@@ -191,7 +193,8 @@ function Orders() {
     } catch (error) {
       logger.error("Lỗi khi tạo đơn hàng:", error);
       setErrorMessage("Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại!");
-      setErrorSnackbarOpen(true);
+      setSuccessMessage(""); // Clear success nếu có
+      setSnackbarOpen(true); // Mở snackbar
     }
   };
 
@@ -548,17 +551,17 @@ function Orders() {
         </Dialog>
       </Box>
       <Snackbar
-        open={errorSnackbarOpen}
+        open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleSnackbarClose}
-          severity="error"
+          severity={errorMessage ? "error" : successMessage ? "success" : "info"} // Severity tùy thuộc vào thông báo
           sx={{ width: "100%" }}
         >
-          {errorMessage}
+          {errorMessage || successMessage}  {/* Hiển thị message tùy theo giá trị */}
         </Alert>
       </Snackbar>
     </>

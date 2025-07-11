@@ -70,7 +70,7 @@ function Product() {
                 //         size: 12,
                 //     },
                 // });
-              const {data} = await getProducts(0 , 10)
+              const {data} = await getProducts(0 , 1000)
                 logger.debug("data", data)
                 setProducts(data || []);
             } catch (err) {
@@ -145,7 +145,6 @@ function Product() {
                                     />
                                 </Grid>
                             </Grid>
-
                             <Modal open={openModal} onClose={handleCloseModal}>
                                 <Box className={classes.modalContent}>
                                     <IconButton

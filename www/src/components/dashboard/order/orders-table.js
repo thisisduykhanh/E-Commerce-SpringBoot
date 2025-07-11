@@ -62,7 +62,7 @@ const columns = [
         </div>
       </Stack>
     ),
-    name: "Order",
+    name: "Đơn hàng",
     width: "300px",
   },
   {
@@ -109,7 +109,7 @@ const columns = [
         </Stack>
       );
     },
-    name: "Payment Method",
+    name: "Phương thức thanh toán",
     width: "300px",
   },
   {
@@ -125,7 +125,7 @@ const columns = [
         </Typography>
       </Stack>
     ),
-    name: "Total",
+    name: "Tổng giá tiền",
     width: "150px",
   },
   // TODO: fix this one
@@ -133,13 +133,13 @@ const columns = [
     formatter: (row) => {
       const mapping = {
         PENDING: {
-          label: "Pending",
+          label: "Đang chờ",
           icon: (
             <ClockIcon color="var(--mui-palette-warning-main)" weight="fill" />
           ),
         },
         PAID: {
-          label: "Completed",
+          label: "Thành công",
           icon: (
             <CheckCircleIcon
               color="var(--mui-palette-success-main)"
@@ -148,7 +148,7 @@ const columns = [
           ),
         },
         CANCELLED: {
-          label: "Canceled",
+          label: "Đã hủy",
           icon: (
             <XCircleIcon color="var(--mui-palette-error-main)" weight="fill" />
           ),
@@ -161,7 +161,7 @@ const columns = [
 
       return <Chip icon={icon} label={label} size="small" variant="outlined" />;
     },
-    name: "Status",
+    name: "Trạng thái",
     width: "100px",
   },
   {

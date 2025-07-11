@@ -76,7 +76,7 @@ function OrderSummary({ totalPrice, taxRate, shippingFee, onPayment, address }) 
                     fontWeight: 700,
                     boxShadow: 'none',
                     ':hover': {
-                        background: !isOrderDisabled ? '#FB8C00' : '#ccc',
+                        background: !isOrderDisabled ? '#fb8c00' : '#ccc',
                         boxShadow: 'none',
                     },
                 }}

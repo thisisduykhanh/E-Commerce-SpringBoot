@@ -14,7 +14,12 @@ public record ProductDTO(
         String productTypeName,
         String supplierName,
         List<ImageDTO> images,
-        Integer quantity
-
+        Integer quantity,
+        Integer batteryLife,  // Chỉ có ở Headphone
+        Boolean isWireless,   // Chỉ có ở Headphone
+        String noiseCancellation, // Chỉ có ở Headphone
+        String cpu,           // Chỉ có ở Laptop
+        Integer ram,          // Chỉ có ở Laptop
+        Integer storage
 ) {
 }

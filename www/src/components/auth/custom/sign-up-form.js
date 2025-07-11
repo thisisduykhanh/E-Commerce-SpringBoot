@@ -49,10 +49,7 @@ const defaultValues = { fullName: '', phone: '', email: '', password: '', terms:
 
 export function SignUpForm() {
     const router = useRouter();
-
-    // const { checkSession } = useUser();
-    const [showPassword, setShowPassword] = React.useState();
-
+    const [showPassword, setShowPassword] = React.useState(false);
     const [isPending, setIsPending] = React.useState(false);
 
     const {
@@ -62,49 +59,18 @@ export function SignUpForm() {
         formState: { errors },
     } = useForm({ defaultValues, resolver: zodResolver(schema) });
 
-    const onAuth = React.useCallback(async (providerId) => {
-        setIsPending(true);
-
-        const { error } = await authClient.signInWithOAuth({ provider: providerId });
-
-        if (error) {
-            setIsPending(false);
-            toast.error(error);
-            return;
-        }
-
-        setIsPending(false);
-
-        // Redirect to OAuth provider
-    }, []);
-
     const onSubmit = React.useCallback(
         async (values) => {
             setIsPending(true);
-
             const { error } = await authClient.signUp(values);
-
             if (error) {
                 setError('root', { type: 'server', message: error });
                 setIsPending(false);
                 return;
             }
 
-            // Thông báo đăng ký thành công với thanh tiến trình
-            const toastId = toast.success('Đăng ký thành công!', {
-                position: 'top-right',
-                style: {
-                    backgroundColor: '#4caf50',
-                    color: 'white',
-                    padding: '16px',
-                    borderRadius: '8px',
-                    fontWeight: 'bold',
-                },
-                duration: 3000,
-                progressBar: true,
-            });
-
-            // Sau khi thông báo hoàn tất (5000ms), chuyển hướng tới trang đăng nhập
+            // Handle successful sign-up
+            const toastId = toast.success('Đăng ký thành công!', { position: 'top-right' });
             setTimeout(() => {
                 toast.dismiss(toastId);
                 router.push('/auth/custom/sign-in');
@@ -114,7 +80,20 @@ export function SignUpForm() {
     );
 
     return (
-        <Stack spacing={4}>
+        <Stack
+            spacing={4}
+            sx={{
+                minHeight: '80vh', // Đảm bảo form không bị dính sát vào lề trên
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center', // Căn giữa nội dung
+                padding: '20px', // Thêm padding để tránh form dính vào lề
+                '@media (max-width: 600px)': { // Điều chỉnh cho màn hình nhỏ
+                    minHeight: '70vh', // Giảm bớt khoảng cách khi màn hình nhỏ
+                    padding: '10px', // Giảm padding cho màn hình nhỏ
+                },
+            }}
+        >
             <div>
                 <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-block', fontSize: 0 }}>
                     <DynamicLogo colorDark="light" colorLight="dark" height={32} width={122} />
@@ -135,25 +114,6 @@ export function SignUpForm() {
                 </Typography>
             </Stack>
             <Stack spacing={3}>
-                <Stack spacing={2}>
-                    {oAuthProviders.map((provider) => (
-                        <Button
-                            color="secondary"
-                            disabled={isPending}
-                            endIcon={<Box alt="" component="img" height={24} src={provider.logo} width={24} />}
-                            key={provider.id}
-                            onClick={() => {
-                                onAuth(provider.id).catch(() => {
-                                    // noop
-                                });
-                            }}
-                            variant="outlined"
-                        >
-                            Đăng nhập với {provider.name}
-                        </Button>
-                    ))}
-                </Stack>
-                <Divider>hoặc</Divider>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={2}>
                         <Controller
@@ -163,9 +123,7 @@ export function SignUpForm() {
                                 <FormControl error={Boolean(errors.fullName)}>
                                     <InputLabel>Họ tên</InputLabel>
                                     <OutlinedInput {...field} />
-                                    {errors.fullName ? (
-                                        <FormHelperText>{errors.fullName.message}</FormHelperText>
-                                    ) : null}
+                                    {errors.fullName ? <FormHelperText>{errors.fullName.message}</FormHelperText> : null}
                                 </FormControl>
                             )}
                         />
@@ -188,7 +146,6 @@ export function SignUpForm() {
                                 </FormControl>
                             )}
                         />
-
                         <Controller
                             control={control}
                             name="email"
@@ -213,23 +170,18 @@ export function SignUpForm() {
                                                 <EyeIcon
                                                     cursor="pointer"
                                                     fontSize="var(--icon-fontSize-md)"
-                                                    onClick={() => {
-                                                        setShowPassword(false);
-                                                    }}
+                                                    onClick={() => setShowPassword(false)}
                                                 />
                                             ) : (
                                                 <EyeSlashIcon
                                                     cursor="pointer"
                                                     fontSize="var(--icon-fontSize-md)"
-                                                    onClick={() => {
-                                                        setShowPassword(true);
-                                                    }}
+                                                    onClick={() => setShowPassword(true)}
                                                 />
                                             )
                                         }
                                         type={showPassword ? 'text' : 'password'}
                                     />
-
                                     {errors.password ? (
                                         <FormHelperText>{errors.password.message}</FormHelperText>
                                     ) : null}
@@ -240,20 +192,10 @@ export function SignUpForm() {
                             control={control}
                             name="terms"
                             render={({ field }) => (
-                                <div>
-                                    <FormControlLabel
-                                        control={<Checkbox {...field} />}
-                                        label={
-                                            <React.Fragment>
-                                                Tôi đã đọc và đồng ý với các{' '}
-                                                <Link sx={{ color: '#00A6B7' }}>điều khoản và điều kiện.</Link>
-                                            </React.Fragment>
-                                        }
-                                    />
-                                    {errors.terms ? (
-                                        <FormHelperText error>{errors.terms.message}</FormHelperText>
-                                    ) : null}
-                                </div>
+                                <FormControlLabel
+                                    control={<Checkbox {...field} />}
+                                    label={<React.Fragment>Tôi đã đọc và đồng ý với các <Link sx={{ color: '#00A6B7' }}>điều khoản và điều kiện.</Link></React.Fragment>}
+                                />
                             )}
                         />
                         {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
@@ -263,7 +205,6 @@ export function SignUpForm() {
                     </Stack>
                 </form>
             </Stack>
-            {/* <Alert color="warning">Created users are not persisted</Alert> */}
         </Stack>
     );
 }

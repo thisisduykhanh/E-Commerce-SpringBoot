@@ -1,275 +1,81 @@
-import { fetchCategories } from '@/services/category-service';
-
 import { Facebook, Instagram, LinkedIn, Twitter, YouTube } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
-import { Headset, Package, ShoppingBag, Truck } from '@phosphor-icons/react';
+import { Headphones, Package, ShieldCheck, Truck } from '@phosphor-icons/react';
 import Link from 'next/link';
 import React from 'react';
 
 function Footer() {
-    const [categories, setCategories] = React.useState([]);
-    const features = [
-        {
-            icon: (
-                <Truck
-                    size={55}
-                    style={{
-                        marginRight: '10px',
-                        color: '#00A6B7',
-                        backgroundColor: 'rgba(0, 166, 183, 0.1)',
-                        borderRadius: '50%',
-                        padding: '8px',
-                    }}
-                />
-            ),
-            title: 'Vận chuyển',
-            description: 'Hỗ trợ vận chuyển tới khách hàng',
-        },
-        {
-            icon: (
-                <Headset
-                    size={55}
-                    style={{
-                        marginRight: '10px',
-                        color: '#00A6B7',
-                        backgroundColor: 'rgba(0, 166, 183, 0.1)',
-                        borderRadius: '50%',
-                        padding: '8px',
-                    }}
-                />
-            ),
-            title: 'Á Đông Center 24/7',
-            description: 'Đội ngũ nhân viên chuyên nghiệp',
-        },
-        {
-            icon: (
-                <ShoppingBag
-                    size={55}
-                    style={{
-                        marginRight: '10px',
-                        color: '#00A6B7',
-                        backgroundColor: 'rgba(0, 166, 183, 0.1)',
-                        borderRadius: '50%',
-                        padding: '8px',
-                    }}
-                />
-            ),
-            title: 'Bảo đảm nguồn gốc',
-            description: 'Truy xuất được nguồn gốc',
-        },
-        {
-            icon: (
-                <Package
-                    size={55}
-                    style={{
-                        marginRight: '10px',
-                        color: '#00A6B7',
-                        backgroundColor: 'rgba(0, 166, 183, 0.1)',
-                        borderRadius: '50%',
-                        padding: '8px',
-                    }}
-                />
-            ),
-            title: 'Đảm bảo hàng hóa',
-            description: 'Chính sách bảo đảm hàng hóa',
-        },
-    ];
-    const fetchCategories2 = React.useCallback(async () => {
-        const response = await fetchCategories();
-        setCategories(response.data);
-    }, []);
-    React.useEffect(() => {
-        fetchCategories2();
-    }, [fetchCategories2]);
 
+    // Các danh mục trong footer
     const sections = [
         {
-            title: 'Trung tâm hỗ trợ',
+            title: 'Hỗ trợ khách hàng',
             description: [
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/CompensationPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Kiểm Tra Đơn Hàng
+                <Link key="track-order" href="/support/track-order" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Theo dõi đơn hàng
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/CompensationPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Kiểm Tra Vận Chuyển
+                <Link key="warranty" href="/support/warranty" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Kiểm tra bảo hành
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/A&Q"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    A & Q
+                <Link key="faq" href="/support/faq" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Câu hỏi thường gặp
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/CompensationPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Hoàn Tiền
+                <Link key="returns" href="/support/returns" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Chính sách đổi trả
                 </Link>,
             ],
         },
         {
             title: 'Chính sách',
             description: [
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/ShippingPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chính sách vận chuyển
+                <Link key="shipping" href="/policy/shipping" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Chính sách giao hàng
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/PaymentPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
+                <Link key="payment" href="/policy/payment" style={{ textDecoration: 'none', color: 'inherit' }}>
                     Chính sách thanh toán
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/PrivacyPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
+                <Link key="privacy" href="/policy/privacy" style={{ textDecoration: 'none', color: 'inherit' }}>
                     Chính sách bảo mật
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/CompensationPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chính sách đổi - trả - yêu cầu bồi thường
-                </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/CompensationPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chính sách khiếu nại và xử lí khiếu nại
-                </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/generalPolicy"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chính sách chung và điều kiện mua bán sản phẩm
-                </Link>,
-                 <Link
-                    key="introduction-link"
-                    href="/user/policy/clause"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Điều khoản dịch vụ
+                <Link key="terms" href="/policy/terms" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Điều khoản sử dụng
                 </Link>,
             ],
         },
         {
-            title: 'Hợp tác',
+            title: 'Về chúng tôi',
             description: [
-                <Link
-                    key="introduction-link"
-                    href="/user/AboutMe"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Giới thiệu
+                <Link key="about" href="/about" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Giới thiệu TechTrend
                 </Link>,
-                <>
-                    <Typography key="asizon-blog" component="span" sx={{ fontWeight: 'bold' }}>
-                        ASIZON
-                    </Typography>{' '}
-                    Blog
-                </>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/sanctionsBuyers"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chế Tài Và Hướng Xử Lý Bên Mua
+                <Link key="blog" href="/blog" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    TechTrend Blog
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/sanctionsSeller"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Chế Tài Và Hướng Xử Lý Bên Nhà Cung Cấp
+                <Link key="careers" href="/careers" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Cơ hội việc làm
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/agreement"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Thoả Thuận Về Điều Kiện Làm Việc Và Chính Sách Chống Lao Động Cưỡng Bức
+                <Link key="contact" href="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Liên hệ
                 </Link>,
             ],
         },
         {
-            title: 'Bán hàng',
+            title: 'Mua sắm',
             description: [
-                'Hướng Dẫn Mua Hàng',
-                'Hướng Dẫn Bán Hàng',
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/commodityBan"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Quy Định Về Hàng Hoá Cấm Bán
+                <Link key="guide" href="/guide/buying" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Hướng dẫn mua hàng
                 </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/asimoney"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Điều khoản và điều kiện ASIMONEY - Vay doanh nghiệp
+                <Link key="promotions" href="/promotions" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Khuyến mãi
                 </Link>,
-            ],
-        },
-        {
-            title: 'Xã hội',
-            description: [
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/climateChangeCommit"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Cam kết chống biến đổi khí hậu
-                </Link>,
-                <Link
-                    key="introduction-link"
-                    href="/user/policy/communityStandards"
-                    passHref
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                    Tiêu chuẩn cộng đồng của hệ sinh thái ASIZON
+                <Link key="banned-items" href="/policy/banned-items" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    Sản phẩm bị cấm
                 </Link>,
             ],
         },
     ];
 
+    // Phương thức thanh toán
     const paymentMethods = [
         '/payment/visa.svg',
         '/payment/master-card.svg',
@@ -278,145 +84,58 @@ function Footer() {
         '/payment/banking.svg',
     ];
 
-    const appDownloads = ['/app/download.png'];
+    // Tải ứng dụng
+    const appDownloads = ['/app/app-store.png', '/app/google-play.png'];
 
+    // Mạng xã hội
     const socialIcons = [
-        { icon: <Facebook sx={{ color: '#3b5998' }} />, name: 'Facebook' },
+        { icon: <Facebook sx={{ color: '#1877F2' }} />, name: 'Facebook' },
         { icon: <Twitter sx={{ color: '#1DA1F2' }} />, name: 'Twitter' },
-        { icon: <Instagram sx={{ color: '#E1306C' }} />, name: 'Instagram' },
-        { icon: <LinkedIn sx={{ color: '#0077B5' }} />, name: 'LinkedIn' },
+        { icon: <Instagram sx={{ color: '#E4405F' }} />, name: 'Instagram' },
+        { icon: <LinkedIn sx={{ color: '#0A66C2' }} />, name: 'LinkedIn' },
         { icon: <YouTube sx={{ color: '#FF0000' }} />, name: 'YouTube' },
     ];
-
-    const callToActionImage = '/img/image/call-to-action.png';
 
     return (
         <>
             <style>{`
-                a {
-                    text-decoration: none !important;
-                    color: inherit !important;
+                a:hover {
+                    color: #0288D1 !important;
+                    text-decoration: underline !important;
                 }
             `}</style>
-            {/* Box chứa các features */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingBottom: '10px',
-                    margin: '20px auto 0px auto',
-                    gap: '20px',
-                    flexWrap: 'wrap',
-                    boxSizing: 'border-box',
-                }}
-            >
-                {features.map((feature) => (
-                    <Box
-                        key={feature.title}
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '15px',
-                            flex: '1 1 22%',
-                            maxWidth: 'calc(25% - 20px)',
-                            marginBottom: '20px',
-                            boxSizing: 'border-box',
-                        }}
-                    >
-                        <Box>{feature.icon}</Box>
-                        <Box>
-                            <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 'bold', color: '#333333' }}>
-                                {feature.title}
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontSize: '12px', color: '#666666' }}>
-                                {feature.description}
-                            </Typography>
-                        </Box>
-                    </Box>
-                ))}
-            </Box>
 
-            {/* Box chứa hình ảnh Call To Action */}
+            {/* Features Section */}
+            
+
+            {/* Main Footer Content */}
             <Box
                 sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    backgroundColor: '#ffffff',
-                    marginTop: '0',
-                }}
-            >
-                <Box
-                    component="img"
-                    src={callToActionImage}
-                    alt="Call to Action"
-                    sx={{ width: '100%', height: 'auto' }}
-                />
-            </Box>
-            {/* Box chứa thông tin của các tiêu đề */}
-            <Box
-                sx={{
+                    backgroundColor: '#1A1A1A',
+                    color: '#FFFFFF',
+                    padding: { xs: '30px 20px', md: '50px 40px' },
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    backgroundColor: '#ffffff',
-                    padding: '20px',
-                    borderRadius: '8px',
-                    margin: '20px auto',
-                    // width: '80%',
-                    boxSizing: 'border-box',
-                    overflow: 'hidden',
+                    gap: '30px',
                 }}
             >
+                {/* Sections */}
                 <Box
                     sx={{
                         display: 'grid',
-                        gridTemplateColumns: {
-                            xs: 'repeat(1, 1fr)',
-                            sm: 'repeat(5, 1fr)',
-                        },
-                        gap: '20px',
-                        width: '100%',
-                        // padding: '10px 20px',
-                        boxSizing: 'border-box',
+                        gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+                        gap: '30px',
+                        marginBottom: '30px',
                     }}
                 >
-                    {/* Danh sách các phần */}
                     {sections.map((section) => (
-                        <Box
-                            key={section.title}
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '10px', // Khoảng cách giữa tiêu đề và mô tả
-                                padding: '10px 0',
-                            }}
-                        >
-                            {/* Tiêu đề */}
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    fontSize: '16px',
-                                    fontWeight: 'bold',
-                                    color: '#333333',
-                                    textAlign: 'left',
-                                }}
-                            >
+                        <Box key={section.title} sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
                                 {section.title}
                             </Typography>
-
-                            {/* Mô tả */}
-                            <Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                 {section.description.map((line, index) => (
-                                    <Typography
-                                        key={index}
-                                        variant="body2"
-                                        sx={{
-                                            fontSize: '14px',
-                                            color: '#666666',
-                                            marginBottom: '5px',
-                                        }}
-                                    >
+                                    <Typography key={index} variant="body2" sx={{ fontSize: '14px', color: '#B0B0B0' }}>
                                         {line}
                                     </Typography>
                                 ))}
@@ -425,387 +144,67 @@ function Footer() {
                     ))}
                 </Box>
 
+                {/* Bottom Section */}
                 <Box
                     sx={{
                         display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
                         justifyContent: 'space-between',
-                        alignItems: 'center',
-                        width: '100%',
-                        marginTop: '50px',
-                        flexWrap: 'wrap',
-                        padding: '0 20px', // Khoảng cách hai bên
-                        boxSizing: 'border-box',
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flex: '1 1 100%', // Đảm bảo phần tử này chiếm toàn bộ chiều rộng
-                            marginBottom: '10px',
-                            flexDirection: { xs: 'column', sm: 'row' }, // Cột trên điện thoại, hàng trên màn hình lớn
-                            textAlign: { xs: 'center', sm: 'left' }, // Căn giữa trên điện thoại, căn trái trên màn hình lớn
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                                color: '#00A6B7',
-                                marginRight: '10px',
-                            }}
-                        >
-                            ASIZON
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: '14px',
-                                color: '#666666',
-                                textAlign: { xs: 'center', sm: 'left' }, // Căn giữa trên điện thoại, trái trên màn hình lớn
-                            }}
-                        >
-                            &copy; 2024 <span style={{ fontWeight: 'bold' }}>ASIZON. ,</span> All Rights Reserved
-                        </Typography>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: { xs: 'column', sm: 'row' }, // Cột trên điện thoại, hàng trên màn hình lớn
-                            gap: '16px',
-                            flex: '1 1 100%', // Đảm bảo phần tử này chiếm toàn bộ chiều rộng
-                            justifyContent: { xs: 'center', sm: 'flex-end' }, // Căn giữa trên điện thoại, phải trên màn hình lớn
-                            flexWrap: 'wrap', // Đảm bảo các phần tử tự động xuống dòng nếu không đủ không gian
-                            boxSizing: 'border-box', // Đảm bảo tính toán kích thước đúng
-                            width: '100%',
-                        }}
-                    >
-                        <Typography
-                            variant="body2"
-                            component="a"
-                            href="/user/policy/legal"
-                            sx={{
-                                fontSize: '14px',
-                                color: '#666666 !important',
-                                textDecoration: 'underline',
-                                whiteSpace: 'nowrap',
-                                marginBottom: '10px', // Thêm margin dưới mỗi liên kết
-                                textAlign: { xs: 'center', sm: 'left' }, // Căn giữa trên điện thoại, trái trên màn hình lớn
-                            }}
-                        >
-                            Thông báo pháp lý
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            component="a"
-                            href="/user/policy/clause"
-                            sx={{
-                                fontSize: '14px',
-                                color: '#666666 !important',
-                                textDecoration: 'underline',
-                                whiteSpace: 'nowrap',
-                                marginBottom: '10px',
-                                textAlign: { xs: 'center', sm: 'left' },
-                            }}
-                        >
-                            Điều khoản dịch vụ
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            component="a"
-                            href="/user/policy/privacy"
-                            sx={{
-                                fontSize: '14px',
-                                color: '#666666 !important',
-                                textDecoration: 'underline',
-                                whiteSpace: 'nowrap',
-                                marginBottom: '10px',
-                                textAlign: { xs: 'center', sm: 'left' },
-                            }}
-                        >
-                            Quyền riêng tư
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        width: '100%',
-                        padding: '20px 0',
-                        flexWrap: 'wrap',
+                        alignItems: { xs: 'center', md: 'flex-start' },
                         gap: '20px',
+                        borderTop: '1px solid #333333',
+                        paddingTop: '30px',
                     }}
                 >
-                    {/* Payment Methods Section */}
-                    <Box sx={{ flex: 1, textAlign: 'left' }}>
-                        <Typography
-                            variant="h6"
-                            sx={{ fontSize: '16px', fontWeight: 'bold', color: '#333333', marginBottom: '10px' }}
-                        >
+                    {/* Company Info */}
+                    <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                        <Typography variant="h6" sx={{ fontSize: '20px', fontWeight: 'bold', color: '#0288D1' }}>
+                            TechTrend
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontSize: '14px', color: '#B0B0B0', marginTop: '10px' }}>
+                            © 2024 TechTrend. All Rights Reserved.
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontSize: '14px', color: '#B0B0B0', marginTop: '10px' }}>
+                            Trụ sở: Tòa nhà TechTower, 123 Nguyễn Huệ, Q.1, TP. HCM
+                            <br />
+                            Hotline: 1800-1234
+                            <br />
+                            Giấy phép kinh doanh: 123456789, cấp ngày 01/01/2022
+                        </Typography>
+                    </Box>
+
+                    {/* Payment Methods */}
+                    <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                        <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>
                             Phương thức thanh toán
                         </Typography>
-                        <Box
-                            sx={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(3, 1fr)',
-                                gap: '8px',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
                             {paymentMethods.map((icon) => (
                                 <Box
                                     key={icon}
                                     component="img"
                                     src={icon}
                                     alt="Payment Method"
-                                    sx={{
-                                        width: '80%',
-                                        padding: '10px',
-                                        objectFit: 'contain',
-                                    }}
+                                    sx={{ width: '50px', height: '30px', objectFit: 'contain' }}
                                 />
                             ))}
                         </Box>
                     </Box>
-
-                    {/* App Downloads Section */}
-                    <Box sx={{ flex: 1, textAlign: 'left' }}>
-                        <Typography
-                            variant="h6"
-                            sx={{ fontSize: '16px', fontWeight: 'bold', color: '#333333', marginBottom: '10px' }}
-                        >
-                            Tải ứng dụng
-                        </Typography>
-                        <Box
-                            sx={{
-                                // display: 'flex',
-                                // flexDirection: 'column',
-                                gap: '10px',
-                            }}
-                        >
-                            {appDownloads.map((icon, index) => (
-                                <Button key={index} variant="contained" color="none" sx={{ padding: 0 }}>
-                                    <Box
-                                        component="img"
-                                        src={icon}
-                                        alt="App Download"
-                                        sx={{
-                                            width: '100%',
-                                            maxWidth: '300px',
-                                            padding: '10px',
-                                        }}
-                                        aria-disabled="true"
-                                    />
-                                </Button>
-                            ))}
-                        </Box>
-                    </Box>
-
-                    {/* Social Media Section */}
-                    <Box sx={{ flex: 1, textAlign: 'center' }}>
-                        <Typography
-                            variant="h6"
-                            sx={{ fontSize: '16px', fontWeight: 'bold', color: '#333333', marginBottom: '10px' }}
-                        >
-                            Kết nối với chúng tôi
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                gap: '20px',
-                            }}
-                        >
-                            {socialIcons.map((social) => (
-                                <Box key={social.name} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    {social.icon}
-                                </Box>
-                            ))}
-                        </Box>
-                    </Box>
+                    
                 </Box>
 
-                {/* Thông tin liên hệ */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'left',
-                        alignItems: 'left',
-                        width: '100%',
-                        margin: '20px 0px',
-                    }}
-                >
-                    <Typography
-                        variant="body2"
-                        component="div"
-                        sx={{
-                            fontSize: '14px',
-                            color: '#333333',
-                            textAlign: 'left',
-                            lineHeight: '2.2',
-                        }}
-                    >
-                        <Box component="span" sx={{ fontWeight: 'bold' }}>
-                            Trụ sở chính:
-                        </Box>{' '}
-                        L17-11, Tầng 17, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, P. Bến Nghé, Q.1, TP. HCM
-                        <br />
-                        <Box component="span" sx={{ fontWeight: 'bold' }}>
-                            Hotline:
-                        </Box>{' '}
-                        0919 111 419
-                        <br />
-                        Giấy chứng nhận Đăng ký Kinh doanh số 0317020213 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh
-                        cấp lần đầu ngày 10/11/2021.
-                        <br />
-                        <Box component="span" sx={{ fontWeight: 'bold', lineHeight: '2.2' }}>
-                            ASIZON
-                        </Box>{' '}
-                        nhận đặt hàng trực tuyến và giao hàng tận nơi, chưa hỗ trợ mua và nhận hàng trực tiếp hoặc trung
-                        tâm xử lý đơn hàng
-                        <br />
-                        <Typography
-                            variant="body2"
-                            component="div"
-                            sx={{
-                                fontSize: '14px',
-                                color: '#333333',
-                                lineHeight: '2.2',
-                            }}
-                        >
-                            &copy; 2024 - Bản quyền của Công ty CP Nông nghiệp Á Đông
-                        </Typography>
+                {/* Social Media */}
+                <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
+                    <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>
+                        Kết nối với chúng tôi
                     </Typography>
-                </Box>
-
-                {/* Đảm bảo */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                        margin: '20px 0px',
-                    }}
-                >
-                    <Typography
-                        variant="body2"
-                        component="div"
-                        sx={{
-                            fontSize: '14px',
-                            color: '#333333 !important',
-                            textAlign: 'left',
-                            lineHeight: '2.2',
-                        }}
-                    >
-                        <Box component="span" sx={{ fontWeight: 'bold' }}>
-                            Mua hàng đảm bảo
-                        </Box>
-                        <Box sx={{ marginTop: '15px' }}>
-                            Mua hàng trên{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn là một trải nghiệm ấn tượng.{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn sẽ đảm bảo cung cấp cho bạn những sản phẩm chất lượng ưng ý. Là một kênh bán hàng uy
-                            tín,{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn cam kết mang lại cho khách hàng những trải nghiệm mua sắm nông sản an toàn và tin cậy.
-                            Các sản phẩm được cập nhật trên nền tảng{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn đảm bảo chất lượng và theo sát xu hướng của thị trường. Mọi thông tin về người dùng đều
-                            được bảo mật tuyệt đối. Các hoạt động giao dịch thanh toán tại{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn được đảm bảo diễn ra nhanh chóng, an toàn. Cùng với đó là các chính sách đổi trả hàng
-                            hoá linh hoạt.
-                        </Box>
-                        <Box sx={{ marginTop: '15px' }}>
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            luôn cam kết mọi sản phẩm trên{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            đều là những sản phẩm chất lượng, gắn tem nhãn, bảo hành đầy đủ. Đến với{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            ngay hôm nay để mua hàng online giá tốt và trải nghiệm dịch vụ chăm sóc khách hàng tuyệt vời
-                            tại đây. Ngoài ra, khách hàng có thể sử dụng chức năng thành viên để đổi lấy mã giảm giá có
-                            giá trị cao và dịch vụ hấp dẫn. Hãy truy cập ngay{' '}
-                            <Box component="span" sx={{ fontWeight: 'bold' }}>
-                                ASIZON
-                            </Box>{' '}
-                            hôm nay và trải nghiệm nhé!
-                        </Box>
-                    </Typography>
-                </Box>
-
-                {/* Danh mục hàng hóa */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'left',
-                        alignItems: 'left',
-                        width: '100%',
-                        margin: '20px 0px',
-                    }}
-                >
-                    <Typography
-                        variant="body2"
-                        component="div"
-                        sx={{
-                            fontSize: '14px',
-                            color: '#333333',
-                            textAlign: 'left',
-                            lineHeight: '2.2',
-                        }}
-                    >
-                        <Box component="span" sx={{ fontWeight: 'bold' }}>
-                            Danh mục hàng hóa
-                        </Box>
-                        <br />
-                        {categories.map((category, index) => (
-                            <React.Fragment key={category.id}>
-                                <Box
-                                    component="span"
-                                    sx={{
-                                        fontSize: '14px',
-                                        color: '#000000',
-                                    }}
-                                >
-                                    <Link sx={{ background: '#000000' }} href="/user/Developments">
-                                        {category.name}
-                                    </Link>
-                                </Box>
-                                {index < categories.length - 1 && (
-                                    <Box
-                                        component="span"
-                                        sx={{
-                                            color: '#000000',
-                                            margin: '0 8px',
-                                        }}
-                                    >
-                                        |
-                                    </Box>
-                                )}
-                            </React.Fragment>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                        {socialIcons.map((social) => (
+                            <Box key={social.name} sx={{ '&:hover': { transform: 'scale(1.2)', transition: '0.3s' } }}>
+                                {social.icon}
+                            </Box>
                         ))}
-                    </Typography>
+                    </Box>
                 </Box>
             </Box>
         </>

@@ -107,6 +107,7 @@ public class ProductService {
             int size) {
 
         Specification<Product> spec = (root, query, criteriaBuilder) -> {
+
             List<Predicate> predicates = new ArrayList<>();
 
             if (productTypeId != null) {
@@ -127,6 +128,9 @@ public class ProductService {
             if (address != null && !address.isEmpty()) {
                 predicates.add(criteriaBuilder.like(root.get("address"), "%" + address + "%"));
             }
+
+            // Thêm điều kiện statusActivity = true
+            predicates.add(criteriaBuilder.isTrue(root.get("statusActivity")));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
@@ -199,11 +203,15 @@ public class ProductService {
     }
 
     // Delete Product
+    @Transactional
     public void deleteProduct(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new CustomException(Error.PRODUCT_NOT_FOUND));
-        productRepository.delete(product);
+
+        product.setStatusActivity(false);
+        productRepository.save(product);
     }
+
 
     private Account getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

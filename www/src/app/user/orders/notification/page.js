@@ -2,6 +2,7 @@
 import { Box, Typography, Card, CardContent } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ProgressBar from '../step/page';
+import Link from 'next/link';
 
 
 function OrderConfirm() {
@@ -49,8 +50,25 @@ function OrderConfirm() {
                             ĐƠN HÀNG CỦA BẠN ĐÃ ĐƯỢC GHI NHẬN
                         </Typography>
                         <Typography variant="body1" mt={2}>
-                            Đơn hàng của bạn đang được xử lý. Xin vui lòng chờ nhà cung cấp xác nhận trong thời gian sớm
-                            nhất.
+                            Đơn hàng của bạn đang được xử lý. Xin vui lòng đến trang {" "}
+                            {/* Link to check order */}
+                            <Link href="/user/order-history" passHref>
+                                <Typography
+                                    variant="body1"
+                                    sx={{
+                                        display: 'inline',
+                                        textDecoration: 'underline',
+                                        fontSize: '18px',
+                                        fontWeight: 'bold',
+                                        color: '#fff',
+                                        cursor: 'pointer',
+                                        marginRight: '4px',
+                                    }}
+                                >
+                                    kiểm tra đơn hàng 
+                                </Typography>
+                            </Link>
+                            để tiến hành thanh toán.
                         </Typography>
                     </Box>
 

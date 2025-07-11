@@ -17,7 +17,7 @@ export default function Page() {
             sx={{
                 maxWidth: 'var(--Content-maxWidth)',
                 m: 'var(--Content-margin)',
-                p: 'var(--Content-padding)',
+                p: '20px',
                 width: 'var(--Content-width)',
             }}
         >

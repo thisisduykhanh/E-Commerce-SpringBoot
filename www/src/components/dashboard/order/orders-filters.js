@@ -20,10 +20,10 @@ import { useOrdersSelection } from './orders-selection-context';
 
 // The tabs should be generated using API data.
 const tabs = [
-    { label: 'All', value: '', count: 0 },
-    { label: 'Completed', value: 'Paid', count: 2 },
-    { label: 'Pending', value: 'pending', count: 1 },
-    { label: 'Canceled', value: 'cancelled', count: 1 },
+    { label: 'Tất cả', value: '', count: 0 },
+    { label: 'Thành công', value: 'Paid', count: 2 },
+    { label: 'Đang chờ', value: 'pending', count: 1 },
+    { label: 'Đã huỷ', value: 'cancelled', count: 1 },
   
 ];
 
@@ -113,7 +113,7 @@ export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flex: '1 1 auto', flexWrap: 'wrap' }}>
                     <FilterButton
                         displayValue={id}
-                        label="Order ID"
+                        label="Mã đơn hàng"
                         onFilterApply={(value) => {
                             handleIdChange(value);
                         }}
@@ -125,7 +125,7 @@ export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
                     />
                     <FilterButton
                         displayValue={customer}
-                        label="Customer"
+                        label="Mã khách hàng"
                         onFilterApply={(value) => {
                             handleCustomerChange(value);
                         }}
@@ -135,7 +135,7 @@ export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
                         popover={<CustomerFilterPopover />}
                         value={customer}
                     />
-                    {hasFilters ? <Button onClick={handleClearFilters}>Clear filters</Button> : null}
+                    {hasFilters ? <Button onClick={handleClearFilters}>Bỏ lọc</Button> : null}
                 </Stack>
                 {selection.selectedAny ? (
                     <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
@@ -153,8 +153,8 @@ export function OrdersFilters({ filters = {}, sortDir = 'desc' }) {
                     sx={{ maxWidth: '100%', width: '120px' }}
                     value={sortDir}
                 >
-                    <Option value="desc">Newest</Option>
-                    <Option value="asc">Oldest</Option>
+                    <Option value="desc">Mới nhất</Option>
+                    <Option value="asc">Cũ nhất</Option>
                 </Select>
             </Stack>
         </div>

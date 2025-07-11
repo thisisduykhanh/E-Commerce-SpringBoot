@@ -53,40 +53,6 @@ function ProductDetailPage() {
   }, [id]);
 
   const products = [
-    {
-      id: 1,
-      name: "Green Apple",
-      image: "/img/image/Image (1).png",
-      price: "10.000 đ - 15.000 đ",
-      originalPrice: "20.000 đ",
-      isSale: true,
-      salePercent: "50%",
-      rating: 4.5,
-    },
-    {
-      id: 2,
-      name: "Chinese Cabbage",
-      image: "/img/image/Image (2).png",
-      price: "10.000 đ - 15.000 đ",
-      isSale: false,
-      rating: 4.5,
-    },
-    {
-      id: 3,
-      name: "Green Capsicum",
-      image: "/img/image/Image (3).png",
-      price: "10.000 đ - 15.000 đ",
-      isSale: false,
-      rating: 4.8,
-    },
-    {
-      id: 4,
-      name: "Ladies Finger",
-      image: "/img/image/Product Image (1).png",
-      price: "10.000 đ - 15.000 đ",
-      isSale: false,
-      rating: 4.3,
-    },
   ];
 
   const [reviews, setReviews] = useState([]);
@@ -121,6 +87,130 @@ function ProductDetailPage() {
       fetchReviews();
     }
   }, [id]);
+
+  // Điều chỉnh phần hiển thị thông tin theo loại sản phẩm
+  const renderProductDetails = () => {
+    if (productDetail?.productTypeName === "LAPTOP") {
+      return (
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+            Cấu hình chi tiết Laptop
+          </Typography>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>CPU:</strong> {productDetail?.cpu || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>RAM:</strong> {productDetail?.ram || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Storage:</strong> {productDetail?.storage || "Không có thông tin"}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    } else if (productDetail?.productTypeName === "HEADPHONE") {
+      return (
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+            Cấu hình chi tiết Headphone
+          </Typography>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Battery Life:</strong> {productDetail?.batteryLife || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Wireless:</strong> {productDetail?.isWireless ? "Có" : "Không"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Noise Cancellation:</strong> {productDetail?.noiseCancellation || "Không có thông tin"}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    } else if (productDetail?.productTypeName === "PHONE") {
+      return (
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+            Cấu hình chi tiết Phone
+          </Typography>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Battery Life:</strong> {productDetail?.batteryLife || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Camera MP:</strong> {productDetail?.cameraMP || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Screen Size:</strong> {productDetail?.screenSize || "Không có thông tin"}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    } else if (productDetail?.productTypeName === "SMARTWATCH") {
+      return (
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+            Cấu hình chi tiết Smartwatch
+          </Typography>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Has GPS:</strong> {productDetail?.hasGPS ? "Có" : "Không"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Water Resistant:</strong> {productDetail?.waterResistant ? "Có" : "Không"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Battery Life:</strong> {productDetail?.batteryLife || "Không có thông tin"}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    } else if (productDetail?.productTypeName === "TABLET") {
+      return (
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "16px" }}>
+            Cấu hình chi tiết Tablet
+          </Typography>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Screen Size:</strong> {productDetail?.screenSize || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Battery Life:</strong> {productDetail?.batteryLife || "Không có thông tin"}
+            </Typography>
+          </Box>
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="body2">
+              <strong>Pen Support:</strong> {productDetail?.hasPenSupport ? "Có" : "Không"}
+            </Typography>
+          </Box>
+        </Box>
+      );
+    }
+
+    return null;
+  };
+
+
 
   const handlePageChange = (_event, value) => {
     setCurrentPage(value);
@@ -197,25 +287,47 @@ function ProductDetailPage() {
                     error={error}
                     activeImageIndex={activeImageIndex}
                 /> */}
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{
+            marginBottom: "16px",
+            color: "black",
+            textAlign: "left",
+            fontSize: "24px",
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+          }}
+        >
+          Thông tin sản phẩm
+        </Typography>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
-            gap: "20px",
+            gap: "24px",
             marginBottom: "40px",
+            marginTop: "24px",
+            flexWrap: "wrap",
+            justifyContent: "center", // Center items for better balance
+            paddingX: { xs: "16px", md: "24px" }, // Responsive padding
           }}
         >
-          {/* Bên trái - Danh sách ảnh */}
+          {/* Thumbnail column */}
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "10px",
+              gap: "12px",
               border: "none",
+              width: { xs: "100%", sm: "120px", md: "140px" }, // Responsive width
+              maxWidth: "140px",
+              flexShrink: 0,
             }}
           >
-            {/* Nút cuộn lên */}
+            {/* Scroll up button */}
             <Button
               onClick={handleScrollUp}
               variant="outlined"
@@ -223,23 +335,27 @@ function ProductDetailPage() {
                 color: "#333333",
                 textTransform: "none",
                 fontWeight: "bold",
-                "&:hover": {
-                  color: "#1976d2",
-                },
+                "&:hover": { color: "#1976d2" },
                 border: "none",
                 backgroundColor: "transparent",
+                minWidth: "40px",
+                padding: "4px",
               }}
             >
-              <ArrowDropUpIcon fontSize="small" />
+              <ArrowDropUpIcon fontSize="medium" />
             </Button>
 
-            {/* Danh sách hình ảnh */}
+            {/* Thumbnail list */}
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
+                gap: "8px",
                 alignItems: "center",
+                maxHeight: "320px", // Slightly taller for better visibility
+                overflowY: "auto",
+                width: "100%",
+                padding: "4px",
               }}
             >
               {productDetail?.images?.map((image, index) => (
@@ -248,7 +364,7 @@ function ProductDetailPage() {
                   component="img"
                   image={image.url}
                   alt={`Thumbnail ${index}`}
-                  onClick={() => handleImageClick(index)} // Truyền index thay vì ID
+                  onClick={() => handleImageClick(index)}
                   sx={{
                     width: "80px",
                     height: "80px",
@@ -257,14 +373,15 @@ function ProductDetailPage() {
                     border:
                       activeImageIndex === index
                         ? "2px solid #00A6B7"
-                        : "1px solid #fff",
-                    objectFit: "cover",
+                        : "1px solid #e0e0e0",
+                    objectFit: "contain",
+                    transition: "border 0.2s ease",
                   }}
                 />
               ))}
             </Box>
 
-            {/* Nút cuộn xuống */}
+            {/* Scroll down button */}
             <Button
               onClick={handleScrollDown}
               variant="outlined"
@@ -272,36 +389,59 @@ function ProductDetailPage() {
                 color: "#333333",
                 textTransform: "none",
                 fontWeight: "bold",
-                "&:hover": {
-                  color: "#1976d2",
-                },
+                "&:hover": { color: "#1976d2" },
                 border: "none",
                 backgroundColor: "transparent",
+                minWidth: "40px",
+                padding: "4px",
               }}
             >
-              <ArrowDropDownIcon fontSize="small" />
+              <ArrowDropDownIcon fontSize="medium" />
             </Button>
           </Box>
 
-          {/* Hình ảnh chính */}
-          <CardMedia
-            component="img"
-            image={productDetail?.images?.[activeImageIndex]?.url} // Ảnh chính
-            alt="Main Product Image"
+          {/* Main image */}
+          <Box
             sx={{
-              width: "50%",
-              height: "500px",
-              borderRadius: "8px",
-              objectFit: "cover",
-              transition: "opacity 0.3s ease-in-out", // Hiệu ứng chuyển ảnh mượt mà
+              flexGrow: 1,
+              width: { xs: "100%", sm: "300px", md: "400px" }, // Responsive width
+              maxWidth: "500px",
+              display: "flex",
+              justifyContent: "center",
+              margin: "0 auto",
             }}
-          />
+          >
+            <CardMedia
+              component="img"
+              image={productDetail?.images?.[activeImageIndex]?.url}
+              alt="Main Product Image"
+              sx={{
+                width: "100%",
+                height: "auto",
+                maxHeight: "450px", // Slightly smaller for balance
+                borderRadius: "12px",
+                objectFit: "contain",
+                transition: "opacity 0.3s ease-in-out",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)", // Subtle shadow for depth
+              }}
+            />
+          </Box>
 
-          {/* Bên phải - Nội dung sản phẩm */}
-          <Box sx={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-            {/* Tên sản phẩm và trạng thái */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="h4" fontWeight="bold">
+          {/* Product details */}
+          <Box
+            sx={{
+              padding: { xs: "16px", md: "24px" },
+              width: { xs: "100%", sm: "300px", md: "400px" }, // Match main image width
+              maxWidth: "450px",
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+            }}
+          >
+            {/* Product name and status */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <Typography variant="h5" fontWeight="bold">
                 {productDetail?.productName}
               </Typography>
               <Typography
@@ -309,256 +449,193 @@ function ProductDetailPage() {
                 sx={{
                   backgroundColor: "rgba(0, 166, 183, 0.2)",
                   color: "#00A6B7",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
-                  marginLeft: "10px",
+                  borderRadius: "6px",
+                  padding: "4px 12px",
+                  textAlign: "center",
                 }}
               >
                 Còn hàng
               </Typography>
             </Box>
 
-            {/* Giá sản phẩm */}
-            <Box
+            {/* Price */}
+            <Typography
+              variant="h6"
               sx={{
-                display: "flex",
-                alignItems: "center",
-                marginTop: "20px",
-                marginBottom: "20px",
+                color: "#000000",
+                fontWeight: "bold",
               }}
             >
-              <Typography
-                variant="body1"
-                sx={{
-                  textDecoration: "line-through",
-                  color: "#B3B3B3",
-                  marginRight: "10px",
-                }}
-              >
-                {productDetail?.price?.toLocaleString()} VND
+              Giá: {productDetail?.price?.toLocaleString()} VND
+            </Typography>
+
+            <Typography variant="body2" sx={{ color: "#666666", mt: "4px" }}>
+              <strong>Nhà cung cấp:</strong>{" "}
+              {productDetail?.supplierName || "Không có nhà cung cấp"}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#666666", mt: "4px" }}>
+              <strong>Loại sản phẩm:</strong>{" "}
+              {productDetail?.productTypeName || "Không có loại sản phẩm"}
+            </Typography>
+
+            {/* Description */}
+            <Box>
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                Mô tả:
               </Typography>
-              
+              <Typography variant="body2" sx={{ color: "#666666", mt: "4px" }}>
+                {productDetail?.description}
+              </Typography>
             </Box>
 
-            {/* Công ty và chia sẻ */}
-            {/* <CompanyShare productDetail={productDetail} /> */}
 
-            {/* Mô tả sản phẩm */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  Mô tả:
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#808080" }}>
-                  {productDetail?.description}
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginTop: "20px",
-              }}
-            >
-              <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  Danh mục:
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#808080" }}>
-                  {productDetail?.productTypeName}
-                </Typography>
-              </Box>
-            </Box>
-
-            {/* Số lượng và nút thêm vào giỏ hàng */}
+            {/* Quantity selector */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "20px",
-                width: "100%", // Adjusted width to fit both elements in one line
-                backgroundColor: "#fff",
-                color: "black !important",
-                marginTop: "20px",
+                gap: "12px",
+                borderRadius: "24px",
+                width: "fit-content",
               }}
             >
-              <Box
+              <Typography variant="body2" sx={{ fontWeight: "bold", color: "#333" }}>
+                Số lượng:
+              </Typography>
+              <IconButton
+                onClick={() => handleQuantityChange("decrement")}
+                disabled={quantity <= 1}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #fff",
-                  borderRadius: "30px",
+                  padding: "6px",
+                  backgroundColor: "#fff",
+                  color: quantity <= 1 ? "#ccc" : "#000",
+                  "&:hover": { backgroundColor: "#e0e0e0" },
                 }}
               >
-                <Typography
-                  variant="body1"
-                  marginBottom="20px"
-                  width="60%"
-                  fontSize="16px"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Số Lượng :
-                </Typography>
-                <IconButton
-                  onClick={() => handleQuantityChange("decrement")}
-                  disabled={quantity <= 1}
-                  sx={{
-                    padding: "10px",
-                    borderRadius: "30px",
-                    backgroundColor: "#FAFAFA !important",
-                    color: quantity > 1 ? "#757575" : "#E0E0E0 !important",
-                  }}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <TextField
-                  value={`${quantity}`}
-                  disabled
-                  aria-readonly
-                  slotProps={{
-                    input: {
-                      readOnly: true,
-                      style: {
-                        width: "50px",
-                        padding: "0",
-                        height: "40px",
-                        lineHeight: "40px",
-                        color: "black !important",
-                        backgroundColor: "#FFF",
-                      },
-                    },
-                  }}
-                  variant="standard"
-                  sx={{
-                    margin: "0 10px",
-                    "& .MuiInputBase-root": {
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    },
-                    "& .MuiInputBase-input": {
-                      textAlign: "center",
-                    },
-                    "& .MuiInput-underline:before": {
-                      borderBottom: "none",
-                    },
-                    "& .MuiInput-underline:after": {
-                      borderBottom: "none",
-                    },
-                    color: "black !important",
-                    backgroundColor: "#FFF",
-                    ":read-only": {
-                      backgroundColor: "#FFF",
-                      color: "black !important",
-                    },
-                  }}
-                />
-                <IconButton
-                  onClick={() => handleQuantityChange("increment")}
-                  sx={{
-                    padding: "10px",
-                    borderRadius: "30px",
-                    backgroundColor: "#FAFAFA !important",
-                    color: "#757575",
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </Box>
+                <RemoveIcon fontSize="small" />
+              </IconButton>
+              <TextField
+                value={`${quantity}`}
+                disabled
+                variant="standard"
+                sx={{
+                  width: "40px",
+                  "& .MuiInputBase-input": {
+                    textAlign: "center",
+                    fontSize: "16px",
+                    color: "#000",
+                  },
+                  "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                    borderBottom: "none",
+                  },
+                }}
+              />
+              <IconButton
+                onClick={() => handleQuantityChange("increment")}
+                sx={{
+                  padding: "6px",
+                  backgroundColor: "#fff",
+                  color: quantity >= 1 ? "#000" : "#ccc",
+                  "&:hover": { backgroundColor: "#e0e0e0" },
+                }}
+              >
+                <AddIcon fontSize="small" />
+              </IconButton>
             </Box>
+
+            {/* Add to cart button */}
             <Button
               variant="contained"
               sx={{
-                padding: "10px 20px",
+                padding: "12px 32px",
                 fontWeight: "bold",
                 fontSize: "16px",
-                borderRadius: "30px",
-                background: quantity >= 0 ? "#00A6B7" : "#E0E0E0",
-                color: quantity >= 0 ? "#fff" : "#000 !important",
-                borderColor: "#00A6B7",
-                cursor: quantity >= 0 ? "pointer" : "not-allowed !important",
+                borderRadius: "24px",
+                backgroundColor: quantity >= 1 ? "#00A6B7" : "#e0e0e0",
+                color: quantity >= 1 ? "#fff" : "#000",
+                "&:hover": {
+                  backgroundColor: quantity >= 1 ? "#fb8c00" : "#e0e0e0",
+                },
+                transition: "background-color 0.3s ease",
               }}
               onClick={handleAddToCart}
-              disabled={isLoading || quantity < 0}
+              disabled={isLoading || quantity < 1}
             >
-              {isLoading ? "Đang thêm..." : "Thêm vào giỏ hàng"}
-              <ShoppingBag />
+              {isLoading ? (
+                "Đang thêm..."
+              ) : (
+                <>
+                  Thêm vào giỏ hàng
+                  <ShoppingBag style={{ marginLeft: "8px", fontSize: "20px" }} />
+                </>
+              )}
             </Button>
 
-            {/* Thông báo thành công hoặc lỗi */}
-            {successMessage ? (
-              <Typography
-                variant="body2"
-                color="primary"
-                sx={{ marginTop: "10px" }}
-              >
+            {/* Success or error messages */}
+            {successMessage && (
+              <Typography variant="body2" color="success.main" sx={{ mt: "8px" }}>
                 {successMessage}
               </Typography>
-            ) : null}
-            {error ? (
-              <Typography
-                variant="body2"
-                color="error"
-                sx={{ marginTop: "10px" }}
-              >
+            )}
+            {error && (
+              <Typography variant="body2" color="error.main" sx={{ mt: "8px" }}>
                 {error}
               </Typography>
-            ) : null}
+            )}
           </Box>
         </Box>
+        <Divider
+        sx={{
+          margin: "20px 0",
+          backgroundColor: "#fff",
+          width: "100%",
+        }}
+      />
 
         {/* Phần dưới */}
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{
+            marginBottom: "16px",
+            color: "black",
+            textAlign: "left",
+            fontSize: "24px",
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+          }}
+        >
+          CẤU HÌNH CHI TIẾT</Typography>
+
+        <Box sx={{marginLeft: "20px"}}>
+        {renderProductDetails()}
+        </Box>
+
+        <Divider
+        sx={{
+          margin: "20px 0",
+          backgroundColor: "#fff",
+          width: "100%",
+        }}
+      />
+
         <Box>
           {/* Tabs */}
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
+
+          <Typography
+            variant="h5"
+            fontWeight="bold"
             sx={{
-              marginBottom: "20px",
-              borderBottom: "1px solid #B3B3B3", // Gạch dưới toàn bộ Tabs (màu xám nhạt)
-              "& .MuiTabs-indicator": {
-                backgroundColor: "#00A6B7", // Gạch dưới Tab đang được chọn
-                height: "3px", // Độ dày của gạch dưới
-              },
-              color: "#000", // Màu chữ Tab
+              marginBottom: "16px",
+              color: "black",
+              textAlign: "left",
+              fontSize: "24px",
+              textTransform: "uppercase",
+              letterSpacing: "1px",
             }}
           >
-            {/* <Tab
-              label="Mô tả"
-              sx={{
-                textTransform: "none", // Không viết hoa chữ
-                fontWeight: activeTab === 0 ? "bold" : "normal", // Chữ đậm nếu Tab được chọn
-                color: activeTab === 0 ? "#000 !important" : "#555", // Màu chữ Tab
-              }}
-            /> */}
-            <Tab
-              label="Đánh giá"
-              sx={{
-                textTransform: "none",
-                fontWeight: activeTab === 1 ? "bold" : "normal",
-                color: activeTab === 1 ? "#000 !important" : "#555",
-              }}
-            />
-            {/* <Tab
-              label="Công ty"
-              sx={{
-                textTransform: "none",
-                fontWeight: activeTab === 2 ? "bold" : "normal",
-                color: activeTab === 2 ? "#000 !important" : "#555",
-              }}
-            />
-            <Tab
-              label="Chứng nhận"
-              sx={{
-                textTransform: "none",
-                fontWeight: activeTab === 3 ? "bold" : "normal",
-                color: activeTab === 3 ? "#000 !important" : "#555",
-              }}
-            /> */}
-          </Tabs>
+            Đánh giá</Typography>
+
 
           {/* Nội dung Tab */}
           <Box>
@@ -662,7 +739,7 @@ function ProductDetailPage() {
               <>
                 {/* Nếu không có đánh giá nào */}
                 {reviews.length === 0 && (
-                  <Typography variant="body2" color="#555">
+                  <Typography variant="body2" color="#555" sx={{ textAlign: 'center', fontSize: '16px', padding: '20px' }}>
                     Chưa có đánh giá nào cho sản phẩm này.
                   </Typography>
                 )}
@@ -673,48 +750,67 @@ function ProductDetailPage() {
                       padding: "20px",
                       width: "80%",
                       margin: "0 auto",
+                      borderRadius: "12px",
                     }}
                   >
                     {/* Danh sách đánh giá */}
                     {currentData.map((review, index) => (
-                      <Box key={review.id} sx={{ marginBottom: "20px" }}>
+                      <Box
+                        key={review.id}
+                        sx={{
+                          marginBottom: "20px",
+                          padding: "20px",
+                          borderRadius: "10px",
+                          boxShadow: "0px 6px 16px rgba(0, 0, 0, 0.1)",
+                          position: "relative",
+                          overflow: "hidden",
+                          transition: "all 0.3s ease-in-out",
+
+                        }}
+                      >
                         {/* Dòng trên cùng */}
                         <Box
                           sx={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "10px",
-                            marginBottom: "10px",
+                            gap: "15px",
+                            marginBottom: "15px",
                           }}
                         >
                           <Avatar
-                            src="/avatars/defult.png"
+                            src={review.avatar || "/avatars/default-avt.png"}
                             alt={review.fullName}
                             sx={{
-                              width: "40px",
-                              height: "40px",
-                              backgroundColor: "#fff",
+                              width: "50px",
+                              height: "50px",
+                              backgroundColor: "#E5E5E5",
+                              fontSize: "18px",
+                              transition: "all 0.3s ease",
+
                             }}
                           >
                             {!review.avatar && review.fullName.charAt(0)}
                           </Avatar>
 
                           <Box>
-                            <Typography variant="body1" fontWeight="bold">
+                            <Typography variant="body1" fontWeight="bold" sx={{ fontSize: "16px" }}>
                               {review.fullName}
                             </Typography>
 
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <span
-                                key={star}
-                                style={{
-                                  color:
-                                    review.rating >= star ? "gold" : "gray",
-                                }}
-                              >
-                                ★
-                              </span>
-                            ))}
+                            {/* Đánh giá sao */}
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <span
+                                  key={star}
+                                  style={{
+                                    color: review.rating >= star ? "gold" : "gray",
+                                    fontSize: "18px",
+                                  }}
+                                >
+                                  ★
+                                </span>
+                              ))}
+                            </Box>
                           </Box>
 
                           <Typography
@@ -733,15 +829,16 @@ function ProductDetailPage() {
                         <Typography
                           variant="body2"
                           color="#555"
-                          sx={{ marginBottom: "10px" }}
+                          sx={{
+                            marginBottom: "15px",
+                            fontSize: "14px",
+                            lineHeight: "1.5",
+                            wordBreak: "break-word",
+                            textAlign: "justify",
+                          }}
                         >
                           {review.comment}
                         </Typography>
-
-                        {/* Đường kẻ ngăn cách */}
-                        {index < currentData.length - 1 && (
-                          <Divider sx={{ marginTop: "10px" }} />
-                        )}
                       </Box>
                     ))}
 
@@ -758,12 +855,28 @@ function ProductDetailPage() {
                         page={currentPage}
                         onChange={handlePageChange}
                         color="primary"
+                        sx={{
+                          "& .MuiPaginationItem-root": {
+                            borderRadius: "50%",
+                            backgroundColor: "#F2F2F2",
+                            color: "#555",
+                            "&:hover": {
+                              backgroundColor: "#00A6B7",
+                              color: "white",
+                            },
+                            "&.Mui-selected": {
+                              backgroundColor: "#00A6B7",
+                              color: "white",
+                            },
+                          },
+                        }}
                       />
                     </Box>
                   </Box>
                 )}
               </>
             )}
+
 
             {activeTab === 2 && (
               <Box sx={{ padding: "20px" }}>

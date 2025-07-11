@@ -97,8 +97,8 @@ export function ProductEditForm({ product }) {
     resolver: zodResolver(schema),
   });
   const [preview, setPreview] = React.useState({});
-    const [imageInputs, setImageInputs] = React.useState([0]);
-  
+  const [imageInputs, setImageInputs] = React.useState([0]);
+
   const [formData, setFormData] = React.useState(new FormData());
   const handleImageChange = (index, files) => {
     const newFormData = new FormData(formData);
@@ -191,7 +191,7 @@ export function ProductEditForm({ product }) {
     },
     [getValues, setValue]
   );
-  
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -229,7 +229,7 @@ export function ProductEditForm({ product }) {
                         fullWidth
                       >
                         <InputLabel required>Giá sản phẩm</InputLabel>
-                          <OutlinedInput {...field} type="number" value={product.price ?? field.value ?? ""} />
+                        <OutlinedInput {...field} type="number" value={product.price ?? field.value ?? ""} />
 
                         {errors.price ? (
                           <FormHelperText>
@@ -243,32 +243,36 @@ export function ProductEditForm({ product }) {
 
 
                 <Grid container flexDirection="column" spacing={4}>
-                                      {/* Phần số lượng */}
-                                      <Grid item xs={12}>
-                                        <Controller
-                                          control={control}
-                                          name="quantity"
-                                          render={({ field }) => (
-                                            <FormControl
-                                              error={Boolean(errors?.quantity)}
-                                              fullWidth
-                                            >
-                                              <InputLabel required>Số Lượng</InputLabel>
-                  
-                                              <OutlinedInput
-                                                {...field}
-                                                type="number"
-                                                value={product.quantity ?? field.value ?? ""}
-                                                placeholder="Nhập số lượng"
-                                              />
-                                              {errors?.quantity ? <FormHelperText>
-                                                  {errors?.quantity.message}
-                                                </FormHelperText> : null}
-                                            </FormControl>
-                                          )}
-                                        />
-                                      </Grid>
-                                    </Grid>
+                  {/* Phần số lượng */}
+                  <Grid item xs={12}>
+                    <Controller
+                      control={control}
+                      name="quantity"
+                      render={({ field }) => (
+                        <FormControl
+                          error={Boolean(errors?.quantity)}
+                          fullWidth
+                        >
+                          <InputLabel required>Số Lượng</InputLabel>
+
+                          <OutlinedInput
+                            {...field}
+                            type="number"
+                            placeholder="Nhập số lượng"
+                            onChange={(e) => {
+                              const number = parseFloat(e.target.value);
+                              field.onChange(isNaN(number) ? undefined : number);
+                            }}
+                          />
+
+                          {errors?.quantity ? <FormHelperText>
+                            {errors?.quantity.message}
+                          </FormHelperText> : null}
+                        </FormControl>
+                      )}
+                    />
+                  </Grid>
+                </Grid>
 
 
                 <Grid item xs={12} width="100%">
@@ -306,9 +310,9 @@ export function ProductEditForm({ product }) {
                     )}
                   />
 
-                                   
+
                 </Grid>
-                
+
                 {/* <Grid item={true} xs={12}>
                   <Typography variant="h6" gutterBottom={true}>
                     Hình ảnh
@@ -373,89 +377,89 @@ export function ProductEditForm({ product }) {
                 </Grid> */}
 
                 <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                    <InputLabel required>Hình Ảnh</InputLabel>
-                
-                                        <Grid container rowSpacing={2} columnSpacing={18}>
-                                        {imageInputs.map((index) => (
-                                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                            <Controller
-                                                control={control}
-                                                name={`images[${index}]`}
-                                                render={({ field }) => (
-                                                <FormControl fullWidth>
-                                                    <Box
-                                                    display="flex"
-                                                    flexDirection="column"
-                                                    alignItems="center"
-                                                    >
-                                                    <InputLabel
-                                                        shrink
-                                                        style={{ marginBottom: "8px" }}
-                                                    >
-                                                        Hình {index + 1}
-                                                    </InputLabel>
-                                                    <OutlinedInput
-                                                        type="file"
-                                                        onChange={(e) => {
-                                                        field.onChange(e.target.files);
-                                                        const showFile = e.target.files[0];
-                                                        if (showFile) {
-                                                            const previewUrl =
-                                                            URL.createObjectURL(showFile);
-                                                            setPreview((prev) => ({
-                                                            ...prev,
-                                                            [index]: previewUrl,
-                                                            }));
-                                                        }
-                                                        }}
-                                                        inputProps={{
-                                                        accept: "image/*",
-                                                        }}
-                                                        style={{
-                                                        padding: "8px",
-                                                        borderRadius: "8px",
-                                                        }}
-                                                    />
-                                                    </Box>
-                                                    {preview[index] ? <Box
-                                                        mt={2}
-                                                        width="100%"
-                                                        height="150px"
-                                                        style={{
-                                                        display: "flex",
-                                                        justifyContent: "center",
-                                                        alignItems: "center",
-                                                        overflow: "hidden",
-                                                        border: "1px solid #ccc",
-                                                        borderRadius: "8px",
-                                                        }}
-                                                    >
-                                                        <img
-                                                        src={preview[index]}
-                                                        alt={`Preview ${index + 1}`}
-                                                        style={{
-                                                            maxWidth: "100%",
-                                                            maxHeight: "100%",
-                                                            objectFit: "contain",
-                                                        }}
-                                                        />
-                                                    </Box> : null}
-                                                </FormControl>
-                                                )}
-                                            />
-                                            </Grid>
-                                        ))}
-                                        </Grid>
-                                        <Button
-                                        variant="outlined"
-                                        onClick={addImageInput}
-                                        sx={{ mt: 2 }}
-                                        >
-                                        Thêm hình ảnh
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                  <Grid item xs={12}>
+                    <InputLabel required>Hình Ảnh</InputLabel>
+
+                    <Grid container rowSpacing={2} columnSpacing={18}>
+                      {imageInputs.map((index) => (
+                        <Grid item xs={12} sm={6} md={3} key={index}>
+                          <Controller
+                            control={control}
+                            name={`images[${index}]`}
+                            render={({ field }) => (
+                              <FormControl fullWidth>
+                                <Box
+                                  display="flex"
+                                  flexDirection="column"
+                                  alignItems="center"
+                                >
+                                  <InputLabel
+                                    shrink
+                                    style={{ marginBottom: "8px" }}
+                                  >
+                                    Hình {index + 1}
+                                  </InputLabel>
+                                  <OutlinedInput
+                                    type="file"
+                                    onChange={(e) => {
+                                      field.onChange(e.target.files);
+                                      const showFile = e.target.files[0];
+                                      if (showFile) {
+                                        const previewUrl =
+                                          URL.createObjectURL(showFile);
+                                        setPreview((prev) => ({
+                                          ...prev,
+                                          [index]: previewUrl,
+                                        }));
+                                      }
+                                    }}
+                                    inputProps={{
+                                      accept: "image/*",
+                                    }}
+                                    style={{
+                                      padding: "8px",
+                                      borderRadius: "8px",
+                                    }}
+                                  />
+                                </Box>
+                                {preview[index] ? <Box
+                                  mt={2}
+                                  width="100%"
+                                  height="150px"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    overflow: "hidden",
+                                    border: "1px solid #ccc",
+                                    borderRadius: "8px",
+                                  }}
+                                >
+                                  <img
+                                    src={preview[index]}
+                                    alt={`Preview ${index + 1}`}
+                                    style={{
+                                      maxWidth: "100%",
+                                      maxHeight: "100%",
+                                      objectFit: "contain",
+                                    }}
+                                  />
+                                </Box> : null}
+                              </FormControl>
+                            )}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                    <Button
+                      variant="outlined"
+                      onClick={addImageInput}
+                      sx={{ mt: 2 }}
+                    >
+                      Thêm hình ảnh
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Stack>
           </Stack>

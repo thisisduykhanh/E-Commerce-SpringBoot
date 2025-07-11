@@ -122,52 +122,7 @@ export default function Page() {
                             ]}
                         />
                     </Grid>
-                    <Grid
-                        size={{
-                            lg: 4,
-                            xs: 12,
-                        }}
-                    >
-                        <TopProducts
-                            products={[
-                                {
-                                    id: 'PRD-001',
-                                    name: 'Erbology Aloe Vera',
-                                    image: '/assets/product-1.png',
-                                    category: 'Healthcare',
-                                    sales: 13153,
-                                },
-                                {
-                                    id: 'PRD-002',
-                                    name: 'Lancome Rouge',
-                                    image: '/assets/product-2.png',
-                                    category: 'Makeup',
-                                    sales: 10300,
-                                },
-                                {
-                                    id: 'PRD-003',
-                                    name: 'Ritual of Sakura',
-                                    image: '/assets/product-3.png',
-                                    category: 'Skincare',
-                                    sales: 5300,
-                                },
-                                {
-                                    id: 'PRD-004',
-                                    name: 'Necessaire Body Lotion',
-                                    image: '/assets/product-4.png',
-                                    category: 'Skincare',
-                                    sales: 1203,
-                                },
-                                {
-                                    id: 'PRD-005',
-                                    name: 'Soja & Co. Eucalyptus',
-                                    image: '/assets/product-5.png',
-                                    category: 'Skincare',
-                                    sales: 254,
-                                },
-                            ]}
-                        />
-                    </Grid>
+                   
                 </Grid>
             </Stack>
         </Box>

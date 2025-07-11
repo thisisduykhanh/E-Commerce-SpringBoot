@@ -8,9 +8,17 @@ export const metadata = { title: `Sign up | Custom | Auth | ${config.site.name}`
 export default function Page() {
     return (
         <GuestGuard>
-            <SplitLayout>
-                <SignUpForm />
-            </SplitLayout>
+            <div style={{
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '90vh', 
+                margin: '5vh 0' // Cách đều lề trên và dưới
+            }}>
+                <SplitLayout>
+                    <SignUpForm />
+                </SplitLayout>
+            </div>
         </GuestGuard>
     );
 }

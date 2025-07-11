@@ -18,10 +18,18 @@ public class Headphone extends Product {
     private int batteryLife;
     private String noiseCancellation;
 
-    public Headphone(String productName, BigDecimal price,Integer quantity, String description, ProductType productType, Supplier supplier, boolean statusActivity, boolean statusVerify, boolean isWireless, int batteryLife, String noiseCancellation) {
+    // Constructor cần thiết
+    public Headphone(String productName, BigDecimal price, Integer quantity, String description,
+                     ProductType productType, Supplier supplier, boolean statusActivity, boolean statusVerify,
+                     boolean isWireless, int batteryLife, String noiseCancellation) {
         super(null, productName, price, quantity, description, productType, supplier, statusActivity, statusVerify);
         this.isWireless = isWireless;
         this.batteryLife = batteryLife;
         this.noiseCancellation = noiseCancellation;
+    }
+
+    // Thêm getter cho trường isWireless nếu Lombok không tự động tạo
+    public boolean getIsWireless() {
+        return isWireless;
     }
 }

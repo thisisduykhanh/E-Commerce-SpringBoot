@@ -29,7 +29,7 @@ export function Form12() {
                     <OutlinedInput name="barcode" />
                 </FormControl>
                 <div>
-                    <Button variant="contained">Create product</Button>
+                    <Button variant="contained">Tạo sản phẩm</Button>
                 </div>
             </Stack>
         </Box>

@@ -3,16 +3,17 @@ package com.example.e_commerce_api.pattern.strategyExportInvoice;
 import com.example.e_commerce_api.entity.Invoice;
 import com.example.e_commerce_api.entity.InvoiceItem;
 import com.example.e_commerce_api.pattern.repository.save.invoice.InvoiceItemRepository;
-import com.lowagie.text.*;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.draw.LineSeparator;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -24,13 +25,16 @@ import java.util.List;
 
 public class PDFExport implements IExportStrategy {
 
-    @Autowired
+    final
     InvoiceItemRepository invoiceItemRepository;
 
+    public PDFExport(InvoiceItemRepository invoiceItemRepository) {
+        this.invoiceItemRepository = invoiceItemRepository;
+    }
 
 
     @Override
-    public byte[] export(List<Invoice> invoices) throws Exception {
+    public byte[] export(List<Invoice> invoices) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         Document document = new Document(PageSize.A4);

@@ -3,6 +3,8 @@
 import BannerSection from '@/components/user/home/BannerSection';
 import CategoriesSection from '@/components/user/home/CategoriesSection';
 import FeaturesSection from '@/components/user/home/FeaturesSection';
+import ProductCategories from '@/components/user/home/ProductCategories';
+import FeaturedProducts from '@/components/user/home/FeaturedProducts';
 import { logger } from '@/lib/default-logger';
 import { fetchCategories, fetchProducts } from '@/services/category-service';
 import { Divider } from '@mui/material';
@@ -71,7 +73,10 @@ function HomePage() {
     return (
         <>
             <BannerSection router={router} />
+            <ProductCategories categories={_categories} products={_products} />
+            <FeaturedProducts />
             <FeaturesSection />
+            
             <Divider
                 sx={{
                     border: '1px solid rgba(243, 240, 240, 0.5)',

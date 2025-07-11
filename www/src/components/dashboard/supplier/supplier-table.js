@@ -81,11 +81,11 @@ const columns = [
             console.log('status', status);
 
             switch (status) {
-                case 'false':
+                case 'true':
                     label = 'Ngừng hoạt động';
                     icon = <MinusIcon color="var(--mui-palette-error-main)" weight="fill" />;
                     break;
-                case 'true':
+                case 'false':
                     label = 'Hoạt động';
                     icon = <CheckCircleIcon color="var(--mui-palette-success-main)" />;
                     break;

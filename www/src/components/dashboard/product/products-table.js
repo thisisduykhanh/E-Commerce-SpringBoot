@@ -6,13 +6,28 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Eye as EyeIcon } from '@phosphor-icons/react/dist/ssr/Eye';
+import { Pencil as PencilIcon } from '@phosphor-icons/react/dist/ssr/Pencil';
+import { Trash as TrashIcon } from '@phosphor-icons/react/dist/ssr/Trash';
 import { Image as ImageIcon } from '@phosphor-icons/react/dist/ssr/Image';
 import RouterLink from 'next/link';
 import * as React from 'react';
 
 import { DataTable } from '@/components/core/data-table';
 import { paths } from '@/paths';
+import { deleteProduct, getProducts } from '@/services/products';
 
+
+
+const handleDelete = async (productId) => {
+    try {
+        const response = await deleteProduct(productId);  // Xóa sản phẩm
+            alert(response.data.message || "Sản phẩm đã được xóa.");
+            window.location.reload(); // Tải lại trang để cập nhật danh sách sản phẩm
+    } catch (error) {
+        console.error("Có lỗi xảy ra khi xóa sản phẩm:", error);
+        alert("Có lỗi xảy ra khi xóa sản phẩm.");
+    }
+};
 
 const columns = [
     {
@@ -75,7 +90,7 @@ const columns = [
             // Hàm định dạng giá tiền (VNĐ)
             const formatPrice = (price) => {
                 if (price == null || isNaN(price)) return "Không có giá trị hợp lệ.";
-        
+
                 return new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
@@ -84,14 +99,14 @@ const columns = [
                     .format(price)
                     .replace("₫", "đ"); // Thay ₫ bằng đ cho đúng văn phong tiếng Việt
             };
-        
+
             return formatPrice(row.price);
         },
-        
+
         name: "Giá",
         width: "150px",
-        
-},
+
+    },
 
     {
         formatter: (row) => (
@@ -99,11 +114,17 @@ const columns = [
                 <IconButton component={RouterLink} href={paths.dashboard.products.preview(row.id)} title="Xem chi tiết">
                     <EyeIcon />
                 </IconButton>
+                <IconButton component={RouterLink} href={paths.dashboard.products.update(row.id)} title="Chỉnh sửa">
+                    <PencilIcon />
+                </IconButton>
+                <IconButton title="Xóa" onClick={() => handleDelete(row.id)}>
+                    <TrashIcon />
+                </IconButton>
             </Stack>
         ),
         name: 'Hành động',
         width: '100px',
-        align: 'right',
+        align: 'center',
     },
 ];
 

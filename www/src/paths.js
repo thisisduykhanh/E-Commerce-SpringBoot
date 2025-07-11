@@ -165,6 +165,9 @@ export const paths = {
             timeline: (id) => `/user/supplier/${id}`,
             connections: (id) => `/user/supplier/${id}/products`,
         },
+        products: {
+            byType: (type) => `/user/products/${type}`, // Thêm đường dẫn động cho loại sản phẩm
+        },
     },
     supplier: {
         products: {

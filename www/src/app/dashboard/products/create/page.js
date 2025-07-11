@@ -17,7 +17,7 @@ export default function Page() {
             sx={{
                 maxWidth: 'var(--Content-maxWidth)',
                 m: 'var(--Content-margin)',
-                p: 'var(--Content-padding)',
+                p: '20px',
                 width: 'var(--Content-width)',
             }}
         >
@@ -32,11 +32,11 @@ export default function Page() {
                             variant="subtitle2"
                         >
                             <ArrowLeftIcon fontSize="var(--icon-fontSize-md)" />
-                            Products
+                            Danh sách sản phẩm
                         </Link>
                     </div>
                     <div>
-                        <Typography variant="h4">Create product</Typography>
+                        <Typography variant="h4">Tạo sản phẩm</Typography>
                     </div>
                 </Stack>
                 <ProductCreateForm />

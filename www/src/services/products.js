@@ -80,3 +80,29 @@ export const getMyOrder = async (status, page, size) => {
 
 
 // 1 accept 2 pending 3 completed
+export const getProductsByType = async (type, page = 0, size = 10) => {
+	try {
+		const response = await apiClient.get(
+			`/products/by-type/${type}?page=${page}&size=${size}`,
+		);
+		return response;
+	} catch (error) {
+		throw error;
+	}
+}
+
+
+/**
+ * Delete a product by ID (Soft Delete).
+ * @param {number} id - The ID of the product to delete.
+ * @returns {Promise<axios.AxiosResponse<any>>} - The response from the API.
+ */
+export const deleteProduct = async (id) => {
+	try {
+	  const response = await apiClient.delete(`/products/${id}`);
+	  return response; // This will return the response object
+	} catch (error) {
+	  console.error('Error deleting product:', error);
+	  throw error;
+	}
+  };

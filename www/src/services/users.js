@@ -14,7 +14,7 @@ export const createProduct = async (
 	} catch (error) {
 	  throw error;
 	}
-  };
+  }; 
 
 
 export const getUsers = async (page = 0, size = 10) => {
